@@ -1,26 +1,11 @@
-// import React from 'react';
-import { createBrowserRouter } from 'react-router-dom';
-// import CircularProgress from '@mui/material/CircularProgress';
-// import HomePage from './public/page';
-// import OrientationInfo from './public/orientationInfo';
+import { createHashRouter } from 'react-router-dom'; // Import createHashRouter instead of createBrowserRouter
 import OrientationSensorApp from './public/page';
-// import HelloWorld from './public/test';
-const router = createBrowserRouter([
+
+const router = createHashRouter([
     {
       path: "/",
       element: <OrientationSensorApp />,
-    //   children: [
-    //     {
-    //       path: "dashboard",
-    //       element: <Dashboard />,
-    //     },
-    //     {
-    //       path: "about",
-    //       element: <About />,
-    //     },
-    //   ],
     },
-  ]);
+]);
 
 export default router;
-  
