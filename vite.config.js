@@ -4,5 +4,6 @@ import react from '@vitejs/plugin-react'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: '/vario/',
+  // Uncomment the following for github pages deployment
+  // base: '/vario/',
 })
