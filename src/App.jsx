@@ -9,7 +9,7 @@ const App = () => {
 
     return (
         <div className="orientation-app">
-            <h1>Orientation Sensor Data changed four times!</h1>
+            <h1>Orientation Sensor Data changed five times!</h1>
             <div>
                 <p>Alpha: {sensorData.alpha !== null ? sensorData.alpha.toFixed(2) : 'N/A'}</p>
                 <p>Beta: {sensorData.beta !== null ? sensorData.beta.toFixed(2) : 'N/A'}</p>
