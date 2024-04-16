@@ -36,11 +36,12 @@ $(document).ready(function(){
     if (window.DeviceOrientationEvent) {
         // Add event listener for device orientation
         console.log("Device orientation supported.");
+        $("#orientation").text("Device orientation supported.");
         window.addEventListener('deviceorientation', handleOrientation, false);
     } else {
         // Device orientation not supported
         console.log("Device orientation not supported.");
-        $("#orientationData").text("Device orientation not supported.");
+        $("#orientation").text("Device orientation not supported.");
     }
 
     // Get geolocation data continuously
