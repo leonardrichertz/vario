@@ -5,7 +5,7 @@ $(document).ready(function(){
         var alpha    = Math.round(event.alpha * 100) / 100; // rotation around z-axis
         var beta     = Math.round(event.beta * 100) / 100;  // rotation around x-axis
         var gamma    = Math.round(event.gamma * 100) / 100; // rotation around y-axis
-        document.getElementById("compass").style.webkitTransform = "rotate(" + alpha + "deg)";
+        document.getElementById("compass").style.transform = "rotate(" + alpha + "deg)";
 
         // Display device orientation data
         $("#orientationData").html("Absolute: " + absolute + "<br>Alpha: " + alpha + "<br>Beta: " + beta + "<br>Gamma: " + gamma);
