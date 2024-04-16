@@ -5,6 +5,7 @@ $(document).ready(function(){
         var alpha    = Math.round(event.alpha * 100) / 100; // rotation around z-axis
         var beta     = Math.round(event.beta * 100) / 100;  // rotation around x-axis
         var gamma    = Math.round(event.gamma * 100) / 100; // rotation around y-axis
+        console.log($("#compass"))
         $("#compass").css("transform", "rotate(" + alpha + "deg)");
 
         // Display device orientation data
@@ -41,6 +42,7 @@ $(document).ready(function(){
         window.addEventListener('deviceorientation', handleOrientation, false);
     } else {
         // Device orientation not supported
+        console.log("Device orientation not supported.");
         $("#orientationData").html("Device orientation not supported.");
     }
 
