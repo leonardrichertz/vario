@@ -1,4 +1,5 @@
 $(document).ready(function(){
+    $("#start").html("Device orientation and geolocation data");
     // Function to handle device orientation data
     function handleOrientation(event) {
         var alpha;
