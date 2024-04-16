@@ -12,20 +12,11 @@ jobs:
     if: github.ref == 'refs/heads/main'
   
     steps:
-      - name: Download artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: production-files
-          path: ./dist
-    
-      - name: Add HTML and JS files to artifact
-        run: |
-          mkdir -p ./dist/assets
-          cp index.html ./dist
-          cp functions.js ./dist/assets
-    
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
+          publish_dir: ./src
