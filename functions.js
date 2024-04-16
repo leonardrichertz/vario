@@ -4,8 +4,10 @@ $(document).ready(function(){
     function handleOrientation(event) {
         var alpha;
         if (event.webkitCompassHeading !== undefined) {
+            $("#webkit").text("webkitCompassHeading supported.");
             alpha = event.webkitCompassHeading; // iOS
         } else {
+            $("#webkit").text("webkitCompassHeading not supported.");
             alpha = event.alpha; // non-iOS
         }
         
