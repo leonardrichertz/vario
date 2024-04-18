@@ -76,4 +76,18 @@ $(document).ready(function(){
         // Geolocation not supported
         $("#geolocationData").text("Geolocation not supported.");
     }
+
+    // Gravity for measuring speed
+    let gravitySensor = new GravitySensor({ frequency: 1 }); 
+
+    gravitySensor.addEventListener("reading", (e) => {
+     // console.log(`Gravity along the X-axis ${gravitySensor.x}`);
+     // console.log(`Gravity along the Y-axis ${gravitySensor.y}`);
+      console.log(`Gravity along the Z-axis ${gravitySensor.z-9.81}`); // substraction of earthgravity 
+    });
+    
+    gravitySensor.start();
+    
+
+
 });
