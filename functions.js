@@ -3,18 +3,22 @@ $(document).ready(function(){
     // Function to handle device orientation data
     function handleOrientation(event) {
         var alpha;
-        if (event.webkitCompassHeading !== undefined) {
-            $("#webkit").text("webkitCompassHeading supported.");
-            alpha = event.webkitCompassHeading; // iOS
-        } else {
-            $("#webkit").text("webkitCompassHeading not supported.");
-            alpha = event.alpha; // non-iOS
-        }
+        if (typeof event.webkitCompassHeading !== "undefined") {
+            alpha = event.webkitCompassHeading; //iOS non-standard
+            var heading = alpha
+            $("#webkit").text(heading.toFixed([0]));
+          }
+          else {
+            alert("Your device is reporting relative alpha values, so this compass won't point north! ");
+            var heading = 360 - alpha; //heading [0, 360)
+            $("#webkit").text(heading.toFixed([0]));
+          }
         
         alpha = Math.round(alpha * 100) / 100; // Normalize value
         
         var beta     = Math.round(event.beta * 100) / 100;  // rotation around x-axis
         var gamma    = Math.round(event.gamma * 100) / 100; // rotation around y-axis
+        var heading  = 360 - alpha; //calculates the relation to north
 
         $("#compass").css("transform", "rotate(" + alpha + "deg)");
 
