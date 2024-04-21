@@ -42,6 +42,7 @@ $(document).ready(function () {
         $("#orientation").text("Device orientation supported.");
         // Check if we need to request permission (iOS 13+)
         if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+            $("#orientationInfo").text("Requesting permission for DeviceOrientation");
             console.log("Requesting permission for DeviceOrientation");
             // Request permission
             DeviceOrientationEvent.requestPermission()
@@ -58,13 +59,13 @@ $(document).ready(function () {
                 })
                 .catch(console.error);
         } else {
+            $("#orientationInfo").text("No need to request permission for DeviceOrientation");
             console.log("No need to request permission for DeviceOrientation");
             // No need to request permission, add event listener directly
             window.addEventListener('deviceorientation', handleOrientation);
         }
     } else {
         $("#orientation").text("Device orientation not supported.");
-        alert('Your device does not support DeviceOrientation');
     }
 
     // Get geolocation data continuously
