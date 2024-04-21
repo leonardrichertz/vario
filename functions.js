@@ -37,36 +37,39 @@ $(document).ready(function () {
         $("#geolocationData").text("Geolocation error: " + error.message);
     }
 
-    // Check if the device supports DeviceOrientationEvent
-    if (window.DeviceOrientationEvent) {
-        $("#orientation").text("Device orientation supported.");
-        // Check if we need to request permission (iOS 13+)
-        if (typeof DeviceOrientationEvent.requestPermission === 'function') {
-            $("#orientationInfo").text("Requesting permission for DeviceOrientation");
-            console.log("Requesting permission for DeviceOrientation");
-            // Request permission
-            DeviceOrientationEvent.requestPermission()
-                .then(permissionState => {
-                    if (permissionState === 'granted') {
-                        console.log("Permission granted for DeviceOrientation");
-                        // Permission granted, add event listener
-                        window.addEventListener('deviceorientation', handleOrientation);
-                    } else {
-                        console.log("Permission not granted for DeviceOrientation");
-                        // Permission not granted
-                        alert('Permission not granted for DeviceOrientation');
-                    }
-                })
-                .catch(console.error);
+    $("#requestPermissionButton").click(function() {
+        // Check if the device supports DeviceOrientationEvent
+        if (window.DeviceOrientationEvent) {
+            $("#orientation").text("Device orientation supported.");
+            // Check if we need to request permission (iOS 13+)
+            if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+                $("#orientationInfo").text("Requesting permission for DeviceOrientation");
+                console.log("Requesting permission for DeviceOrientation");
+                // Request permission
+                // The request permission is only needed for iOS 13+ devices and it is only available in Safari.
+                DeviceOrientationEvent.requestPermission()
+                    .then(permissionState => {
+                        if (permissionState === 'granted') {
+                            console.log("Permission granted for DeviceOrientation");
+                            // Permission granted, add event listener
+                            window.addEventListener('deviceorientation', handleOrientation);
+                        } else {
+                            console.log("Permission not granted for DeviceOrientation");
+                            // Permission not granted
+                            alert('Permission not granted for DeviceOrientation');
+                        }
+                    })
+                    .catch(console.error);
+            } else {
+                $("#orientationInfo").text("No need to request permission for DeviceOrientation");
+                console.log("No need to request permission for DeviceOrientation");
+                // No need to request permission, add event listener directly
+                window.addEventListener('deviceorientation', handleOrientation);
+            }
         } else {
-            $("#orientationInfo").text("No need to request permission for DeviceOrientation");
-            console.log("No need to request permission for DeviceOrientation");
-            // No need to request permission, add event listener directly
-            window.addEventListener('deviceorientation', handleOrientation);
+            $("#orientation").text("Device orientation not supported.");
         }
-    } else {
-        $("#orientation").text("Device orientation not supported.");
-    }
+    });
 
     // Get geolocation data continuously
     if (navigator.geolocation) {
