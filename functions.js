@@ -22,7 +22,7 @@ $(document).ready(function () {
         $("#compass").css("transform", "rotate(" + alpha + "deg)");
 
         // Display device orientation data
-        $("#orientationData").html("<br>Alpha: " + alpha + "<br>Beta: " + beta + "<br>Gamma: " + gamma);
+        $("#orientationData").html( "<br>heading: " + heading + "<br>Alpha: " + alpha + "<br>Beta: " + beta + "<br>Gamma: " + gamma);
     }
 
     // Function to handle geolocation data
