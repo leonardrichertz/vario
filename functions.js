@@ -50,10 +50,11 @@ $(document).ready(function () {
                 DeviceOrientationEvent.requestPermission()
                     .then(permissionState => {
                         if (permissionState === 'granted') {
-                            console.log("Permission granted for DeviceOrientation");
+                            $("#permission").text("Permission granted for DeviceOrientation");
                             // Permission granted, add event listener
                             window.addEventListener('deviceorientation', handleOrientation);
                         } else {
+                            $("#permission").text("Permission not granted for DeviceOrientation");
                             console.log("Permission not granted for DeviceOrientation");
                             // Permission not granted
                             alert('Permission not granted for DeviceOrientation');
