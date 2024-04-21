@@ -18,7 +18,7 @@ $(document).ready(function () {
 
         var beta = Math.round(event.beta * 100) / 100;  // rotation around x-axis
         var gamma = Math.round(event.gamma * 100) / 100; // rotation around y-axis
-        
+
         $("#compass").css("transform", "rotate(" + alpha + "deg)");
 
         // Display device orientation data
@@ -47,15 +47,18 @@ $(document).ready(function () {
             DeviceOrientationEvent.requestPermission()
                 .then(permissionState => {
                     if (permissionState === 'granted') {
+                        console.log("Permission granted for DeviceOrientation");
                         // Permission granted, add event listener
                         window.addEventListener('deviceorientation', handleOrientation);
                     } else {
+                        console.log("Permission not granted for DeviceOrientation");
                         // Permission not granted
                         alert('Permission not granted for DeviceOrientation');
                     }
                 })
                 .catch(console.error);
         } else {
+            console.log("No need to request permission for DeviceOrientation");
             // No need to request permission, add event listener directly
             window.addEventListener('deviceorientation', handleOrientation);
         }
