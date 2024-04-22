@@ -1,4 +1,11 @@
 $(document).ready(function () {
+    var map = L.map('map').setView([0, 0], 13);
+
+    // Add Tile layer for map
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
     $("#start").text("Device orientation and geolocation data");
     // Function to handle device orientation data
     function handleOrientation(event) {
@@ -25,8 +32,17 @@ $(document).ready(function () {
         $("#orientationData").html( "<br>heading: " + heading + "<br>Alpha: " + alpha + "<br>Beta: " + beta + "<br>Gamma: " + gamma);
     }
 
+    function updateLocationOnMap(position) {
+        var latlng = [position.coords.latitude, position.coords.longitude];
+        map.setView(latlng);
+        L.marker(latlng).addTo(map)
+            .bindPopup("You are here").openPopup();
+    }
+
     // Function to handle geolocation data
     function handleGeolocation(position) {
+
+        updateLocationOnMap(position);
         // Display geolocation data
         $("#geolocationData").html("<br>Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude);
     }
@@ -79,4 +95,5 @@ $(document).ready(function () {
         // Geolocation not supported
         $("#geolocationData").text("Geolocation not supported.");
     }
+
 });
