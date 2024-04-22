@@ -10,23 +10,23 @@ jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
+  
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
 
-      - name: Set publish branch and directory
+      - name: Prepare for deployment
         run: |
           if [ "${GITHUB_REF##*/}" = "main" ]; then
-            export PUBLISH_BRANCH="main"
-            export PUBLISH_DIR="src"
+            mkdir -p deploy
+            cp -r src/* deploy/
           elif [ "${GITHUB_REF##*/}" = "dev" ]; then
-            export PUBLISH_BRANCH="gh-pages"
-            export PUBLISH_DIR="src/dev"
+            mkdir -p deploy/dev
+            cp -r src/* deploy/dev/
           fi
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: $PUBLISH_DIR
-          publish_branch: $PUBLISH_BRANCH
+          publish_dir: deploy
