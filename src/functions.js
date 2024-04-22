@@ -39,6 +39,11 @@ $(document).ready(function () {
             .bindPopup("You are here").openPopup();
     }
 
+    function handleMotion(event) {
+        // Display acceleration data
+        $("#motionData").html("Acceleration: <br>x: " + event.acceleration.x + "<br>y: " + event.acceleration.y + "<br>z: " + event.acceleration.z);
+    }
+
     // Function to handle geolocation data
     function handleGeolocation(position) {
 
@@ -100,6 +105,8 @@ $(document).ready(function () {
             }
             else {
                 $("#motionInfo").text("No need to request permission for DeviceMotion");
+                window.addEventListener('devicemotion', handleMotion);
+                
             }
         }
 
