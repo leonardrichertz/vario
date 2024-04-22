@@ -1,15 +1,15 @@
-name: Deploy
+name: Deploy to GitHub Pages
 
 on:
   push:
     branches:
       - main
+      - dev
 
 jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
   
     steps:
       - name: Checkout repo
@@ -19,4 +19,5 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./src
+          publish_dir: ${{ github.ref == 'refs/heads/main' && 'src' || 'src/dev' }}
+          publish_branch: ${{ github.ref == 'refs/heads/main' && 'main' || 'dev' }}
