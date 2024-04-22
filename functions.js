@@ -86,6 +86,23 @@ $(document).ready(function () {
         } else {
             $("#orientation").text("Device orientation not supported.");
         }
+        if (window.DeviceMotionEvent) {
+            $("#motion").text("Device motion supported.");
+            if (typeof(DeviceMotionEvent) !== 'undefined' && typeof (DeviceMotionEvent.requestPermission) === 'function'){
+                DeviceMotionEvent.requestPermission().then(response => {
+                    if (response == 'granted') {
+                        window.addEventListener('devicemotion', (e) => {
+                            // Display acceleration data
+                            $("#motionData").html("Acceleration: <br>x: " + e.acceleration.x + "<br>y: " + e.acceleration.y + "<br>z: " + e.acceleration.z);
+                        });
+                    }
+                }).catch(console.error);
+            }
+            else {
+                $("#motionInfo").text("No need to request permission for DeviceMotion");
+            }
+        }
+
     });
 
     // Get geolocation data continuously
