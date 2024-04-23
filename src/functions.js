@@ -44,6 +44,54 @@ $(document).ready(function () {
         $("#motionData").html("Acceleration: <br>x: " + event.acceleration.x + "<br>y: " + event.acceleration.y + "<br>z: " + event.acceleration.z);
     }
 
+
+    
+let lastAcceleration = { x: 0, y: 0, z: 0 };
+
+let lastTimestamp;
+
+let currentDirection = null; // 'up' für aufsteigende Bewegung, 'down' für absteigende Bewegung
+
+
+function handleSpeed(event) {
+    let acceleration = event.accelerationIncludingGravity;
+    let currentTimestamp = new Date().getTime();
+    if (lastTimestamp) {
+        // Berechne die Änderung der Geschwindigkeit
+        let timeDifference = currentTimestamp - lastTimestamp;
+        let deltaX = acceleration.x - lastAcceleration.x;
+        let deltaY = acceleration.y - lastAcceleration.y;
+        let deltaZ = acceleration.z - lastAcceleration.z;
+        // Berechne die Geschwindigkeit in Metern pro Sekunde (m/s)
+        let speedX = deltaX / timeDifference * 1000; // in m/s
+        let speedY = deltaY / timeDifference * 1000; // in m/s
+        let speedZ = deltaZ / timeDifference * 1000; // in m/s
+        // Ermittle die Bewegungsrichtung basierend auf der Geschwindigkeit (nur X-Achse)
+        if (speedX > 0) {
+            currentDirection = 'up'; // aufsteigende Bewegung
+        } else if (speedX < 0) {
+            currentDirection = 'down'; // absteigende Bewegung
+        } else {
+            currentDirection = null; // keine eindeutige Bewegung
+        }
+        // Zeige die Bewegungsrichtung und Geschwindigkeit an
+        $("#richtung").html("Bewegungsrichtung: " + (currentDirection ? currentDirection : "keine Bewegung"));
+        $("#geschwindigkeit").html("Geschwindigkeit (X-Achse): " + Math.abs(speedX).toFixed(2) + " m/s");
+        document.getElementById("speed").innerText = "Geschwindigkeit (X-Achse): " + Math.abs(speedX).toFixed(2) + " m/s";
+    }
+
+
+
+    // Aktualisiere die letzten Werte
+
+    lastAcceleration = {
+        x: acceleration.x,
+        y: acceleration.y,
+        z: acceleration.z
+    };
+    lastTimestamp = currentTimestamp;
+}
+
     // Function to handle geolocation data
     function handleGeolocation(position) {
 
@@ -96,20 +144,16 @@ $(document).ready(function () {
             if (typeof(DeviceMotionEvent) !== 'undefined' && typeof (DeviceMotionEvent.requestPermission) === 'function'){
                 DeviceMotionEvent.requestPermission().then(response => {
                     if (response == 'granted') {
-                        window.addEventListener('devicemotion', (e) => {
-                            // Display acceleration data
-                            $("#motionData").html("Acceleration: <br>x: " + e.acceleration.x + "<br>y: " + e.acceleration.y + "<br>z: " + e.acceleration.z);
-                        });
+                        $("#motionInfo").text("Permission granted for DeviceMotion");
+                        window.addEventListener('devicemotion', handleSpeed);
                     }
                 }).catch(console.error);
             }
             else {
                 $("#motionInfo").text("No need to request permission for DeviceMotion");
-                window.addEventListener('devicemotion', handleMotion);
-                
+                window.addEventListener('devicemotion', handleSpeed);
             }
         }
-
     });
 
     // Get geolocation data continuously
