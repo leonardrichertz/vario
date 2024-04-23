@@ -75,8 +75,7 @@ function handleSpeed(event) {
             currentDirection = null; // keine eindeutige Bewegung
         }
         // Zeige die Bewegungsrichtung und Geschwindigkeit an
-        $("#richtung").html("Bewegungsrichtung: " + (currentDirection ? currentDirection : "keine Bewegung"));
-        $("#geschwindigkeit").html("Geschwindigkeit (X-Achse): " + Math.abs(speedX).toFixed(2) + " m/s");
+        document.getElementById("movement").innerText = "Bewegungsrichtung: " + (currentDirection ? currentDirection : "keine Bewegung");
         document.getElementById("speed").innerText = "Geschwindigkeit (X-Achse): " + Math.abs(speedX).toFixed(2) + " m/s";
     }
 
@@ -144,16 +143,20 @@ function handleSpeed(event) {
             if (typeof(DeviceMotionEvent) !== 'undefined' && typeof (DeviceMotionEvent.requestPermission) === 'function'){
                 DeviceMotionEvent.requestPermission().then(response => {
                     if (response == 'granted') {
-                        $("#motionInfo").text("Permission granted for DeviceMotion");
-                        window.addEventListener('devicemotion', handleSpeed);
+                        window.addEventListener('devicemotion', (e) => {
+                            // Display acceleration data
+                            $("#motionData").html("Acceleration: <br>x: " + e.acceleration.x + "<br>y: " + e.acceleration.y + "<br>z: " + e.acceleration.z);
+                        });
                     }
                 }).catch(console.error);
             }
             else {
                 $("#motionInfo").text("No need to request permission for DeviceMotion");
-                window.addEventListener('devicemotion', handleSpeed);
+                window.addEventListener('devicemotion', handleMotion);
+                
             }
         }
+
     });
 
     // Get geolocation data continuously
