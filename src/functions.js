@@ -1,6 +1,6 @@
 $(document).ready(function () {
     var map = L.map('map').setView([0, 0], 13);
-
+    var oldPosition;
     // Add Tile layer for map
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -37,6 +37,20 @@ $(document).ready(function () {
         map.setView(latlng);
         L.marker(latlng).addTo(map)
             .bindPopup("You are here").openPopup();
+        
+        oldPosition = position;
+       }
+    
+    function calculateGroundSpeed(position) {
+        var speed = 0;
+        var latlng1 = L.latLng(oldPosition.coords.latitude, oldPosition.coords.longitude);
+        var latlng2 = L.latLng(position.coords.latitude, position.coords.longitude);
+        var time1 = oldPosition.timestamp;
+        var time2 = position.timestamp;
+        var distance = latlng1.distanceTo(latlng2); // Distance in meters
+        var timeDiff = (time2 - time1) / 1000; // Time difference in seconds
+        speed = distance / timeDiff; // Speed in meters per second
+        return speed;
     }
 
     function handleMotion(event) {
@@ -46,8 +60,14 @@ $(document).ready(function () {
 
     // Function to handle geolocation data
     function handleGeolocation(position) {
-
+        // update the Location on the map
         updateLocationOnMap(position);
+        // calaculate the distance between two points and thus get the groundSpeed
+        if (oldPosition) {
+            var speed = calculateGroundSpeed(position);
+            $("#groundSpeed").html("Ground Speed: " + speed.toFixed(2) + " m/s");
+        }
+
         // Display geolocation data
         $("#geolocationData").html("<br>Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude);
     }
