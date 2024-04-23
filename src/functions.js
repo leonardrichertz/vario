@@ -29,7 +29,7 @@ $(document).ready(function () {
         $("#compass").css("transform", "rotate(" + alpha + "deg)");
 
         // Display device orientation data
-        $("#orientationData").html( "<br>heading: " + heading + "<br>Alpha: " + alpha + "<br>Beta: " + beta + "<br>Gamma: " + gamma);
+        $("#orientationData").html("<br>heading: " + heading + "<br>Alpha: " + alpha + "<br>Beta: " + beta + "<br>Gamma: " + gamma);
     }
 
     function updateLocationOnMap(position) {
@@ -37,10 +37,10 @@ $(document).ready(function () {
         map.setView(latlng);
         L.marker(latlng).addTo(map)
             .bindPopup("You are here").openPopup();
-        
+
         oldPosition = position;
-       }
-    
+    }
+
     function calculateGroundSpeed(position) {
         var speed = 0;
         var latlng1 = L.latLng(oldPosition.coords.latitude, oldPosition.coords.longitude);
@@ -82,7 +82,7 @@ $(document).ready(function () {
         $("#geolocationData").text("Geolocation error: " + error.message);
     }
 
-    $("#requestPermissionButton").click(function() {
+    $("#requestPermissionButton").click(function () {
         // Check if the device supports DeviceOrientationEvent
         if (window.DeviceOrientationEvent) {
             $("#orientation").text("Device orientation supported.");
@@ -117,7 +117,7 @@ $(document).ready(function () {
         }
         if (window.DeviceMotionEvent) {
             $("#motion").text("Device motion supported.");
-            if (typeof(DeviceMotionEvent) !== 'undefined' && typeof (DeviceMotionEvent.requestPermission) === 'function'){
+            if (typeof (DeviceMotionEvent) !== 'undefined' && typeof (DeviceMotionEvent.requestPermission) === 'function') {
                 DeviceMotionEvent.requestPermission().then(response => {
                     if (response == 'granted') {
                         window.addEventListener('devicemotion', (e) => {
@@ -130,7 +130,7 @@ $(document).ready(function () {
             else {
                 $("#motionInfo").text("No need to request permission for DeviceMotion");
                 window.addEventListener('devicemotion', handleMotion);
-                
+
             }
         }
 
