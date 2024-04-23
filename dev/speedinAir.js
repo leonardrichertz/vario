@@ -15,15 +15,10 @@ function handleMotion(event) {
 
 
     if (lastTimestamp) {
-
         // Berechne die Änderung der Geschwindigkeit
-
         let timeDifference = currentTimestamp - lastTimestamp;
-
         let deltaX = acceleration.x - lastAcceleration.x;
-
         let deltaY = acceleration.y - lastAcceleration.y;
-
         let deltaZ = acceleration.z - lastAcceleration.z;
 
 
