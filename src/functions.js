@@ -65,6 +65,8 @@ $(document).ready(function () {
         updateLocationOnMap(position);
         // Display geolocation data
         $("#geolocationData").html("<br>Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude);
+        console.log(position.coords);
+        console.log(position.coords.speed); // Current speed
         // Display current speed
         if (position.coords.speed !== null && !isNaN(position.coords.speed)) {
             var speed = position.coords.speed;
