@@ -50,6 +50,7 @@ $(document).ready(function () {
         var distance = latlng1.distanceTo(latlng2); // Distance in meters
         var timeDiff = (time2 - time1) / 1000; // Time difference in seconds
         speed = distance / timeDiff; // Speed in meters per second
+        console.log(speed);
         return speed;
     }
 
@@ -62,18 +63,16 @@ $(document).ready(function () {
     function handleGeolocation(position) {
         // update the Location on the map
         updateLocationOnMap(position);
-        // calaculate the distance between two points and thus get the groundSpeed
-        if (oldPosition) {
-            $("#groundSpeedInfo").html("Calculating ground speed");
-            var speed = calculateGroundSpeed(position);
-            $("#groundSpeed").html("Ground Speed: " + speed.toFixed(2) + " m/s");
-        }
-        else {
-            $("#groundSpeedInfo").html("Waiting for next position to calculate ground speed");
-        }
-
         // Display geolocation data
         $("#geolocationData").html("<br>Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude);
+        // Display current speed
+        if (position.coords.speed !== null && !isNaN(position.coords.speed)) {
+            var speed = position.coords.speed;
+            console.log("Current speed:", speed, "m/s");
+            $("#groundSpeed").text("Current speed: " + speed.toFixed(2) + " m/s");
+        } else {
+            $("#groundSpeed").text("Current speed: N/A");
+        }
     }
 
     // Function to handle geolocation errors
