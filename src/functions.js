@@ -64,8 +64,12 @@ $(document).ready(function () {
         updateLocationOnMap(position);
         // calaculate the distance between two points and thus get the groundSpeed
         if (oldPosition) {
+            $("#groundSpeedInfo").html("Calculating ground speed");
             var speed = calculateGroundSpeed(position);
             $("#groundSpeed").html("Ground Speed: " + speed.toFixed(2) + " m/s");
+        }
+        else {
+            $("#groundSpeedInfo").html("Waiting for next position to calculate ground speed");
         }
 
         // Display geolocation data
