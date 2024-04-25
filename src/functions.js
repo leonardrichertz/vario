@@ -43,6 +43,7 @@ $(document).ready(function () {
 
     // Function to handle geolocation data
     function handleGeolocation(position) {
+        var speed = position.coords.speed;
         var latlng = [position.coords.latitude, position.coords.longitude];
         marker.setLatLng(latlng).update();
         map.setView(latlng);
@@ -51,12 +52,12 @@ $(document).ready(function () {
         $("#geolocationData").html("<br>Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude);
 
         // Display current speed
-        if (position.coords.speed !== null && !isNaN(position.coords.speed)) {
+        if (speed !== null && !isNaN(speed)) {
             var speed = position.coords.speed;
             console.log("Current speed:", speed, "m/s");
-            $("#groundSpeed").text("Current speed: " + speed.toFixed(2) + " m/s");
+            $("#speed").html("<br>Speed: " + speed.toFixed(2) + " m/s");
         } else {
-            $("#groundSpeed").text("Current speed: N/A");
+            $("#speed").html("Current speed: N/A");
         }
     }
 
@@ -98,7 +99,7 @@ $(document).ready(function () {
             }
         } else {
             $("#orientation").text("Device orientation not supported.");
-        }
+        } 
         if (window.DeviceMotionEvent) {
             $("#motion").text("Device motion supported.");
             if (typeof (DeviceMotionEvent) !== 'undefined' && typeof (DeviceMotionEvent.requestPermission) === 'function') {
