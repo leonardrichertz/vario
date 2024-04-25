@@ -3,6 +3,12 @@ $(document).ready(function () {
     var marker;
     var watchId;
 
+    const options = {
+        enableHighAccuracy: true,
+        maximumAge: 30000,
+        timeout: 27000,
+      };
+
     // Add Tile layer for map
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -126,18 +132,29 @@ $(document).ready(function () {
     $("#stopGeolocation").click(function () {
         navigator.geolocation.clearWatch(watchId);
         $("#geolocationData").text("Geolocation data stopped.");
+        $("#startGeolocation").prop("disabled", false);
     });
 
+    // Starts tracking the users geolocation
+    $("#startGeolocation").click(function () {
+        startGeolocation();
+    });
+
+    // Function to start geolocation
+    function startGeolocation() {
+        // Get geolocation data once
+        if ('geolocation' in navigator) {
+            watchId = navigator.geolocation.watchPosition(handleGeolocation, handleError, options);
+        } else {
+            // Geolocation not supported
+            $("#geolocationData").text("Geolocation not supported.");
+        }
+    }
 
     // Get geolocation data continuously
     if ('geolocation'in navigator) {
-        const options = {
-            enableHighAccuracy: true,
-            maximumAge: 30000,
-            timeout: 27000,
-          };
         watchId = navigator.geolocation.watchPosition(handleGeolocation, handleError, options);
-        console.log("watchId: ", watchId);
+        $("#startGeolocation").prop("disabled", true);
     } else {
         // Geolocation not supported
         $("#geolocationData").text("Geolocation not supported.");
