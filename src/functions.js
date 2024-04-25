@@ -131,7 +131,12 @@ $(document).ready(function () {
 
     // Get geolocation data continuously
     if ('geolocation'in navigator) {
-        watchId = navigator.geolocation.watchPosition(handleGeolocation, handleError, enableHighAccuracy = true);
+        const options = {
+            enableHighAccuracy: true,
+            maximumAge: 30000,
+            timeout: 27000,
+          };
+        watchId = navigator.geolocation.watchPosition(handleGeolocation, handleError, options);
         console.log("watchId: ", watchId);
     } else {
         // Geolocation not supported
