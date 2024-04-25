@@ -44,7 +44,6 @@ $(document).ready(function () {
     // Function to handle geolocation data
     function handleGeolocation(position) {
         var speed = position.coords.speed;
-        console.log("Current speed:", speed, "m/s");
         var latlng = [position.coords.latitude, position.coords.longitude];
         marker.setLatLng(latlng).update();
         map.setView(latlng);
@@ -58,7 +57,8 @@ $(document).ready(function () {
             console.log("Current speed:", speed, "m/s");
             $("#speed").html("<br>Speed: " + speed.toFixed(2) + " m/s");
         } else {
-            $("#speed").html("Current speed: N/A " + speed);
+            console.log("Current speed:", speed, "m/s");
+            $("#speed").html("Current speed not available, but it is: " + speed);
         }
     }
 
@@ -125,6 +125,7 @@ $(document).ready(function () {
     // Get geolocation data continuously
     if (navigator.geolocation) {
         var watchId = navigator.geolocation.watchPosition(handleGeolocation, handleError);
+        console.log("watchId: ", watchId);
     } else {
         // Geolocation not supported
         $("#geolocationData").text("Geolocation not supported.");
