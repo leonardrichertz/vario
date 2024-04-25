@@ -58,7 +58,7 @@ $(document).ready(function () {
             console.log("Current speed:", speed, "m/s");
             $("#speed").html("<br>Speed: " + speed.toFixed(2) + " m/s");
         } else {
-            $("#speed").html("Current speed: N/A");
+            $("#speed").html("Current speed: N/A " + speed.toFixed(2));
         }
     }
 
