@@ -10,7 +10,7 @@ $(document).ready(function () {
         enableHighAccuracy: true,
         maximumAge: 30000,
         timeout: 27000,
-      };
+    };
 
     // Add Tile layer for map
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -45,7 +45,7 @@ $(document).ready(function () {
         $("#orientationData").html("<br>heading: " + heading + "<br>Alpha: " + alpha + "<br>Beta: " + beta + "<br>Gamma: " + gamma);
     }
 
-  
+
     function handleMotion(event) {
         var acceleration = event.acceleration;
         var currentTimestamp = event.timeStamp; // Get current timestamp
@@ -59,7 +59,7 @@ $(document).ready(function () {
         displacement.y += velocity.y * deltaTime;
         displacement.z += velocity.z * deltaTime;
 
-        var speed = Math.sqrt(velocity.x ** 2 + velocity.y ** 2 +velocity.z ** 2); // Calculate speed
+        var speed = Math.sqrt(velocity.x ** 2 + velocity.y ** 2 + velocity.z ** 2); // Calculate speed
 
         $("#motionSpeed").html("Motion Data Speed: " + speed.toFixed(2) + " m/s");
         // Display acceleration data
@@ -125,8 +125,9 @@ $(document).ready(function () {
             }
         } else {
             $("#orientation").text("Device orientation not supported.");
-        } 
+        }
     });
+
     // Request permission for DeviceMotion
     $("#requestMotionPermissionButton").click(function () {
         if (window.DeviceMotionEvent) {
@@ -135,12 +136,13 @@ $(document).ready(function () {
                 DeviceMotionEvent.requestPermission().then(permissionState => {
                     if (permissionState === 'granted') {
                         window.addEventListener('devicemotion', handleMotion);
-                        }
-                    else{
+                    }
+                    else {
                         alert('Permission not granted for DeviceMotion');
-                    }}).catch(console.error);
-                }
-                else {
+                    }
+                }).catch(console.error);
+            }
+            else {
                 $("#motionInfo").text("No need to request permission for DeviceMotion");
                 window.addEventListener('devicemotion', handleMotion);
             }
@@ -148,9 +150,9 @@ $(document).ready(function () {
         else {
             $("#motionInfo").text("Device motion not supported.");
         }
-});
+    });
 
-   
+
     // Stops trtackiing the users geolocation
     $("#stopGeolocation").click(function () {
         navigator.geolocation.clearWatch(watchId);
@@ -175,7 +177,7 @@ $(document).ready(function () {
     }
 
     // Get geolocation data continuously
-    if ('geolocation'in navigator) {
+    if ('geolocation' in navigator) {
         watchId = navigator.geolocation.watchPosition(handleGeolocation, handleError, options);
         $("#startGeolocation").prop("disabled", true);
     } else {
