@@ -46,7 +46,7 @@ $(document).ready(function () {
     }
 
 
-    function handleMotion(event) {
+    async function handleMotion(event) {
         if (previousTimestamp === null) {
             previousTimestamp = event.timeStamp; // Set initial timestamp
         }
