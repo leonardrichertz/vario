@@ -28,7 +28,7 @@ function handleMotion(event) {
 // Request permission for DeviceMotion
 $("#requestMotionPermissionButton").click(function () {
     if (window.DeviceMotionEvent) {
-        $("#motion").text("Device motion supported.");
+        $("#motion").html("Device motion supported.");
         if (typeof (DeviceMotionEvent) !== 'undefined' && typeof (DeviceMotionEvent.requestPermission) === 'function') {
             DeviceMotionEvent.requestPermission().then(permissionState => {
                 if (permissionState === 'granted') {
@@ -45,6 +45,6 @@ $("#requestMotionPermissionButton").click(function () {
         }
     }
     else {
-        $("#motionInfo").text("Device motion not supported.");
+        $("#motionInfo").html("Device motion not supported.");
     }
 });
