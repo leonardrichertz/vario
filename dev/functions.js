@@ -52,26 +52,44 @@ $(document).ready(function () {
         }
         var acceleration = event.acceleration;
         var currentTimestamp = event.timeStamp; // Get current timestamp
-        var deltaTime = previousTimestamp ? (currentTimestamp - previousTimestamp) / 1000 : 0; // Convert milliseconds to seconds
-
-        velocity.x += acceleration.x * deltaTime; // Calculate velocity
-        velocity.y += acceleration.y * deltaTime;
-        velocity.z += acceleration.z * deltaTime;
-
-        displacement.x += velocity.x * deltaTime; // Calculate displacement
-        displacement.y += velocity.y * deltaTime;
-        displacement.z += velocity.z * deltaTime;
-
+        var deltaTime = (currentTimestamp - previousTimestamp) / 1000; // Convert milliseconds to seconds
+    
+        // Calculate acceleration magnitude
+        var accelerationMagnitude = Math.sqrt(acceleration.x ** 2 + acceleration.y ** 2 + acceleration.z ** 2);
+    
+        if (accelerationMagnitude < stationaryThreshold) {
+            // Reset velocity to zero if device is stationary
+            velocity.x = 0;
+            velocity.y = 0;
+            velocity.z = 0;
+        } else {
+            // Integrate acceleration to calculate velocity, accounting for negative acceleration
+            velocity.x += acceleration.x * deltaTime;
+            velocity.y += acceleration.y * deltaTime;
+            velocity.z += acceleration.z * deltaTime;
+            
+            // Ensure velocity does not go below zero
+            velocity.x = Math.max(velocity.x, 0);
+            velocity.y = Math.max(velocity.y, 0);
+            velocity.z = Math.max(velocity.z, 0);
+    
+            // Calculate displacement
+            displacement.x += velocity.x * deltaTime;
+            displacement.y += velocity.y * deltaTime;
+            displacement.z += velocity.z * deltaTime;
+        }
+    
         var speed = Math.sqrt(velocity.x ** 2 + velocity.y ** 2 + velocity.z ** 2); // Calculate speed
-
+    
         previousTimestamp = currentTimestamp; // Update previous timestamp
-
+    
         $("#motionSpeed").html("Motion Data Speed: " + speed.toFixed(2) + " m/s");
         // Display acceleration data
-        $("#motionData").html("Acceleration: <br>x: " + event.acceleration.x + "<br>y: " + event.acceleration.y +
-         "<br>z: " + event.acceleration.z + "<br>Velocity x: " + velocity.x + "<br>Velocity y: " + velocity.y + "<br>Velocity z: " +
+        $("#motionData").html("Acceleration: <br>x: " + acceleration.x + "<br>y: " + acceleration.y +
+         "<br>z: " + acceleration.z + "<br>Velocity x: " + velocity.x + "<br>Velocity y: " + velocity.y + "<br>Velocity z: " +
           velocity.z + "<br>Displacement x: " + displacement.x + "<br>Displacement y: " + displacement.y + "<br>Displacement z: " + displacement.z + "<br>Delta time: " + deltaTime + "<br>Current timestamp: " + currentTimestamp + "<br>Previous timestamp: " + previousTimestamp); 
     }
+    
 
     function handleMotionError(event) {
         $("#motionData").html("Error: " + event.error.message);
