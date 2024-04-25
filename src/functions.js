@@ -47,6 +47,9 @@ $(document).ready(function () {
 
 
     function handleMotion(event) {
+        if (previousTimestamp === null) {
+            previousTimestamp = event.timeStamp; // Set initial timestamp
+        }
         var acceleration = event.acceleration;
         var currentTimestamp = event.timeStamp; // Get current timestamp
         var deltaTime = previousTimestamp ? (currentTimestamp - previousTimestamp) / 1000 : 0; // Convert milliseconds to seconds
@@ -61,11 +64,13 @@ $(document).ready(function () {
 
         var speed = Math.sqrt(velocity.x ** 2 + velocity.y ** 2 + velocity.z ** 2); // Calculate speed
 
+        previousTimestamp = currentTimestamp; // Update previous timestamp
+
         $("#motionSpeed").html("Motion Data Speed: " + speed.toFixed(2) + " m/s");
         // Display acceleration data
         $("#motionData").html("Acceleration: <br>x: " + event.acceleration.x + "<br>y: " + event.acceleration.y +
          "<br>z: " + event.acceleration.z + "<br>Velocity x: " + velocity.x + "<br>Velocity y: " + velocity.y + "<br>Velocity z: " +
-          velocity.z + "<br>Displacement x: " + displacement.x + "<br>Displacement y: " + displacement.y + "<br>Displacement z: " + displacement.z);
+          velocity.z + "<br>Displacement x: " + displacement.x + "<br>Displacement y: " + displacement.y + "<br>Displacement z: " + displacement.z + "<br>Delta time: " + deltaTime + "<br>Current timestamp: " + currentTimestamp + "<br>Previous timestamp: " + previousTimestamp); 
     }
 
     function handleMotionError(event) {
