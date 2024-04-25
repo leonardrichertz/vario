@@ -1,6 +1,7 @@
 $(document).ready(function () {
     var map = L.map('map').setView([0, 0], 13);
     var marker;
+    var watchId;
 
     // Add Tile layer for map
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -121,10 +122,16 @@ $(document).ready(function () {
         }
 
     });
+    // Stops trtackiing the users geolocation
+    $("#stopGeolocation").click(function () {
+        navigator.geolocation.clearWatch(watchId);
+        $("#geolocationData").text("Geolocation data stopped.");
+    });
+
 
     // Get geolocation data continuously
-    if (navigator.geolocation) {
-        var watchId = navigator.geolocation.watchPosition(handleGeolocation, handleError);
+    if ('geolocation'in navigator) {
+        watchId = navigator.geolocation.watchPosition(handleGeolocation, handleError, enableHighAccuracy = true);
         console.log("watchId: ", watchId);
     } else {
         // Geolocation not supported
