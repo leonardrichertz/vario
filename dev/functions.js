@@ -66,6 +66,10 @@ $(document).ready(function () {
         $("#motionData").html("Acceleration: <br>x: " + event.acceleration.x + "<br>y: " + event.acceleration.y + "<br>z: " + event.acceleration.z);
     }
 
+    function handleMotionError(event) {
+        $("#motionData").html("Error: " + event.error.message);
+    }
+
     // Function to handle geolocation data
     function handleGeolocation(position) {
         var speed = position.coords.speed;
@@ -135,7 +139,7 @@ $(document).ready(function () {
             if (typeof (DeviceMotionEvent) !== 'undefined' && typeof (DeviceMotionEvent.requestPermission) === 'function') {
                 DeviceMotionEvent.requestPermission().then(permissionState => {
                     if (permissionState === 'granted') {
-                        window.addEventListener('devicemotion', handleMotion);
+                        window.addEventListener('devicemotion', handleMotion, handleMotionError);
                     }
                     else {
                         alert('Permission not granted for DeviceMotion');
@@ -144,7 +148,7 @@ $(document).ready(function () {
             }
             else {
                 $("#motionInfo").text("No need to request permission for DeviceMotion");
-                window.addEventListener('devicemotion', handleMotion);
+                window.addEventListener('devicemotion', handleMotion, handleMotionError);
             }
         }
         else {
