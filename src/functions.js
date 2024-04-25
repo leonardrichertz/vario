@@ -44,6 +44,7 @@ $(document).ready(function () {
     // Function to handle geolocation data
     function handleGeolocation(position) {
         var speed = position.coords.speed;
+        console.log("Current speed:", speed, "m/s");
         var latlng = [position.coords.latitude, position.coords.longitude];
         marker.setLatLng(latlng).update();
         map.setView(latlng);
