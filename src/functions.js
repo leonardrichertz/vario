@@ -63,7 +63,9 @@ $(document).ready(function () {
 
         $("#motionSpeed").html("Motion Data Speed: " + speed.toFixed(2) + " m/s");
         // Display acceleration data
-        $("#motionData").html("Acceleration: <br>x: " + event.acceleration.x + "<br>y: " + event.acceleration.y + "<br>z: " + event.acceleration.z);
+        $("#motionData").html("Acceleration: <br>x: " + event.acceleration.x + "<br>y: " + event.acceleration.y +
+         "<br>z: " + event.acceleration.z + "<br>Velocity x: " + velocity.x + "<br>Velocity y: " + velocity.y + "<br>Velocity z: " +
+          velocity.z + "<br>Displacement x: " + displacement.x + "<br>Displacement y: " + displacement.y + "<br>Displacement z: " + displacement.z);
     }
 
     function handleMotionError(event) {
