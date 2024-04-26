@@ -8,16 +8,22 @@
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+        }
 
-    <style>body {
-        padding: 0;
-        margin: 0;
-    }
-    html, body, #map {
-        height: 50%;
-        width: 50vw;
-    }
-    #map { height: 520px; }
+        html,
+        body,
+        #map {
+            height: 50%;
+            width: 50vw;
+        }
+
+        #map {
+            height: 520px;
+        }
     </style>
 </head>
 
@@ -33,16 +39,21 @@
     <p id="motion"></p>
     <p id="motionInfo"></p>
     <p id="webkit"></p>
-    <button id="requestPermissionButton">Click here for starting the orientation </button>
+    <button id="requestOrientationPermissionButton">Click here for starting orientation </button>
+    <button id="requestMotionPermissionButton">Click here for starting the Motion data</button>
+    <button id="stopGeolocation">stop watching geolocation</button>
+    <button id="startGeolocation">Restart the Geolocation</button>
+    <p id ="motionSpeed"></p>
+    <p id="groundSpeedInfo"></p>
+    <p id="speed"></p>
 
     <!-- <button id="toggleButton">Toggle Device Motion</button> -->
 
     <!-- Elements to display device orientation and geolocation data -->
     <div id="orientationData"></div>
     <div id="geolocationData"></div>
-    <div id ="motionData"></div>
+    <div id="motionData"></div>
     <div id="map">Map</div>
-    <!-- <div id="deviceMotionData" style="display:none;"></div> -->
 
 </body>
 
