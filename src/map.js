@@ -108,6 +108,10 @@ $(document).ready(function () {
     function handleGeolocation(position) {
         var speed = position.coords.speed;
         var latlng = [position.coords.latitude, position.coords.longitude];
+        if (marker.getLatLng().lat !== 0 && marker.getLatLng().lng !== 0) {
+            var oldLatLng = marker.getLatLng();
+            var polyline = L.polyline([oldLatLng, latlng], { color: 'blue' }).addTo(map);
+        }
         marker.setLatLng(latlng).update();
         map.setView(latlng);
         if(typeof startMarker == 'undefined'){
