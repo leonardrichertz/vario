@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    function handleError(){
+    function handleError() {
         $("#altitudeData").text("Error getting altitude.");
     }
     const options = {
@@ -7,7 +7,7 @@ $(document).ready(function () {
         maximumAge: 30000,
         timeout: 27000,
     };
-    if (navigator.geolocation) {
+    if ('geolocation' in navigator) {
         navigator.geolocation.watchPosition(function (position) {
             var altitude = position.coords.altitude;
             $("#altitudeData").text("Altitude: " + altitude);
