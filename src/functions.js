@@ -47,7 +47,6 @@ $(document).ready(function () {
         $("#orientationData").html("<br>heading: " + heading + "<br>Alpha: " + alpha + "<br>Beta: " + beta + "<br>Gamma: " + gamma);
     }
 
-
     async function handleMotion(event) {
         if (previousTimestamp === null) {
             previousTimestamp = event.timeStamp; // Set initial timestamp
