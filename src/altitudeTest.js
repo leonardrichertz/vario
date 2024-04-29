@@ -4,6 +4,7 @@ var lastAcceleration = { x: 0, y: 0, z: 0 };
 var lastTimestamp;
 
 $("#requestMotionPermissionButton").on("click", function () {
+  console.log("Requesting permission for DeviceMotion");
   if (window.DeviceMotionEvent) {
     $("#motion").text("Device motion supported.");
     if (typeof DeviceMotionEvent !== "undefined" && typeof DeviceMotionEvent.requestPermission === "function") {
