@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    // TODO add code that gets the orientation data and the accelaration data and uses it to get the change in altitude.
     const thresholdRotation = 2.5; // Define threshold for rotation
     function handleError() {
         $("#altitudeData").text("Error getting altitude.");
@@ -31,10 +32,7 @@ $(document).ready(function () {
         if (evt.beta > thresholdRotation || evt.beta < -thresholdRotation){
             // Handle rotation here
         }
-        // We do not have to use alpha since it only represents the compass direction (rotaion around z-axis)
-        
-
-
+        // We do not have to use alpha since it only represents the compass direction (rotation around z-axis)
     }
 
     $("#requestMotionPermissionButton").click(function () {
