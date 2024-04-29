@@ -125,6 +125,7 @@ $(document).ready(function () {
     }
 
     $("#requestOrientationPermissionButton").click(function () {
+        console.log("Requesting permission for DeviceOrientation");
         // Check if the device supports DeviceOrientationEvent
         if (window.DeviceOrientationEvent) {
             $("#orientation").text("Device orientation supported.");
