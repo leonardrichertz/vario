@@ -3,27 +3,25 @@ var alpha = 0.8; // Complementary filter parameter
 var lastAcceleration = { x: 0, y: 0, z: 0 };
 var lastTimestamp;
 
-
-$("#requestMotionPermissionButton").click(function () {
+$("#requestMotionPermissionButton").on("click", function () {
   if (window.DeviceMotionEvent) {
-      $("#motion").text("Device motion supported.");
-      if (typeof (DeviceMotionEvent) !== 'undefined' && typeof (DeviceMotionEvent.requestPermission) === 'function') {
-          DeviceMotionEvent.requestPermission().then(permissionState => {
-              if (permissionState === 'granted') {
-                  window.addEventListener('devicemotion', handleMotionEvent, handleMotionError);
-              }
-              else {
-                  alert('Permission not granted for DeviceMotion');
-              }
-          }).catch(console.error);
-      }
-      else {
-          $("#motionInfo").text("No need to request permission for DeviceMotion");
-          window.addEventListener('devicemotion', handleMotionEvent, handleMotionError);
-      }
-  }
-  else {
-      $("#motionInfo").text("Device motion not supported.");
+    $("#motion").text("Device motion supported.");
+    if (typeof DeviceMotionEvent !== "undefined" && typeof DeviceMotionEvent.requestPermission === "function") {
+      DeviceMotionEvent.requestPermission()
+        .then(function (permissionState) {
+          if (permissionState === "granted") {
+            window.addEventListener("devicemotion", handleMotionEvent, handleMotionError);
+          } else {
+            alert("Permission not granted for DeviceMotion");
+          }
+        })
+        .catch(console.error);
+    } else {
+      $("#motionInfo").text("No need to request permission for DeviceMotion");
+      window.addEventListener("devicemotion", handleMotionEvent, handleMotionError);
+    }
+  } else {
+    $("#motionInfo").text("Device motion not supported.");
   }
 });
 
@@ -50,7 +48,7 @@ function handleMotionEvent(event) {
     var verticalAcceleration = Math.sqrt(filteredAcceleration.x ** 2 + filteredAcceleration.y ** 2);
 
     // Output vertical acceleration
-    document.getElementById("accelerationData").innerHTML = "Vertical Acceleration: " + verticalAcceleration + " m/s^2";
+   $("#accelerationData").html = "Vertical Acceleration: " + verticalAcceleration + " m/s^2";
     console.log("Vertical Acceleration: " + verticalAcceleration + " m/s^2");
   }
 
