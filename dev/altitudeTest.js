@@ -3,9 +3,32 @@ var alpha = 0.8; // Complementary filter parameter
 var lastAcceleration = { x: 0, y: 0, z: 0 };
 var lastTimestamp;
 
-window.addEventListener('devicemotion', handleMotionEvent);
+
+$("#requestMotionPermissionButton").click(function () {
+  if (window.DeviceMotionEvent) {
+      $("#motion").text("Device motion supported.");
+      if (typeof (DeviceMotionEvent) !== 'undefined' && typeof (DeviceMotionEvent.requestPermission) === 'function') {
+          DeviceMotionEvent.requestPermission().then(permissionState => {
+              if (permissionState === 'granted') {
+                  window.addEventListener('devicemotion', handleMotionEvent, handleMotionError);
+              }
+              else {
+                  alert('Permission not granted for DeviceMotion');
+              }
+          }).catch(console.error);
+      }
+      else {
+          $("#motionInfo").text("No need to request permission for DeviceMotion");
+          window.addEventListener('devicemotion', handleMotionEvent, handleMotionError);
+      }
+  }
+  else {
+      $("#motionInfo").text("Device motion not supported.");
+  }
+});
 
 function handleMotionEvent(event) {
+  console.log(event);
   var acceleration = event.accelerationIncludingGravity;
   var timestamp = event.timeStamp;
 
