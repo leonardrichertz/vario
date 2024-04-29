@@ -7,7 +7,7 @@ $(document).ready(function () {
     console.log("Requesting permission for DeviceMotion");
     if (window.DeviceMotionEvent) {
       console.log("Device motion supported.");
-      $("#motion").text("Device motion supported.");
+      $("#motionInfo").text("Device motion supported.");
       if (typeof DeviceMotionEvent !== "undefined" && typeof DeviceMotionEvent.requestPermission === "function") {
         DeviceMotionEvent.requestPermission()
           .then(function (permissionState) {
@@ -57,5 +57,10 @@ $(document).ready(function () {
 
     // Update timestamp for the next iteration
     lastTimestamp = timestamp;
+  }
+
+  function handleMotionError(error) {
+    $("#motionInfo").text("Error accessing motion data: " + error);
+    console.error("Error accessing motion data: " + error);
   }
 });
