@@ -1,0 +1,36 @@
+var alpha = 0.8; // Complementary filter parameter
+
+var lastAcceleration = { x: 0, y: 0, z: 0 };
+var lastTimestamp;
+
+window.addEventListener('devicemotion', handleMotionEvent);
+
+function handleMotionEvent(event) {
+  var acceleration = event.accelerationIncludingGravity;
+  var timestamp = event.timeStamp;
+
+  if (lastTimestamp) {
+    // Calculate time difference since last measurement
+    var dt = (timestamp - lastTimestamp) / 1000; // Convert to seconds
+
+    // Apply complementary filter to isolate vertical acceleration
+    var filteredAcceleration = {
+      x: alpha * lastAcceleration.x + (1 - alpha) * acceleration.x,
+      y: alpha * lastAcceleration.y + (1 - alpha) * acceleration.y,
+      z: alpha * lastAcceleration.z + (1 - alpha) * acceleration.z
+    };
+
+    // Update last acceleration for the next iteration
+    lastAcceleration = filteredAcceleration;
+
+    // Extract vertical acceleration (perpendicular to Earth's surface)
+    var verticalAcceleration = Math.sqrt(filteredAcceleration.x ** 2 + filteredAcceleration.y ** 2);
+
+    // Output vertical acceleration
+    document.getElementById("accelerationData").innerHTML = "Vertical Acceleration: " + verticalAcceleration + " m/s^2";
+    console.log("Vertical Acceleration: " + verticalAcceleration + " m/s^2");
+  }
+
+  // Update timestamp for the next iteration
+  lastTimestamp = timestamp;
+}
