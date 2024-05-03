@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Höhenmessung</title>
+    <script>
+        // Funktion zur Ermittlung und regelmäßigen Messung der Höhe eines Geräts
+        function measureHeight() {
+            // Überprüfen, ob die Geolocation-API unterstützt wird
+            if ("geolocation" in navigator) {
+                // Funktion zur Aktualisierung und Anzeige der Höhe
+                function updateHeight(position) {
+                    // Zugriff auf die Höhe aus den Geodaten
+                    var altitude = position.coords.altitude;
+
+                    // Anzeige der Höhe
+                    console.log("Höhe: " + altitude.toFixed(2) + " Meter");
+                }
+
+                // Funktion zur Behandlung von Fehlern
+                function errorHandler(error) {
+                    console.error("Fehler bei der Geolokalisierung:", error.message);
+                }
+
+                // Optionen für die Geolocation
+                var options = {
+                    enableHighAccuracy: true,
+                    timeout: 5000,
+                    maximumAge: 0
+                };
+
+                // Aktualisieren und Anzeigen der Höhe beim ersten Aufruf
+                navigator.geolocation.getCurrentPosition(updateHeight, errorHandler, options);
+
+                // Setzen eines Intervalls für regelmäßige Aktualisierungen
+                setInterval(function() {
+                    navigator.geolocation.getCurrentPosition(updateHeight, errorHandler, options);
+                }, 10000); // Hier wird die Aktualisierungsrate in Millisekunden festgelegt (hier: alle 10 Sekunden)
+            } else {
+                console.error("Geolocation wird von diesem Browser nicht unterstützt.");
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Höhenmessung</h1>
+    <p>Diese Seite misst die Höhe deines Geräts.</p>
+
+    <!-- Aufruf der JavaScript-Funktion beim Laden der Seite -->
+    <script>
+        measureHeight();
+    </script>
+</body>
+</html>
