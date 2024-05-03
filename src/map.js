@@ -118,8 +118,6 @@ $(document).ready(function () {
             startMarker = L.marker([position.coords.latitude, position.coords.longitude], {icon: greenIcon}).addTo(map);
         }  
 
-        
-
         // Display geolocation data
         $("#geolocationData").html("<br>Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude);
 

@@ -1,4 +1,6 @@
 $(document).ready(function () {
+    let gammaShift = 0;
+    let betaShift = 0;
     // TODO add code that gets the orientation data and the accelaration data and uses it to get the change in altitude.
     const thresholdRotation = 2.5; // Define threshold for rotation
     function handleError() {
@@ -21,15 +23,39 @@ $(document).ready(function () {
     }
     function handleMotion(evt){
         evt.interval;
+        // if (gammaShift > 90 )
         // Handle motion data here
 
     }
 
+    // what we are trying to achieve is to get the cahnge in altitude by using the orientation of the device as a correction for the acceleration properties.
     function handleOrientation(evt){
-        if (evt.gamma > thresholdRotation || evt.gamma < -thresholdRotation){
-            // Handle rotation here
+        if (evt.gamma < 180 )
+        {
+            if (evt.gamma > thresholdRotation || evt.gamma - 180 < -thresholdRotation){
+                gammaShift =evt.gamma;
+                // adjust the gammaShift value
         }
+        else {
+            gammaShift = 0;
+        }
+    }
+    else if (evt.gamma >= 180)
+    {
+        if (evt.gamma - 180 > thresholdRotation || evt.gamma - 360 < -thresholdRotation){
+            gammaShift = evt.gamma;
+            // adjust the gammaShift value
+        }
+        else {
+            gammaShift = 0;
+        }
+    }
+    if (evt.beta < 180)
+    {
+        if ()
+    }
         if (evt.beta > thresholdRotation || evt.beta < -thresholdRotation){
+            betaShift = evt.beta;
             // Handle rotation here
         }
         // We do not have to use alpha since it only represents the compass direction (rotation around z-axis)
