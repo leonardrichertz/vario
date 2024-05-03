@@ -52,7 +52,7 @@ $(document).ready(function () {
     }
     if (evt.beta < 180)
     {
-        if ()
+        console.log(evt.beta)
     }
         if (evt.beta > thresholdRotation || evt.beta < -thresholdRotation){
             betaShift = evt.beta;
