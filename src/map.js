@@ -7,7 +7,8 @@ $(document).ready(function () {
     var displacement = { x: 0, y: 0, z: 0 }; // Initialize displacement
     var previousTimestamp = null; // Variable to store the previous timestamp
     var stationaryThreshold = 0.1; // Define stationary threshold (adjust as needed)
-    var greenIcon = L.icon({
+    var distance = 0;
+    var startMarkerIcon = L.icon({
         iconUrl: 'assets/marker.png',
     
         iconSize:     [38, 50], // size of the icon
@@ -111,12 +112,17 @@ $(document).ready(function () {
         if (marker.getLatLng().lat !== 0 && marker.getLatLng().lng !== 0) {
             var oldLatLng = marker.getLatLng();
             var polyline = L.polyline([oldLatLng, latlng], { color: 'blue' }).addTo(map);
+            distance += calculateDistance(oldLatLng.lat, oldLatLng.lng, position.coords.latitude, position.coords.longitude);
+            console.log(distance)
+            $("#distance").html("<br>distance: " + distance.toFixed(3));
         }
         marker.setLatLng(latlng).update();
         map.setView(latlng);
         if(typeof startMarker == 'undefined'){
-            startMarker = L.marker([position.coords.latitude, position.coords.longitude], {icon: greenIcon}).addTo(map);
+            startMarker = L.marker([position.coords.latitude, position.coords.longitude], {icon: startMarkerIcon}).addTo(map);
         }  
+        $("#distance").html("<br>distance: " + distance.toFixed(3));
+        
 
         // Display geolocation data
         $("#geolocationData").html("<br>Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude);
@@ -125,11 +131,24 @@ $(document).ready(function () {
         if (speed !== null && !isNaN(speed)) {
             var speed = position.coords.speed;
             console.log("Current speed:", speed, "m/s");
-            $("#speed").html("<br>Speed: " + speed.toFixed(2) + " m/s");
+            $("#speed").html("<br>Speed: " + speed.toFixed(2) + " m/s <br> Speed: " + (speed * 3.6).toFixed(2) + " km/h ");
         } else {
             console.log("Current speed:", speed, "m/s");
-            $("#speed").html("Current speed not available, but it is: " + speed);
+            $("#speed").html("Current speed not available, but it is: " + speed + " m/s <br> Speed: " + (speed * 3.6).toFixed(2) + " km/h " );
         }
+    }
+
+    function calculateDistance(lat1, lon1, lat2, lon2) {
+        const R = 6371; // radius of the earth
+        const dLat = (lat2 - lat1) * Math.PI / 180; // Convert degrees to radians
+        const dLon = (lon2 - lon1) * Math.PI / 180;
+        const a =
+            Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+            Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        const distance = R * c; // Distance in kilometers
+        return distance;
     }
 
     // Function to handle geolocation errors
