@@ -7,7 +7,6 @@ $(document).ready(function () {
     var previousTimestamp = null; // Variable to store the previous timestamp
     var stationaryThreshold = 0.1; // Define stationary threshold (adjust as needed)
 
-
     const options = {
         enableHighAccuracy: true,
         maximumAge: 30000,
@@ -47,7 +46,7 @@ $(document).ready(function () {
         $("#orientationData").html("<br>heading: " + heading + "<br>Alpha: " + alpha + "<br>Beta: " + beta + "<br>Gamma: " + gamma);
     }
 
-    async function handleMotion(event) {
+    function handleMotion(event) {
         if (previousTimestamp === null) {
             previousTimestamp = event.timeStamp; // Set initial timestamp
         }
