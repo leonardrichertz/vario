@@ -121,7 +121,7 @@ $(document).ready(function () {
         if(typeof startMarker == 'undefined'){
             startMarker = L.marker([position.coords.latitude, position.coords.longitude], {icon: startMarkerIcon}).addTo(map);
         }  
-
+        $("#distance").html("<br>distance: " + distance.toFixed(3));
         
 
         // Display geolocation data
