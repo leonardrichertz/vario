@@ -5,38 +5,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Höhenmessung</title>
     <script>
-        // Funktion zur Ermittlung und regelmäßigen Messung der Höhe eines Geräts
-        function measureHeight() {
-            // Überprüfen, ob die Geolocation-API unterstützt wird
+        // Funktion zur Verarbeitung der Höhendaten
+        function updateHeight(position) {
+            var altitude = position.coords.altitude;
+            console.log("Höhe: " + altitude.toFixed(2) + " Meter");
+        }
+
+        // Funktion zur Behandlung von Fehlern bei der Standortabfrage
+        function errorHandler(error) {
+            switch(error.code) {
+                case error.PERMISSION_DENIED:
+                    console.error("Benutzer hat die Standortfreigabe abgelehnt.");
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    console.error("Höheninformationen sind nicht verfügbar.");
+                    break;
+                case error.TIMEOUT:
+                    console.error("Die Höhenabfrage dauerte zu lange.");
+                    break;
+                case error.UNKNOWN_ERROR:
+                    console.error("Ein unbekannter Fehler ist aufgetreten.");
+                    break;
+            }
+        }
+
+        // Funktion zum Starten der Höhenüberwachung
+        function startHeightWatch() {
             if ("geolocation" in navigator) {
-                // Funktion zur Aktualisierung und Anzeige der Höhe
-                function updateHeight(position) {
-                    // Zugriff auf die Höhe aus den Geodaten
-                    var altitude = position.coords.altitude;
+                var watchID = navigator.geolocation.watchPosition(updateHeight, errorHandler, { enableHighAccuracy: true });
+                console.log("Höhenüberwachung gestartet (ID: " + watchID + ")");
+            } else {
+                console.error("Geolocation wird von diesem Browser nicht unterstützt.");
+            }
+        }
 
-                    // Anzeige der Höhe
-                    console.log("Höhe: " + altitude.toFixed(2) + " Meter");
-                }
-
-                // Funktion zur Behandlung von Fehlern
-                function errorHandler(error) {
-                    console.error("Fehler bei der Geolokalisierung:", error.message);
-                }
-
-                // Optionen für die Geolocation
-                var options = {
-                    enableHighAccuracy: true,
-                    timeout: 5000,
-                    maximumAge: 0
-                };
-
-                // Aktualisieren und Anzeigen der Höhe beim ersten Aufruf
-                navigator.geolocation.getCurrentPosition(updateHeight, errorHandler, options);
-
-                // Setzen eines Intervalls für regelmäßige Aktualisierungen
-                setInterval(function() {
-                    navigator.geolocation.getCurrentPosition(updateHeight, errorHandler, options);
-                }, 10000); // Hier wird die Aktualisierungsrate in Millisekunden festgelegt (hier: alle 10 Sekunden)
+        // Funktion zum Stoppen der Höhenüberwachung
+        function stopHeightWatch() {
+            if ("geolocation" in navigator) {
+                navigator.geolocation.clearWatch(watchID);
+                console.log("Höhenüberwachung gestoppt");
             } else {
                 console.error("Geolocation wird von diesem Browser nicht unterstützt.");
             }
@@ -45,11 +52,12 @@
 </head>
 <body>
     <h1>Höhenmessung</h1>
-    <p>Diese Seite misst die Höhe deines Geräts.</p>
+    <p>Diese Seite verwendet die Geolokalisierungsfunktionen des Browsers, um die Höhe des Benutzers zu verfolgen.</p>
+    
+    <!-- Button zum Starten der Höhenüberwachung -->
+    <button onclick="startHeightWatch()">Höhenüberwachung starten</button>
 
-    <!-- Aufruf der JavaScript-Funktion beim Laden der Seite -->
-    <script>
-        measureHeight();
-    </script>
+    <!-- Button zum Stoppen der Höhenüberwachung -->
+    <button onclick="stopHeightWatch()">Höhenüberwachung stoppen</button>
 </body>
 </html>
