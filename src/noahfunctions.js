@@ -1,10 +1,10 @@
-        $(document).ready(function() {
+$(document).ready(function() {
 
             function updateHeight(position) {
             var altitude = position.coords.altitude;
             console.log("Höhe: " + altitude.toFixed(2) + " Meter");
             $("#hoehe").html("<br>heading:" + altitude.toFixed(2));
-            
+        
         }
 
         // Funktion zur Behandlung von Fehlern bei der Standortabfrage

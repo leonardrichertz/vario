@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -6,18 +8,42 @@
     <title>Höhenmessung</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="noahfunctions.js"></script>
+    <script>
+        var reqcont = 0;
+    
+        navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
+    
+        function successCallback(){
+    
+            const{accuracy, latitude, longitude, altitude, heading, speed} = position.coords;
+    
+            details.innerHTMl = "Accuracy: " +accuracy+"<br>";
+            details.innerHTMl = "Latitude: " +latitude+" | Longitude" +longitude+ "<br>";
+            details.innerHTMl = "Altitude: " +altitude+"<br>";
+            details.innerHTMl = "Heading: " +heading+ "<br>";
+            details.innerHTMl = "Speed: " +speed+ "<br>";
+            details.innerHTMl = "Repetion: " +reqcont+"<br>"
+        }
+        function errorCallback(){
+    
+        }
+    </script>
 
 </head>
 <body>
     <h1>Höhenmessung</h1>
     <p>Diese Seite verwendet die Geolokalisierungsfunktionen des Browsers, um die Höhe des Benutzers zu verfolgen.</p>
     
-    <!-- Button zum Starten der Höhenüberwachung -->
-    <button onclick="startHeightWatch()">Höhenüberwachung starten</button>
-    <!-- Button zum Stoppen der Höhenüberwachung -->
-    <button onclick="endHoehe">Höhenüberwachung stoppen</button>
+    
+   <!-- <button onclick="startHeightWatch()">Höhenüberwachung starten</button>
+    
+    <button onclick="endHoehe()">Höhenüberwachung stoppen</button>
     <div id="updateHeight"> 
         <h1>Hier sollte die Höhe stehen</h1>
-    </div>
+        
+    </div>-->
+    <div id="details"> </div>
 </body>
 </html>
+
+
