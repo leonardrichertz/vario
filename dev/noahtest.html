@@ -1,67 +1,49 @@
+
+
 <!DOCTYPE html>
 <html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Höhenmessung</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="noahfunctions.js"></script>
     <script>
-        // Funktion zur Verarbeitung der Höhendaten
-        $(document).ready(function() {
-            function updateHeight(position) {
-            var altitude = position.coords.altitude;
-            console.log("Höhe: " + altitude.toFixed(2) + " Meter");
+        var reqcont = 0;
+    
+        navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
+    
+        function successCallback(){
+    
+            const{accuracy, latitude, longitude, altitude, heading, speed} = position.coords;
+    
+            details.innerHTMl = "Accuracy: " +accuracy+"<br>";
+            details.innerHTMl = "Latitude: " +latitude+" | Longitude" +longitude+ "<br>";
+            details.innerHTMl = "Altitude: " +altitude+"<br>";
+            details.innerHTMl = "Heading: " +heading+ "<br>";
+            details.innerHTMl = "Speed: " +speed+ "<br>";
+            details.innerHTMl = "Repetion: " +reqcont+"<br>"
         }
-
-        // Funktion zur Behandlung von Fehlern bei der Standortabfrage
-        function errorHandler(error) {
-            switch(error.code) {
-                case error.PERMISSION_DENIED:
-                    console.error("Benutzer hat die Standortfreigabe abgelehnt.");
-                    break;
-                case error.POSITION_UNAVAILABLE:
-                    console.error("Höheninformationen sind nicht verfügbar.");
-                    break;
-                case error.TIMEOUT:
-                    console.error("Die Höhenabfrage dauerte zu lange.");
-                    break;
-                case error.UNKNOWN_ERROR:
-                    console.error("Ein unbekannter Fehler ist aufgetreten.");
-                    break;
-            }
+        function errorCallback(){
+    
         }
-
-        // Funktion zum Starten der Höhenüberwachung
-        function startHeightWatch() {
-            if ("geolocation" in navigator) {
-                var watchID = navigator.geolocation.watchPosition(updateHeight, errorHandler, { enableHighAccuracy: true });
-                console.log("Höhenüberwachung gestartet (ID: " + watchID + ")");
-            } else {
-                console.error("Geolocation wird von diesem Browser nicht unterstützt.");
-            }
-        }
-
-        // Funktion zum Stoppen der Höhenüberwachung
-        function stopHeightWatch() {
-            if ("geolocation" in navigator) {
-                navigator.geolocation.clearWatch(watchID);
-                console.log("Höhenüberwachung gestoppt");
-            } else {
-                console.error("Geolocation wird von diesem Browser nicht unterstützt.");
-            }
-        }
-        
-        })
-
     </script>
+
 </head>
 <body>
     <h1>Höhenmessung</h1>
     <p>Diese Seite verwendet die Geolokalisierungsfunktionen des Browsers, um die Höhe des Benutzers zu verfolgen.</p>
     
-    <!-- Button zum Starten der Höhenüberwachung -->
-    <button id="startHoehe">Höhenüberwachung starten</button>
-
-    <!-- Button zum Stoppen der Höhenüberwachung -->
-    <button id="endHoehe">Höhenüberwachung stoppen</button>
+    
+   <!-- <button onclick="startHeightWatch()">Höhenüberwachung starten</button>
+    
+    <button onclick="endHoehe()">Höhenüberwachung stoppen</button>
+    <div id="updateHeight"> 
+        <h1>Hier sollte die Höhe stehen</h1>
+        
+    </div>-->
+    <div id="details"> </div>
 </body>
 </html>
+
+
