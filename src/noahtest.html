@@ -11,7 +11,7 @@
     <script>
         var reqcont = 0;
     
-        navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
+        navigator.geolocation.watchPosition(successCallback, errorCallback);
     
         function successCallback(){
     
