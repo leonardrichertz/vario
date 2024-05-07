@@ -6,7 +6,8 @@
     <title>Höhenmessung</title>
     <script>
         // Funktion zur Verarbeitung der Höhendaten
-        function updateHeight(position) {
+        $(document).ready(function() {
+            function updateHeight(position) {
             var altitude = position.coords.altitude;
             console.log("Höhe: " + altitude.toFixed(2) + " Meter");
         }
@@ -48,6 +49,9 @@
                 console.error("Geolocation wird von diesem Browser nicht unterstützt.");
             }
         }
+        
+        })
+
     </script>
 </head>
 <body>
@@ -55,9 +59,9 @@
     <p>Diese Seite verwendet die Geolokalisierungsfunktionen des Browsers, um die Höhe des Benutzers zu verfolgen.</p>
     
     <!-- Button zum Starten der Höhenüberwachung -->
-    <button onclick="startHeightWatch()">Höhenüberwachung starten</button>
+    <button id="startHoehe">Höhenüberwachung starten</button>
 
     <!-- Button zum Stoppen der Höhenüberwachung -->
-    <button onclick="stopHeightWatch()">Höhenüberwachung stoppen</button>
+    <button id="endHoehe">Höhenüberwachung stoppen</button>
 </body>
 </html>
