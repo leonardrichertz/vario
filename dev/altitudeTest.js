@@ -3,7 +3,7 @@ $(document).ready(function () {
   var lastAcceleration = { x: 0, y: 0, z: 0 };
   var lastTimestamp;
 
-  $("#requestMotionPermissionButton").on("click", function () {
+  $("#requestPermission").on("click", function () {
     console.log("Requesting permission for DeviceMotion");
     if (window.DeviceMotionEvent) {
       console.log("Device motion supported.");
