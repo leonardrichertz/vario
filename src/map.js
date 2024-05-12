@@ -55,7 +55,7 @@ $(document).ready(function () {
         console.log("Höhe über dem Meeresspiegel: " + altitude + " Meter");
         $("#altitude").html("<br>altitude: " + altitude);
     }
-
+    
     // Aufrufen der Funktion zum Lesen der Barometerdaten
     readBarometerData();
 
@@ -159,6 +159,7 @@ $(document).ready(function () {
             startMarker = L.marker([position.coords.latitude, position.coords.longitude], {icon: startMarkerIcon}).addTo(map);
         }  
         $("#distance").html("<br>distance: " + distance.toFixed(3));
+        $("#altitude").html("<br>altitude: " + 0);
         
 
         // Display geolocation data
