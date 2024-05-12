@@ -22,6 +22,43 @@ $(document).ready(function () {
         timeout: 27000,
     };
 
+    // Funktion zur Überprüfung, ob das Barometer unterstützt wird
+    function isBarometerSupported() {
+        return ('ondeviceorientationabsolute' in window);
+    }
+
+    // Funktion zum Lesen der Barometerdaten
+    function readBarometerData() {
+        // Überprüfen, ob das Gerät das Barometer unterstützt
+        if (!isBarometerSupported()) {
+            console.error("Barometer wird nicht unterstützt.");
+            return;
+        }
+
+        // Event-Listener für die Barometerdaten
+        window.addEventListener('deviceorientationabsolute', handleBarometerData);
+    }
+
+    // Funktion zum Umgang mit den Barometerdaten
+    function handleBarometerData(event) {
+        // Luftdruck abrufen
+        var pressure = event.pressure;
+
+        // Hier können Sie den gemessenen Luftdruck verwenden, um die Höhe zu berechnen
+        // Verwenden Sie die Höhenformel und den Referenzluftdruck auf Meereshöhe
+
+        // Beispiel: Berechnung der Höhe über dem Meeresspiegel (nur zum Veranschaulichen)
+        var seaLevelPressure = 1013.25; // Referenzluftdruck auf Meereshöhe in hPa
+        var altitude = ((1 - (pressure / seaLevelPressure) ** (1 / 5.257)) * 44330.8).toFixed(2); // Höhe in Metern
+
+        // Ausgabe der Höhe
+        console.log("Höhe über dem Meeresspiegel: " + altitude + " Meter");
+        $("#altitude").html("<br>altitude: " + altitude);
+    }
+
+    // Aufrufen der Funktion zum Lesen der Barometerdaten
+    readBarometerData();
+
     // Add Tile layer for map
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -239,6 +276,8 @@ $(document).ready(function () {
             // Geolocation not supported
             $("#geolocationData").text("Geolocation not supported.");
         }
+
+    
     }
 
     // Get geolocation data continuously
@@ -249,4 +288,6 @@ $(document).ready(function () {
         // Geolocation not supported
         $("#geolocationData").text("Geolocation not supported.");
     }
+
+    
 });
