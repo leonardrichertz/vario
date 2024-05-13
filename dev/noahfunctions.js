@@ -1,5 +1,4 @@
 $(document).ready(function() {
-
             function updateHeight(position) {
             var altitude = position.coords.altitude;
             console.log("Höhe: " + altitude.toFixed(2) + " Meter");
