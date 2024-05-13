@@ -90,16 +90,19 @@ $(document).ready(function () {
                 case (gammaShift <= 90):
                     switch (true) {
                         case (betaShift <= 90):
-                            adjustedAccelerationAltitude = (gammaShift / 90 * accelerationZ) + (90 - gammaShift / 90 * accelerationX) + (betaShift / 90 * accelerationY) + (90 - betaShift / 90 * accelerationZ);
+                            adjustedAccelerationAltitude = (gammaShift / 90 * accelerationZ) + (90 - gammaShift / 90 * accelerationX) + (betaShift / 90 * accelerationZ) + (90 - betaShift / 90 * accelerationY);
                             actualSpeed = adjustedAccelerationAltitude * evt.interval + actualSpeed;
                             break;
                         case (betaShift > 90 && betaShift <= 180):
+                            adjustedAccelerationAltitude = -(gammaShift / 90 * accelerationZ) - (90- gammaShift / 90 * accelerationX)  - (betaShift / 180 * accelerationY) -(180 - betaShift / 180 * accelerationZ); 
                             // Todo: add code here
                             break;
                         case (betaShift > 180 && betaShift <= 270):
+                            adjustedAccelerationAltitude = -(gammaShift / 90 * accelerationZ) - (90- gammaShift / 90 * accelerationX)  - (betaShift / 270 * accelerationY) - (270 - betaShift / 270 * accelerationZ);
                             // Todo: add code here
                             break;
                         case (betaShift > 270 && betaShift <= 360):
+                            adjustedAccelerationAltitude = (gammaShift / 90 * accelerationZ)  + (90- gammaShift / 90 * accelerationX)  + (betaShift / 360 * accelerationY) + (360 - betaShift / 360 * accelerationZ);
                             // Todo: add code here
                             break;
                     }
