@@ -21,7 +21,7 @@ $(document).ready(function() {
 
     function updateHeight(position) {
         const { latitude, longitude, altitude } = position.coords;
-        console.log("Höhe: " + altitude.toFixed(2) + " Meter");
+        console.log("Höhe: " + altitude + " Meter");
         $("#height").html("Longitude: " + longitude + " | Höhe: " + altitude.toFixed(2) + " Meter<br>");
         $("#latitude").html("Latitude: " + latitude);
     }
