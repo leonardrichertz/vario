@@ -44,7 +44,7 @@ $(document).ready(function () {
             }
             else {
                 $("#motionInfo").text("No need to request permission for DeviceMotion");
-                window.addEventListener('devicemotion', handleMotion);
+                window.addEventListener('devicemotion', handleMotion, handleMotionError);
             }
         }
         else {
@@ -53,23 +53,15 @@ $(document).ready(function () {
 
     });
 
-    var prevX = 0;
-    var prevY = 0;
-    var prevZ = 0;
-    
     function handleMotion(event) {
-        // Set the filter constant (adjust as needed)
-        var filterConstant = 0.5;
-    
-        // Apply the low-pass filter to smooth out the acceleration data
-        var x = prevX + filterConstant * (event.acceleration.x - prevX);
-        var y = prevY + filterConstant * (event.acceleration.y - prevY);
-        var z = prevZ + filterConstant * (event.acceleration.z - prevZ);
-    
-        // Update the previous acceleration values
-        prevX = x;
-        prevY = y;
-        prevZ = z;
+        var acceleration = event.acceleration;
+        var x = event.acceleration.x;
+        var y = event.acceleration.y;
+        var z = event.acceleration.z;
+        console.log("Acceleration: " + acceleration);
+        console.log("Acceleration X: " + x);
+        console.log("Acceleration Y: " + y);
+        console.log("Acceleration Z: " + z);
         $("#motionData").html("Acceleration: " + acceleration + "<br> Acceleration X: " + x + "<br> Acceleration Y: " + y + "<br>Acceleration Z: " + z);
     }
 
