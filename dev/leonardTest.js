@@ -34,6 +34,7 @@ $(document).ready(function () {
                 $("#motionInfo").text("Requesting permission for DeviceMotion");
                 DeviceMotionEvent.requestPermission().then(permissionState => {
                     if (permissionState === 'granted') {
+                        $("#motionInfo").text("Permission granted for DeviceMotion");
                         window.addEventListener('devicemotion', handleMotion, handleMotionError);
                     }
                     else {
@@ -53,11 +54,15 @@ $(document).ready(function () {
     });
 
     function handleMotion(event) {
-        var accelaration = event.acceleration;
+        var acceleration = event.acceleration;
         var x = event.acceleration.x;
         var y = event.acceleration.y;
         var z = event.acceleration.z;
-        $("#motionData").html("Acceleration: " + accelaration + "<br> Acceleration X: " + x + "<br> Acceleration Y: " + y + "<br>Acceleration Z: " + z);
+        console.log("Acceleration: " + acceleration);
+        console.log("Acceleration X: " + x);
+        console.log("Acceleration Y: " + y);
+        console.log("Acceleration Z: " + z);
+        $("#motionData").html("Acceleration: " + acceleration + "<br> Acceleration X: " + x + "<br> Acceleration Y: " + y + "<br>Acceleration Z: " + z);
     }
 
     function handleOrientation(event) {
