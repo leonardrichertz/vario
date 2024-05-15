@@ -86,10 +86,12 @@ $(document).ready(function () {
             let accelerationX = evt.acceleration.x;
             let adjustedAccelerationAltitude;
 
+            // gamma and beta are values between -90 and 90.
+            // Todo: adjust functionality accordingly.
             switch (true) {
-                case (gammaShift <= 90):
+                case (gammaShift <= 90 && gammaShift >= 0):
                     switch (true) {
-                        case (betaShift <= 90):
+                        case (betaShift >= -90 && betaShift <= 90):
                             adjustedAccelerationAltitude = (gammaShift / 90 * accelerationZ) + (90 - gammaShift / 90 * accelerationX) + (betaShift / 90 * accelerationZ) + (90 - betaShift / 90 * accelerationY);
                             actualSpeed = adjustedAccelerationAltitude * evt.interval + actualSpeed;
                             break;

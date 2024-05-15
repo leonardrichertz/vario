@@ -28,7 +28,36 @@ $(document).ready(function () {
                 window.addEventListener('deviceorientation', handleOrientation);
             }
         }
+        if (window.DeviceMotionEvent) {
+            $("#motion").text("Device motion supported.");
+            if (typeof (DeviceMotionEvent) !== 'undefined' && typeof (DeviceMotionEvent.requestPermission) === 'function') {
+                $("#motionInfo").text("Requesting permission for DeviceMotion");
+                DeviceMotionEvent.requestPermission().then(permissionState => {
+                    if (permissionState === 'granted') {
+                        window.addEventListener('devicemotion', handleMotion, handleMotionError);
+                    }
+                    else {
+                        alert('Permission not granted for DeviceMotion');
+                    }
+                }).catch(console.error);
+            }
+            else {
+                $("#motionInfo").text("No need to request permission for DeviceMotion");
+                window.addEventListener('devicemotion', handleMotion, handleMotionError);
+            }
+        }
+        else {
+            $("#motionInfo").text("Device motion not supported.");
+        }
+
     });
+
+    function handleMotion(event) {
+        var x = event.acceleration.x;
+        var y = event.acceleration.y;
+        var z = event.acceleration.z;
+        $("#motionData").html("Acceleration X: " + x + "<br> Acceleration Y: " + y + "<br>Acceleration Z: " + z);
+    }
 
     function handleOrientation(event) {
         var alpha = event.alpha;
