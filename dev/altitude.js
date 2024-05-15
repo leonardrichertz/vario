@@ -91,19 +91,21 @@ $(document).ready(function () {
             switch (true) {
                 case (gammaShift <= 90 && gammaShift >= 0):
                     switch (true) {
-                        case (betaShift >= -90 && betaShift <= 90):
-                            adjustedAccelerationAltitude = (gammaShift / 90 * accelerationZ) + (90 - gammaShift / 90 * accelerationX) + (betaShift / 90 * accelerationZ) + (90 - betaShift / 90 * accelerationY);
+                        case (betaShift >= 0 && betaShift <= 90):
+                            // In this case the acceleration for the x axis is negative if we are moving the device upwards.
+                            adjustedAccelerationAltitude = (gammaShift / 90 * accelerationZ) - (90 - gammaShift / 90 * accelerationX) + (betaShift / 90 * accelerationZ) + (90 - betaShift / 90 * accelerationY);
                             actualSpeed = adjustedAccelerationAltitude * evt.interval + actualSpeed;
                             break;
-                        case (betaShift > 90 && betaShift <= 180):
-                            adjustedAccelerationAltitude = -(gammaShift / 90 * accelerationZ) - (90- gammaShift / 90 * accelerationX)  - (betaShift / 180 * accelerationY) -(180 - betaShift / 180 * accelerationZ); 
+                        case (betaShift >= -90 && betaShift < 0):
+                            // In this case the acceleration for the y-axis is negative because the top of the device is facing downwards.
+                            adjustedAccelerationAltitude = (gammaShift / 90 * accelerationZ) - (90 - gammaShift / 90 * accelerationX)  + (betaShift / 90 * accelerationZ) - (90 - betaShift / 90 * accelerationY); 
                             // Todo: add code here
                             break;
-                        case (betaShift > 180 && betaShift <= 270):
-                            adjustedAccelerationAltitude = -(gammaShift / 90 * accelerationZ) - (90- gammaShift / 90 * accelerationX)  - (betaShift / 270 * accelerationY) - (270 - betaShift / 270 * accelerationZ);
+                        case (betaShift >= 90 && betaShift >= 0):
+                            adjustedAccelerationAltitude = -(gammaShift / 90 * accelerationZ) + (90 - gammaShift / 90 * accelerationX) - (betaShift / 180 * accelerationZ) + (180 - betaShift / 180 * accelerationZ);
                             // Todo: add code here
                             break;
-                        case (betaShift > 270 && betaShift <= 360):
+                        case (betaShift < 0 && betaShift >= -90):
                             adjustedAccelerationAltitude = (gammaShift / 90 * accelerationZ)  + (90- gammaShift / 90 * accelerationX)  + (betaShift / 360 * accelerationY) + (360 - betaShift / 360 * accelerationZ);
                             // Todo: add code here
                             break;
