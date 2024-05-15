@@ -53,10 +53,11 @@ $(document).ready(function () {
     });
 
     function handleMotion(event) {
+        var accelaration = event.acceleration;
         var x = event.acceleration.x;
         var y = event.acceleration.y;
         var z = event.acceleration.z;
-        $("#motionData").html("Acceleration X: " + x + "<br> Acceleration Y: " + y + "<br>Acceleration Z: " + z);
+        $("#motionData").html("Acceleration: " + accelaration + "<br> Acceleration X: " + x + "<br> Acceleration Y: " + y + "<br>Acceleration Z: " + z);
     }
 
     function handleOrientation(event) {
