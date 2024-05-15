@@ -35,7 +35,7 @@ $(document).ready(function () {
                 DeviceMotionEvent.requestPermission().then(permissionState => {
                     if (permissionState === 'granted') {
                         $("#motionInfo").text("Permission granted for DeviceMotion");
-                        window.addEventListener('devicemotion', handleMotion, handleMotionError);
+                        window.addEventListener('devicemotion', handleMotion);
                     }
                     else {
                         alert('Permission not granted for DeviceMotion');
@@ -44,7 +44,7 @@ $(document).ready(function () {
             }
             else {
                 $("#motionInfo").text("No need to request permission for DeviceMotion");
-                window.addEventListener('devicemotion', handleMotion, handleMotionError);
+                window.addEventListener('devicemotion', handleMotion);
             }
         }
         else {
