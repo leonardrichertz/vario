@@ -1,8 +1,13 @@
 $(document).ready(function() {
+
+    // Todo: Make Threshold value. The change in height should only trigger if the change is greater than the threshold value.
     let watchID;
     let initialAltitude;
     let previousAltitude;
     let currentAltitude;
+
+    const ascentSound = new Audio("ascent.mp3");
+    const descentSound = new Audio("descent.mp3");
 
     $("#startHeightWatch").click(function() {
         if ('geolocation' in navigator) {
@@ -31,10 +36,12 @@ $(document).ready(function() {
         currentAltitude = altitude;
         if (previousAltitude - currentAltitude >= 0) {
             $("#ascent_descent").html("Abstieg");
+            descentSound.play();
             // abstieg
         }
         else if (previousAltitude - currentAltitude < 0) {
             $("#ascent_descent").html("Aufstieg");
+            ascentSound.play();	
             // aufstieg
         }
         previousAltitude = currentAltitude;
