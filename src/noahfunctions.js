@@ -36,12 +36,12 @@ $(document).ready(function() {
         currentAltitude = altitude;
         if (previousAltitude - currentAltitude >= 0) {
             $("#ascent_descent").html("Abstieg");
-            descentSound.play();
+            // descentSound.play();
             // abstieg
         }
         else if (previousAltitude - currentAltitude < 0) {
             $("#ascent_descent").html("Aufstieg");
-            ascentSound.play();	
+            // ascentSound.play();	
             // aufstieg
         }
         previousAltitude = currentAltitude;
