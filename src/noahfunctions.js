@@ -17,7 +17,7 @@ $(document).ready(function() {
                 previousAltitude = initialAltitude;
                 currentAltitude = initialAltitude;
             }, errorHandler, { enableHighAccuracy: true });
-            watchID = navigator.geolocation.watchPosition(updateHeight, errorHandler, { enableHighAccuracy: true, timeout: 5000, maximumAge: 0});
+            watchID = navigator.geolocation.watchPosition(updateHeight, errorHandler, { enableHighAccuracy: true});
             console.log("Höhenüberwachung gestartet (ID: " + watchID + ")");
         } else {
             console.error("Geolocation wird von diesem Browser nicht unterstützt.");
