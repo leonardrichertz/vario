@@ -3,6 +3,7 @@ $(document).ready(function() {
     let previousAltitude;
     let currentAltitude;
     let counter = 0;    
+    let flag = true;
     
     $("#startHeightWatch").click(function() {
         if ('geolocation' in navigator) {
@@ -22,12 +23,15 @@ $(document).ready(function() {
     });
 
     $("#stopHeightWatch").click(function() {
+        flag = false;
         clearInterval(updateInterval);
         console.log("Höhenüberwachung gestoppt");
     });
 
     function requestAltitudeUpdate() {
-        navigator.geolocation.getCurrentPosition(updateHeight, errorHandler, { enableHighAccuracy: true });
+        if (flag){
+            navigator.geolocation.getCurrentPosition(updateHeight, errorHandler, { enableHighAccuracy: true });
+        }
     }
 
     function updateHeight(position) {
