@@ -5,7 +5,8 @@ $(document).ready(function() {
     let initialAltitude;
     let previousAltitude;
     let currentAltitude;
-
+    let counter = 0;    
+    
     // const ascentSound = new Audio("ascent.mp3");
     // const descentSound = new Audio("descent.mp3");
 
@@ -33,6 +34,7 @@ $(document).ready(function() {
     });
 
     function updateHeight(position) {
+        counter++;
         const { latitude, longitude, altitude } = position.coords;
         currentAltitude = altitude;
         if (previousAltitude - currentAltitude >= 0) {
@@ -48,7 +50,7 @@ $(document).ready(function() {
         previousAltitude = currentAltitude;
         console.log("Höhe: " + altitude + " Meter");
         $("#height").html("Longitude: " + longitude + " | Höhe: " + altitude.toFixed(2) + " Meter<br>");
-        $("#latitude").html("Latitude: " + latitude);
+        $("#latitude").html("Latitude: " + latitude + " | Counter: " + counter + "<br>");
     }
 
     function errorHandler(error) {
