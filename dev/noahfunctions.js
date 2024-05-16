@@ -28,13 +28,13 @@ $(document).ready(function() {
         console.log("Höhenüberwachung gestoppt");
     });
 
-    function requestAltitudeUpdate() {
+    async function requestAltitudeUpdate() {
         if (flag){
             navigator.geolocation.getCurrentPosition(updateHeight, errorHandler, { enableHighAccuracy: true });
         }
     }
 
-    function updateHeight(position) {
+    async function updateHeight(position) {
         counter++;
         const { latitude, longitude, altitude } = position.coords;
         currentAltitude = altitude;
