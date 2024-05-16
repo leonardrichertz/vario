@@ -1,56 +1,49 @@
-$(document).ready(function() {
+$(document).ready(function () {
     let initialAltitude;
     let previousAltitude;
     let currentAltitude;
-    let counter = 0;    
-    let flag = true;
-    
-    $("#startHeightWatch").click(function() {
+    let counter = 0;
+    let watchId;
+
+    $("#startHeightWatch").click(function () {
         if ('geolocation' in navigator) {
-            navigator.geolocation.getCurrentPosition(function(position) {
-                initialAltitude = position.coords.altitude;
-                previousAltitude = initialAltitude;
-                currentAltitude = initialAltitude;
-            }, errorHandler, { enableHighAccuracy: true });
-
+            watchId = navigator.geolocation.watchPosition(updateHeight, errorHandler, { enableHighAccuracy: true, timeout: 200 });
             // Request altitude updates at a high frequency (approximately 10 times per second)
-            let updateInterval = setInterval(requestAltitudeUpdate, 200);
-
-            console.log("Höhenüberwachung gestartet (Intervall: " + updateInterval + ")");
         } else {
             console.error("Geolocation wird von diesem Browser nicht unterstützt.");
         }
     });
 
-    $("#stopHeightWatch").click(function() {
-        flag = false;
-        clearInterval(updateInterval);
+    $("#stopHeightWatch").click(function () {
+        stopwatch = navigator.geolocation.clearWatch(watchId);
         console.log("Höhenüberwachung gestoppt");
     });
 
-    async function requestAltitudeUpdate() {
-        if (flag){
-            navigator.geolocation.getCurrentPosition(updateHeight, errorHandler, { enableHighAccuracy: true });
+    function updateHeight(position) {
+        if (counter = 0) {
+            initialAltitude = position.coords.altitude;
+            previousAltitude = initialAltitude;
+            currentAltitude = initialAltitude;
+            counter++;
         }
-    }
-
-    async function updateHeight(position) {
-        counter++;
-        const { latitude, longitude, altitude } = position.coords;
-        currentAltitude = altitude;
-        if (previousAltitude - currentAltitude >= 0) {
-            $("#ascent_descent").html("Abstieg");
-        } else if (previousAltitude - currentAltitude < 0) {
-            $("#ascent_descent").html("Aufstieg");
+        else {
+            counter++;
+            const { latitude, longitude, altitude } = position.coords;
+            currentAltitude = altitude;
+            if (previousAltitude - currentAltitude >= 0) {
+                $("#ascent_descent").html("Abstieg");
+            } else if (previousAltitude - currentAltitude < 0) {
+                $("#ascent_descent").html("Aufstieg");
+            }
+            previousAltitude = currentAltitude;
+            console.log("Höhe: " + altitude + " Meter");
+            $("#height").html("Longitude: " + longitude + " | Höhe: " + altitude + " Meter<br>");
+            $("#latitude").html("Latitude: " + latitude + " | Counter: " + counter + "<br>");
         }
-        previousAltitude = currentAltitude;
-        console.log("Höhe: " + altitude + " Meter");
-        $("#height").html("Longitude: " + longitude + " | Höhe: " + altitude + " Meter<br>");
-        $("#latitude").html("Latitude: " + latitude + " | Counter: " + counter + "<br>");
     }
 
     function errorHandler(error) {
-        switch(error.code) {
+        switch (error.code) {
             case error.PERMISSION_DENIED:
                 console.error("Benutzer hat die Standortfreigabe abgelehnt.");
                 break;
