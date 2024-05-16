@@ -1,8 +1,15 @@
 $(document).ready(function() {
     let watchID;
+    let initialAltitude;
+    let previousAltitude;
+    let currentAltitude;
 
     $("#startHeightWatch").click(function() {
         if ('geolocation' in navigator) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                initialAltitude = position.coords.altitude;
+                previousAltitude = initialAltitude;
+            }, errorHandler, { enableHighAccuracy: true });
             watchID = navigator.geolocation.watchPosition(updateHeight, errorHandler, { enableHighAccuracy: true });
             console.log("Höhenüberwachung gestartet (ID: " + watchID + ")");
         } else {
@@ -21,6 +28,16 @@ $(document).ready(function() {
 
     function updateHeight(position) {
         const { latitude, longitude, altitude } = position.coords;
+        currentAltitude = altitude;
+        if (previousAltitude - currentAltitude >= 0) {
+            $("#ascent_descent").html("Abstieg");
+            // abstieg
+        }
+        else if (previousAltitude - currentAltitude < 0) {
+            $("#ascent_descent").html("Aufstieg");
+            // aufstieg
+        }
+        previousAltitude = currentAltitude;
         console.log("Höhe: " + altitude + " Meter");
         $("#height").html("Longitude: " + longitude + " | Höhe: " + altitude.toFixed(2) + " Meter<br>");
         $("#latitude").html("Latitude: " + latitude);
