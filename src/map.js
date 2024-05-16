@@ -1,17 +1,63 @@
 $(document).ready(function () {
     var map = L.map('map').setView([0, 0], 13);
     var marker;
+    var startMarker
     var watchId;
     var velocity = { x: 0, y: 0, z: 0 }; // Initialize velocity
     var displacement = { x: 0, y: 0, z: 0 }; // Initialize displacement
     var previousTimestamp = null; // Variable to store the previous timestamp
     var stationaryThreshold = 0.1; // Define stationary threshold (adjust as needed)
+    var distance = 0;
+    var startMarkerIcon = L.icon({
+        iconUrl: 'assets/marker.png',
+    
+        iconSize:     [38, 50], // size of the icon
+        iconAnchor:   [19, 50], // point of the icon which will correspond to marker's location
+        popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+    });
 
     const options = {
         enableHighAccuracy: true,
         maximumAge: 30000,
         timeout: 27000,
     };
+
+    // Funktion zur Überprüfung, ob das Barometer unterstützt wird
+    function isBarometerSupported() {
+        return ('ondeviceorientationabsolute' in window);
+    }
+
+    // Funktion zum Lesen der Barometerdaten
+    function readBarometerData() {
+        // Überprüfen, ob das Gerät das Barometer unterstützt
+        if (!isBarometerSupported()) {
+            console.error("Barometer wird nicht unterstützt.");
+            return;
+        }
+
+        // Event-Listener für die Barometerdaten
+        window.addEventListener('deviceorientationabsolute', handleBarometerData);
+    }
+
+    // Funktion zum Umgang mit den Barometerdaten
+    function handleBarometerData(event) {
+        // Luftdruck abrufen
+        var pressure = event.pressure;
+
+        // Hier können Sie den gemessenen Luftdruck verwenden, um die Höhe zu berechnen
+        // Verwenden Sie die Höhenformel und den Referenzluftdruck auf Meereshöhe
+
+        // Beispiel: Berechnung der Höhe über dem Meeresspiegel (nur zum Veranschaulichen)
+        var seaLevelPressure = 1013.25; // Referenzluftdruck auf Meereshöhe in hPa
+        var altitude = ((1 - (pressure / seaLevelPressure) ** (1 / 5.257)) * 44330.8).toFixed(2); // Höhe in Metern
+
+        // Ausgabe der Höhe
+        console.log("Höhe über dem Meeresspiegel: " + altitude + " Meter");
+        $("#altitude").html("<br>altitude: " + altitude);
+    }
+    
+    // Aufrufen der Funktion zum Lesen der Barometerdaten
+    readBarometerData();
 
     // Add Tile layer for map
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -46,7 +92,8 @@ $(document).ready(function () {
         $("#orientationData").html("<br>heading: " + heading + "<br>Alpha: " + alpha + "<br>Beta: " + beta + "<br>Gamma: " + gamma);
     }
 
-    function handleMotion(event) {
+
+    async function handleMotion(event) {
         if (previousTimestamp === null) {
             previousTimestamp = event.timeStamp; // Set initial timestamp
         }
@@ -99,8 +146,21 @@ $(document).ready(function () {
     function handleGeolocation(position) {
         var speed = position.coords.speed;
         var latlng = [position.coords.latitude, position.coords.longitude];
+        if (marker.getLatLng().lat !== 0 && marker.getLatLng().lng !== 0) {
+            var oldLatLng = marker.getLatLng();
+            var polyline = L.polyline([oldLatLng, latlng], { color: 'blue' }).addTo(map);
+            distance += calculateDistance(oldLatLng.lat, oldLatLng.lng, position.coords.latitude, position.coords.longitude);
+            console.log(distance)
+            $("#distance").html("<br>distance: " + distance.toFixed(3));
+        }
         marker.setLatLng(latlng).update();
         map.setView(latlng);
+        if(typeof startMarker == 'undefined'){
+            startMarker = L.marker([position.coords.latitude, position.coords.longitude], {icon: startMarkerIcon}).addTo(map);
+        }  
+        $("#distance").html("<br>distance: " + distance.toFixed(3));
+        $("#altitude").html("<br>altitude: " + 0);
+        
 
         // Display geolocation data
         $("#geolocationData").html("<br>Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude);
@@ -109,11 +169,24 @@ $(document).ready(function () {
         if (speed !== null && !isNaN(speed)) {
             var speed = position.coords.speed;
             console.log("Current speed:", speed, "m/s");
-            $("#speed").html("<br>Speed: " + speed.toFixed(2) + " m/s");
+            $("#speed").html("<br>Speed: " + speed.toFixed(2) + " m/s <br> Speed: " + (speed * 3.6).toFixed(2) + " km/h ");
         } else {
             console.log("Current speed:", speed, "m/s");
-            $("#speed").html("Current speed not available, but it is: " + speed);
+            $("#speed").html("Current speed not available, but it is: " + speed + " m/s <br> Speed: " + (speed * 3.6).toFixed(2) + " km/h " );
         }
+    }
+
+    function calculateDistance(lat1, lon1, lat2, lon2) {
+        const R = 6371; // radius of the earth
+        const dLat = (lat2 - lat1) * Math.PI / 180; // Convert degrees to radians
+        const dLon = (lon2 - lon1) * Math.PI / 180;
+        const a =
+            Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+            Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        const distance = R * c; // Distance in kilometers
+        return distance;
     }
 
     // Function to handle geolocation errors
@@ -123,7 +196,6 @@ $(document).ready(function () {
     }
 
     $("#requestOrientationPermissionButton").click(function () {
-        console.log("Requesting permission for DeviceOrientation");
         // Check if the device supports DeviceOrientationEvent
         if (window.DeviceOrientationEvent) {
             $("#orientation").text("Device orientation supported.");
@@ -200,10 +272,13 @@ $(document).ready(function () {
         // Get geolocation data once
         if ('geolocation' in navigator) {
             watchId = navigator.geolocation.watchPosition(handleGeolocation, handleError, options);
+            
         } else {
             // Geolocation not supported
             $("#geolocationData").text("Geolocation not supported.");
         }
+
+    
     }
 
     // Get geolocation data continuously
@@ -214,4 +289,6 @@ $(document).ready(function () {
         // Geolocation not supported
         $("#geolocationData").text("Geolocation not supported.");
     }
+
+    
 });
