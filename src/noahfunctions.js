@@ -6,8 +6,8 @@ $(document).ready(function() {
     let previousAltitude;
     let currentAltitude;
 
-    const ascentSound = new Audio("ascent.mp3");
-    const descentSound = new Audio("descent.mp3");
+    // const ascentSound = new Audio("ascent.mp3");
+    // const descentSound = new Audio("descent.mp3");
 
     $("#startHeightWatch").click(function() {
         if ('geolocation' in navigator) {
