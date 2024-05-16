@@ -4,6 +4,7 @@ $(document).ready(function () {
     let currentAltitude;
     let counter = 0;
     let watchId;
+    let treshold = 0.25;
 
     $("#startHeightWatch").click(function () {
         if ('geolocation' in navigator) {
@@ -30,11 +31,17 @@ $(document).ready(function () {
             counter++;
             const { latitude, longitude, altitude } = position.coords;
             currentAltitude = altitude;
-            if (previousAltitude - currentAltitude >= 0) {
+            if (currentAltitude - previousAltitude < 0 - treshold) {
+                $("#threshold").html("Schwellwert übertroffen");
                 $("#ascent_descent").html("Abstieg");
-            } else if (previousAltitude - currentAltitude < 0) {
+            } else if (currentAltitude - previousAltitude > 0 + treshold) {
+                $("#threshold").html("Schwellwert übertroffen");
                 $("#ascent_descent").html("Aufstieg");
             }
+            else (
+                $("#threshold").html("Schwellwert nicht übertroffen"),
+                $("#ascent_descent").html("Keine Änderung")
+            )
             previousAltitude = currentAltitude;
             console.log("Höhe: " + altitude + " Meter");
             $("#height").html("Longitude: " + longitude + " | Höhe: " + altitude + " Meter<br>");
