@@ -14,7 +14,7 @@ $(document).ready(function() {
             }, errorHandler, { enableHighAccuracy: true });
 
             // Request altitude updates at a high frequency (approximately 10 times per second)
-            let updateInterval = setInterval(requestAltitudeUpdate, 100);
+            let updateInterval = setInterval(requestAltitudeUpdate, 200);
 
             console.log("Höhenüberwachung gestartet (Intervall: " + updateInterval + ")");
         } else {
