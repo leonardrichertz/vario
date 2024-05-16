@@ -32,10 +32,10 @@ $(document).ready(function () {
             counter++;
             const { latitude, longitude, altitude } = position.coords;
             currentAltitude = altitude;
-            if (currentAltitude - previousAltitude < 0 - treshold) {
+            if (currentAltitude - previousAltitude < -treshold) {
                 $("#threshold").html("Schwellwert übertroffen");
                 $("#ascent_descent").html("Abstieg");
-            } else if (currentAltitude - previousAltitude > 0 + treshold) {
+            } else if (currentAltitude - previousAltitude > treshold) {
                 $("#threshold").html("Schwellwert übertroffen");
                 $("#ascent_descent").html("Aufstieg");
             }
