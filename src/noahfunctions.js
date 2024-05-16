@@ -4,7 +4,7 @@ $(document).ready(function () {
     let currentAltitude;
     let counter = 0;
     let watchId;
-    let treshold = 0.25;
+    let treshold = 0.1;
 
     $("#startHeightWatch").click(function () {
         if ('geolocation' in navigator) {
