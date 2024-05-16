@@ -45,7 +45,7 @@ $(document).ready(function() {
         }
         previousAltitude = currentAltitude;
         console.log("Höhe: " + altitude + " Meter");
-        $("#height").html("Longitude: " + longitude + " | Höhe: " + altitude.toFixed(2) + " Meter<br>");
+        $("#height").html("Longitude: " + longitude + " | Höhe: " + altitude + " Meter<br>");
         $("#latitude").html("Latitude: " + latitude + " | Counter: " + counter + "<br>");
     }
 
