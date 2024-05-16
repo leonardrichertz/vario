@@ -8,7 +8,7 @@ $(document).ready(function () {
 
     $("#startHeightWatch").click(function () {
         if ('geolocation' in navigator) {
-            watchId = navigator.geolocation.watchPosition(updateHeight, errorHandler, { enableHighAccuracy: true, timeout: 200 });
+            watchId = navigator.geolocation.watchPosition(updateHeight, errorHandler, { enableHighAccuracy: true, timeout: 100, maximumAge: 0 });
             // Request altitude updates at a high frequency (approximately 10 times per second)
         } else {
             console.error("Geolocation wird von diesem Browser nicht unterstützt.");
