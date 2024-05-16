@@ -5,36 +5,27 @@ $(document).ready(function() {
     let initialAltitude;
     let previousAltitude;
     let currentAltitude;
-    let altitude;
+    let threshold = 0.01;
+    // let altitude;
     let counter = 0;   
     let flag = true; 
     
     // const ascentSound = new Audio("ascent.mp3");
     // const descentSound = new Audio("descent.mp3");
+
     $("#startHeightWatch").click(function() {
         if ('geolocation' in navigator) {
-        while (flag){
-            console.log("Höhenüberwachung läuft...");
-            navigator.geolocation.getCurrentPosition(updateHeight, errorHandler, { enableHighAccuracy: true });
-        }
+            navigator.geolocation.getCurrentPosition(function(position) {
+                initialAltitude = position.coords.altitude;
+                previousAltitude = initialAltitude;
+                currentAltitude = initialAltitude;
+            }, errorHandler, { enableHighAccuracy: true });
+            watchID = navigator.geolocation.watchPosition(updateHeight, errorHandler, { enableHighAccuracy: true});
+            console.log("Höhenüberwachung gestartet (ID: " + watchID + ")");
         } else {
             console.error("Geolocation wird von diesem Browser nicht unterstützt.");
         }
     });
-
-    // $("#startHeightWatch").click(function() {
-    //     if ('geolocation' in navigator) {
-    //         navigator.geolocation.getCurrentPosition(function(position) {
-    //             initialAltitude = position.coords.altitude;
-    //             previousAltitude = initialAltitude;
-    //             currentAltitude = initialAltitude;
-    //         }, errorHandler, { enableHighAccuracy: true });
-    //         watchID = navigator.geolocation.watchPosition(updateHeight, errorHandler, { enableHighAccuracy: true});
-    //         console.log("Höhenüberwachung gestartet (ID: " + watchID + ")");
-    //     } else {
-    //         console.error("Geolocation wird von diesem Browser nicht unterstützt.");
-    //     }
-    // });
 
     $("#stopHeightWatch").click(function() {
         if ("geolocation" in navigator) {
@@ -49,18 +40,18 @@ $(document).ready(function() {
     function updateHeight(position) {
         counter++;
         const { latitude, longitude, altitude } = position.coords;
-        // currentAltitude = altitude;
-        // if (previousAltitude - currentAltitude >= 0) {
-        //     $("#ascent_descent").html("Abstieg");
-        //     // descentSound.play();
-        //     // abstieg
-        // }
-        // else if (previousAltitude - currentAltitude < 0) {
-        //     $("#ascent_descent").html("Aufstieg");
-        //     // ascentSound.play();	
-        //     // aufstieg
-        // }
-        // previousAltitude = currentAltitude;
+        currentAltitude = altitude;
+        if (currentAltitude - previousAltitude >= 0 + threshold) {
+            $("#ascent_descent").html("Aufstieg");
+            // descentSound.play();
+            // abstieg
+        }
+        else if (currentAltitude - previousAltitude < 0 -threshold) {
+            $("#ascent_descent").html("Abstieg");
+            // ascentSound.play();	
+            // aufstieg
+        }
+        previousAltitude = currentAltitude;
         console.log("Höhe: " + altitude + " Meter");
         $("#height").html("Longitude: " + longitude + " | Höhe: " + altitude + " Meter<br>");
         $("#latitude").html("Latitude: " + latitude + " | Counter: " + counter + "<br>");
