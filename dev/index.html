@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My PWA</title>
-    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="manifest" href="/vario/dev/manifest.webmanifest">
     <!-- Add your CSS and JavaScript files here -->
 </head>
 <body>
@@ -14,7 +14,7 @@
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('service-worker.js')
+                navigator.serviceWorker.register('/vario/dev/service-worker.js')
                     .then(registration => {
                         console.log('Service Worker registered with scope:', registration.scope);
                     })
