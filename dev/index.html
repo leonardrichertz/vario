@@ -4,17 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My PWA</title>
-    <link rel="manifest" href="/manifest.json">
+    <link rel="manifest" href="manifest.webmanifest">
     <!-- Add your CSS and JavaScript files here -->
 </head>
 <body>
     <!-- Add your PWA content here -->
-    
+    Hello, World!
     <!-- Add your service worker registration script here -->
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/service-worker.js')
+                navigator.serviceWorker.register('service-worker.js')
                     .then(registration => {
                         console.log('Service Worker registered with scope:', registration.scope);
                     })
