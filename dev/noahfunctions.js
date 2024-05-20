@@ -9,8 +9,7 @@ $(document).ready(function () {
     $("#startHeightWatch").click(function () {
         if ('geolocation' in navigator) {
             // maximumAge: 0 ensures that the device always gets the current location and not the cached one. Timeout determines how long the device maximally can take to get the location.
-            watchId = navigator.geolocation.watchPosition(updateHeight, errorHandler, { enableHighAccuracy: true, maximumAge: 0 });
-            // Request altitude updates at a high frequency (approximately 10 times per second)
+            watchId = navigator.geolocation.watchPosition(updateHeight, errorHandler, { enableHighAccuracy: true, maximumAge: 0, timeout: 100 });
         } else {
             console.error("Geolocation wird von diesem Browser nicht unterstützt.");
         }
