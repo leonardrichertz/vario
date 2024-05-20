@@ -4,11 +4,13 @@ $(document).ready(function () {
     let currentAltitude;
     let counter = 0;
     let watchId;
-    let treshold = 0.1;
+    let threshold = 0.1;
+    
+    const ascentSound = document.getElementById('ascentSound');
+    const descentSound = document.getElementById('descentSound');
 
     $("#startHeightWatch").click(function () {
         if ('geolocation' in navigator) {
-            // maximumAge: 0 ensures that the device always gets the current location and not the cached one. Timeout determines how long the device maximally can take to get the location.
             watchId = navigator.geolocation.watchPosition(updateHeight, errorHandler, { enableHighAccuracy: true, maximumAge: 0, timeout: 100 });
         } else {
             console.error("Geolocation wird von diesem Browser nicht unterstützt.");
@@ -16,32 +18,36 @@ $(document).ready(function () {
     });
 
     $("#stopHeightWatch").click(function () {
-        stopwatch = navigator.geolocation.clearWatch(watchId);
-        console.log("Höhenüberwachung gestoppt");
+        if (watchId) {
+            navigator.geolocation.clearWatch(watchId);
+            console.log("Höhenüberwachung gestoppt");
+        }
     });
 
     function updateHeight(position) {
-        if (counter = 0) {
+        if (counter === 0) {
             initialAltitude = position.coords.altitude;
             previousAltitude = initialAltitude;
             currentAltitude = initialAltitude;
             counter++;
-        }
-        else {
+        } else {
             counter++;
             const { latitude, longitude, altitude } = position.coords;
             currentAltitude = altitude;
-            if (currentAltitude - previousAltitude < -treshold) {
+
+            if (currentAltitude - previousAltitude < -threshold) {
                 $("#threshold").html("Schwellwert übertroffen");
                 $("#ascent_descent").html("Abstieg");
-            } else if (currentAltitude - previousAltitude > treshold) {
+                descentSound.play();
+            } else if (currentAltitude - previousAltitude > threshold) {
                 $("#threshold").html("Schwellwert übertroffen");
                 $("#ascent_descent").html("Aufstieg");
+                ascentSound.play();
+            } else {
+                $("#threshold").html("Schwellwert nicht übertroffen");
+                $("#ascent_descent").html("Keine Änderung");
             }
-            else (
-                $("#threshold").html("Schwellwert nicht übertroffen"),
-                $("#ascent_descent").html("Keine Änderung")
-            )
+
             previousAltitude = currentAltitude;
             console.log("Höhe: " + altitude + " Meter");
             $("#height").html("Longitude: " + longitude + " | Höhe: " + altitude + " Meter<br>");
