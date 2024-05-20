@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My PWA</title>
-    <link rel="manifest" href="/vario/dev/manifest.webmanifest">
+    <link rel="manifest" href="../manifest.webmanifest">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
 </head>
 <body>
     <!-- Include the header -->
@@ -26,12 +28,14 @@
         $(document).ready(function(){
             // $("#header").load("/path/to/header.html");
             // $("#footer").load("/path/to/footer.html");
-            $("#map").load("views/map.html");
+            $("#map").load("views/map.html", function() {
+                $.getScript("scripts/map.js");
+            });
         });
 
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/vario/dev/service-worker.js')
+                navigator.serviceWorker.register('../service-worker.js')
                     .then(registration => {
                         console.log('Service Worker registered with scope:', registration.scope);
                     })
