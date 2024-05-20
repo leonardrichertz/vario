@@ -5,13 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My PWA</title>
     <link rel="manifest" href="/vario/dev/manifest.webmanifest">
-    <!-- Add your CSS and JavaScript files here -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-    <!-- Add your PWA content here -->
-    Hello, World!
+    <!-- Include the header -->
+    <div id="header"></div>
+
+    <!-- Main content -->
+    <main>
+        Hello, World!
+    </main>
+
+    <div id="map"></div>
+
+    <!-- Include the footer -->
+    <div id="footer"></div>
+
     <!-- Add your service worker registration script here -->
     <script>
+        $(document).ready(function(){
+            // $("#header").load("/path/to/header.html");
+            // $("#footer").load("/path/to/footer.html");
+            $("#map").load("/src/views/map.html");
+        });
+
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('/vario/dev/service-worker.js')
