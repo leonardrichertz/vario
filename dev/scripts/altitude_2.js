@@ -49,7 +49,9 @@ $(document).ready(function () {
         const accelerationX = evt.acceleration.x;
         const accelerationY = evt.acceleration.y;
         const accelerationZ = evt.acceleration.z;
-        console.log("Interval: " + interval);
+        console.log("Interval: " + evt.interval);
+        console.log("Interval * 1000" + evt.interval* 1000)
+        console.log("Interval/1000: " + interval);
 
         // Calculate the speed for each axis by integrating the acceleration
         xSpeed += accelerationX * interval;
