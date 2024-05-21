@@ -46,9 +46,9 @@ $(document).ready(function () {
 
     function handleMotion(evt) {
         const interval = evt.interval / 1000; // convert interval to seconds
-        const accelerationX = evt.accelerationIncludingGravity.x;
-        const accelerationY = evt.accelerationIncludingGravity.y;
-        const accelerationZ = evt.accelerationIncludingGravity.z;
+        const accelerationX = evt.accelerationX;
+        const accelerationY = evt.accelerationY
+        const accelerationZ = evt.accelerationZ;
 
         // Calculate the speed for each axis by integrating the acceleration
         xSpeed += accelerationX * interval;
