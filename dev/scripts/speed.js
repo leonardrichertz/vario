@@ -1,4 +1,6 @@
-    var velocity = { x: 0, y: 0, z: 0 }; // Initialize velocity
+$(document).ready(function () {  
+   
+   var velocity = { x: 0, y: 0, z: 0 }; // Initialize velocity
     var displacement = { x: 0, y: 0, z: 0 }; // Initialize displacement
     var previousTimestamp = null; // Variable to store the previous timestamp
 
@@ -47,4 +49,5 @@ $("#requestMotionPermissionButton").click(function () {
     else {
         $("#motionInfo").html("Device motion not supported.");
     }
+});
 });
