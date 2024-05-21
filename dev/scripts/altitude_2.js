@@ -45,7 +45,7 @@ $(document).ready(function () {
     });
 
     function handleMotion(evt) {
-        const interval = evt.interval / 1000; // convert interval to seconds
+        const interval = evt.interval; // convert interval to seconds
         const accelerationX = evt.acceleration.x;
         const accelerationY = evt.acceleration.y;
         const accelerationZ = evt.acceleration.z;
