@@ -59,9 +59,9 @@ $(document).ready(function () {
     
     function handleMotion(event) {
         var acceleration = event.acceleration;
-        var x = event.acceleration.x;
-        var y = event.acceleration.y;
-        var z = event.acceleration.z;
+        var x = event.acceleration.x.toFixed(2);
+        var y = event.acceleration.y.toFixed(2);
+        var z = event.acceleration.z.toFixed(2);
         console.log("Acceleration: " + acceleration);
         console.log("Acceleration X: " + x);
         console.log("Acceleration Y: " + y);
@@ -70,9 +70,9 @@ $(document).ready(function () {
     }
 
     function handleOrientation(event) {
-        var alpha = event.alpha;
-        var beta = event.beta;
-        var gamma = event.gamma;
+        var alpha = event.alpha.toFixed(2);
+        var beta = event.beta.toFixed(2);
+        var gamma = event.gamma.toFixed(2);
         $("#orientationData").html("Alpha: " + alpha + "<br>Beta: " + beta + "<br>Gamma: " + gamma);
     }
 });
