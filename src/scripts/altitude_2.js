@@ -54,7 +54,9 @@ $(document).ready(function () {
         xSpeed += accelerationX * interval;
         ySpeed += accelerationY * interval;
         zSpeed += accelerationZ * interval;
-
+        console.log("Acceleration: X=" + accelerationX.toFixed(2) + ", Y=" + accelerationY.toFixed(2) + ", Z=" + accelerationZ.toFixed(2));
+        console.log("Speed: X=" + xSpeed.toFixed(2) + ", Y=" + ySpeed.toFixed(2) + ", Z=" + zSpeed.toFixed(2));
+        $("#accelerationData").text("Acceleration: X=" + accelerationX.toFixed(2) + ", Y=" + accelerationY.toFixed(2) + ", Z=" + accelerationZ.toFixed(2));
         $("#speedData").text("Speed (m/s): X=" + xSpeed.toFixed(2) + ", Y=" + ySpeed.toFixed(2) + ", Z=" + zSpeed.toFixed(2));
     }
 });
