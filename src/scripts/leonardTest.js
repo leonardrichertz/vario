@@ -53,6 +53,10 @@ $(document).ready(function () {
 
     });
 
+    function handleMotionError(event) {
+        console.error("Error while handling motion event: " + event);
+    }
+    
     function handleMotion(event) {
         var acceleration = event.acceleration;
         var x = event.acceleration.x;
