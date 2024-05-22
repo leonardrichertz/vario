@@ -1,21 +1,35 @@
 <!DOCTYPE html>
 <html>
+
 <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="map.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <style>
         body {
             padding: 0;
             margin: 0;
         }
-        html, body, #map {
+
+        html,
+        body,
+        #map {
             height: 50%;
             width: 50vw;
         }
+
         #map {
             height: 520px;
         }
     </style>
 </head>
+
 <body>
+
+
     <h1 id="start"></h1>
 
     <!-- <img id="compass" src="assets/compass.png"> -->
@@ -27,12 +41,11 @@
     <button id="stopGeolocation">stop watching geolocation</button>
     <button id="startGeolocation">Restart the Geolocation</button>
     <p id="speed"></p>
-    <p id="distance"></p>
+    <p id ="distance"></p>
 
     <div id="geolocationData"></div>
     <div id="map">Map</div>
 
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 </body>
+
 </html>
