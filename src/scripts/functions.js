@@ -32,6 +32,7 @@ $(document).ready(function () {
             $("#compass").css("transform", "rotate(" + alpha + "deg)");
         }
         else {
+            var absolute = event.absolute;
             alpha = event.alpha; //standard
             var heading = compassHeading(alpha, event.beta, event.gamma); //heading [0, 360)
             heading = Math.round(alpha * 100) / 100; // Normalize value
@@ -42,7 +43,7 @@ $(document).ready(function () {
         var gamma = Math.round(event.gamma * 100) / 100; // rotation around y-axis
 
         // Display device orientation data
-        $("#orientationData").html("<br>heading: " + heading + "<br>Alpha: " + alpha + "<br>Beta: " + beta + "<br>Gamma: " + gamma);
+        $("#orientationData").html("<br>absolute: " + absolute + "<br>heading: " + heading + "<br>Alpha: " + alpha + "<br>Beta: " + beta + "<br>Gamma: " + gamma);
     }
 
     function compassHeading(alpha, beta, gamma) {
