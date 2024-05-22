@@ -1,4 +1,33 @@
 $(document).ready(function () {
+
+    function getOS() {
+        var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+        if (/windows phone/i.test(userAgent)) {
+            return "Windows Phone";
+        }
+        if (/android/i.test(userAgent)) {
+            return "Android";
+        }
+        if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+            return "iOS";
+        }
+        if (/Win/i.test(userAgent)) {
+            return "Windows";
+        }
+        if (/Mac/i.test(userAgent)) {
+            return "MacOS";
+        }
+        if (/Linux/i.test(userAgent)) {
+            return "Linux";
+        }
+        return "unknown";
+    }
+
+    var os = getOS();
+    console.log("Operating System: " + os);
+    $("#osInfo").html("Operating System: " + os);
+
     var map = L.map('map').setView([0, 0], 13);
     var marker;
     var watchId;
@@ -22,7 +51,7 @@ $(document).ready(function () {
 
     $("#start").text("Device orientation and geolocation data");
     // Function to handle device orientation data
-    function handleOrientation(event) {
+    function handleOrientationIOS(event) {
         var alpha;
         if (typeof event.webkitCompassHeading !== "undefined") {
             alpha = event.webkitCompassHeading; //iOS non-standard
@@ -31,57 +60,19 @@ $(document).ready(function () {
             $("#orientationData").html("Supported webkitCompassHeading");
             $("#compass").css("transform", "rotate(" + alpha + "deg)");
         }
-        else {
-            var absolute = event.absolute;
-            alpha = event.alpha; //standard
-            var heading = compassHeading(alpha, event.beta, event.gamma); //heading [0, 360)
-            heading = Math.round(alpha * 100) / 100; // Normalize value
-            $("#orientationData").html("Not supported webkitCompassHeading");
-            $("#compass").css("transform", "rotate(" + heading + "deg)");
-        }
         var beta = Math.round(event.beta * 100) / 100;  // rotation around x-axis
         var gamma = Math.round(event.gamma * 100) / 100; // rotation around y-axis
 
         // Display device orientation data
         $("#orientationData").html("<br>absolute: " + absolute + "<br>heading: " + heading + "<br>Alpha: " + alpha + "<br>Beta: " + beta + "<br>Gamma: " + gamma);
     }
+    function handleOrientationAndroid(event) {
+        var alpha = event.alpha; // rotation around z-axis
+        var beta = event.beta;  // rotation around x-axis
+        var gamma = event.gamma; // rotation around y-axis
 
-    function compassHeading(alpha, beta, gamma) {
-
-        // Convert degrees to radians
-        var alphaRad = alpha * (Math.PI / 180);
-        var betaRad = beta * (Math.PI / 180);
-        var gammaRad = gamma * (Math.PI / 180);
-      
-        // Calculate equation components
-        var cA = Math.cos(alphaRad);
-        var sA = Math.sin(alphaRad);
-        var cB = Math.cos(betaRad);
-        var sB = Math.sin(betaRad);
-        var cG = Math.cos(gammaRad);
-        var sG = Math.sin(gammaRad);
-      
-        // Calculate A, B, C rotation components
-        var rA = - cA * sG - sA * sB * cG;
-        var rB = - sA * sG + cA * sB * cG;
-        var rC = - cB * cG;
-      
-        // Calculate compass heading
-        var compassHeading = Math.atan(rA / rB);
-      
-        // Convert from half unit circle to whole unit circle
-        if(rB < 0) {
-          compassHeading += Math.PI;
-        }else if(rA < 0) {
-          compassHeading += 2 * Math.PI;
-        }
-      
-        // Convert radians to degrees
-        compassHeading *= 180 / Math.PI;
-      
-        return compassHeading;
-      
-      }
+        $("#orientationData").html("<br>Alpha: " + alpha + "<br>Beta: " + beta + "<br>Gamma: " + gamma);
+    }
 
     function handleMotion(event) {
         if (previousTimestamp === null) {
@@ -90,10 +81,10 @@ $(document).ready(function () {
         var acceleration = event.acceleration;
         var currentTimestamp = event.timeStamp; // Get current timestamp
         var deltaTime = (currentTimestamp - previousTimestamp) / 1000; // Convert milliseconds to seconds
-    
+
         // Calculate acceleration magnitude
         var accelerationMagnitude = Math.sqrt(acceleration.x ** 2 + acceleration.y ** 2 + acceleration.z ** 2);
-    
+
         if (accelerationMagnitude < stationaryThreshold) {
             // Reset velocity to zero if device is stationary
             velocity.x = 0;
@@ -104,29 +95,29 @@ $(document).ready(function () {
             velocity.x += acceleration.x * deltaTime;
             velocity.y += acceleration.y * deltaTime;
             velocity.z += acceleration.z * deltaTime;
-            
+
             // Ensure velocity does not go below zero
             velocity.x = Math.max(velocity.x, 0);
             velocity.y = Math.max(velocity.y, 0);
             velocity.z = Math.max(velocity.z, 0);
-    
+
             // Calculate displacement
             displacement.x += velocity.x * deltaTime;
             displacement.y += velocity.y * deltaTime;
             displacement.z += velocity.z * deltaTime;
         }
-    
+
         var speed = Math.sqrt(velocity.x ** 2 + velocity.y ** 2 + velocity.z ** 2); // Calculate speed
-    
+
         previousTimestamp = currentTimestamp; // Update previous timestamp
-    
+
         $("#motionSpeed").html("Motion Data Speed: " + speed.toFixed(2) + " m/s");
         // Display acceleration data
         $("#motionData").html("Acceleration: <br>x: " + acceleration.x + "<br>y: " + acceleration.y +
-         "<br>z: " + acceleration.z + "<br>Velocity x: " + velocity.x + "<br>Velocity y: " + velocity.y + "<br>Velocity z: " +
-          velocity.z + "<br>Displacement x: " + displacement.x + "<br>Displacement y: " + displacement.y + "<br>Displacement z: " + displacement.z + "<br>Delta time: " + deltaTime + "<br>Current timestamp: " + currentTimestamp + "<br>Previous timestamp: " + previousTimestamp); 
+            "<br>z: " + acceleration.z + "<br>Velocity x: " + velocity.x + "<br>Velocity y: " + velocity.y + "<br>Velocity z: " +
+            velocity.z + "<br>Displacement x: " + displacement.x + "<br>Displacement y: " + displacement.y + "<br>Displacement z: " + displacement.z + "<br>Delta time: " + deltaTime + "<br>Current timestamp: " + currentTimestamp + "<br>Previous timestamp: " + previousTimestamp);
     }
-    
+
 
     function handleMotionError(event) {
         $("#motionData").html("Error: " + event.error.message);
@@ -175,7 +166,12 @@ $(document).ready(function () {
                         if (permissionState === 'granted') {
                             $("#permission").text("Permission granted for DeviceOrientation");
                             // Permission granted, add event listener
-                            window.addEventListener('deviceorientation', handleOrientation);
+                            if (os === "iOS") {
+                                window.addEventListener('deviceorientation', handleOrientationIOS);
+                            }
+                            else{
+                                window.addEventListener('deviceorientationabsolute', handleOrientationAndroid, true);
+                            }
                         } else {
                             $("#permission").text("Permission not granted for DeviceOrientation");
                             console.log("Permission not granted for DeviceOrientation");
