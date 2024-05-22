@@ -31,6 +31,7 @@ $(document).ready(function () {
             $("#orientationData").html("Supported webkitCompassHeading");
         }
         else {
+            alpha = event.alpha; //standard
             var heading = 360 - alpha; //heading [0, 360)
             $("#orientationData").html("Not supported webkitCompassHeading");
         }
