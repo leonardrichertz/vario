@@ -26,23 +26,20 @@ $(document).ready(function () {
         var alpha;
         if (typeof event.webkitCompassHeading !== "undefined") {
             alpha = event.webkitCompassHeading; //iOS non-standard
-            var heading = alpha
+            alpha = Math.round(alpha * 100) / 100; // Normalize value
             $("#webkit").text(heading.toFixed([0]));
             $("#orientationData").html("Supported webkitCompassHeading");
+            $("#compass").css("transform", "rotate(" + alpha + "deg)");
         }
         else {
             alpha = event.alpha; //standard
-            console.log("Alpha: ", alpha);
-            // var heading = 360 - alpha; //heading [0, 360)
-            console.log("Heading: ", heading);
+            var heading = 360 - alpha; //heading [0, 360)
+            heading = Math.round(alpha * 100) / 100; // Normalize value
             $("#orientationData").html("Not supported webkitCompassHeading");
+            $("#compass").css("transform", "rotate(" + heading + "deg)");
         }
-        alpha = Math.round(alpha * 100) / 100; // Normalize value
-
         var beta = Math.round(event.beta * 100) / 100;  // rotation around x-axis
         var gamma = Math.round(event.gamma * 100) / 100; // rotation around y-axis
-
-        $("#compass").css("transform", "rotate(" + alpha + "deg)");
 
         // Display device orientation data
         $("#orientationData").html("<br>heading: " + heading + "<br>Alpha: " + alpha + "<br>Beta: " + beta + "<br>Gamma: " + gamma);
