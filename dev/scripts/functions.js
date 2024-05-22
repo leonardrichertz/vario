@@ -32,16 +32,17 @@ $(document).ready(function () {
         }
         else {
             alpha = event.alpha; //standard
+            console.log("Alpha: ", alpha);
             var heading = 360 - alpha; //heading [0, 360)
+            console.log("Heading: ", heading);
             $("#orientationData").html("Not supported webkitCompassHeading");
         }
-
         alpha = Math.round(alpha * 100) / 100; // Normalize value
 
         var beta = Math.round(event.beta * 100) / 100;  // rotation around x-axis
         var gamma = Math.round(event.gamma * 100) / 100; // rotation around y-axis
 
-        $("#compass").css("transform", "rotate(" + alpha + "deg)");
+        $("#compass").css("transform", "rotate(" + heading + "deg)");
 
         // Display device orientation data
         $("#orientationData").html("<br>heading: " + heading + "<br>Alpha: " + alpha + "<br>Beta: " + beta + "<br>Gamma: " + gamma);
