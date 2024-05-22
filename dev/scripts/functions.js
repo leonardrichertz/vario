@@ -167,7 +167,7 @@ $(document).ready(function () {
                         if (permissionState === 'granted') {
                             $("#permission").text("Permission granted for DeviceOrientation");
                             // Permission granted, add event listener
-                            if (os === "iOS") {
+                            if (os != 'Android') {
                                 console.log("iOS device detected");
                                 window.addEventListener('deviceorientation', handleOrientationIOS);
                             }
