@@ -5,14 +5,14 @@ $(document).ready(function () {
     var watchId;
     var distance = 0;
     var startMarkerIcon = L.icon({
-        iconUrl: 'assets/marker.png',
+        iconUrl: '../assets/marker.png',
         iconSize:     [38, 50], // size of the icon
         iconAnchor:   [19, 50], // point of the icon which will correspond to marker's location
         popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
     });
 
     var markerIcon = L.icon({
-        iconUrl: 'assets/paraglider.png',
+        iconUrl: '../assets/paraglider.png',
         iconSize:     [38, 50], // size of the icon
         iconAnchor:   [19, 50], // point of the icon which will correspond to marker's location
         popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
@@ -158,11 +158,8 @@ $(document).ready(function () {
         } else {
             // Geolocation not supported
             $("#geolocationData").text("Geolocation not supported.");
-        }
-
-    
+        } 
     }
-
     // Get geolocation data continuously
     if ('geolocation' in navigator) {
         watchId = navigator.geolocation.watchPosition(handleGeolocation, handleError, options);
