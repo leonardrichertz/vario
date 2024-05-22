@@ -34,7 +34,7 @@ $(document).ready(function () {
         else {
             alpha = event.alpha; //standard
             var heading = compassHeading(alpha, event.beta, event.gamma); //heading [0, 360)
-            // heading = Math.round(alpha * 100) / 100; // Normalize value
+            heading = Math.round(alpha * 100) / 100; // Normalize value
             $("#orientationData").html("Not supported webkitCompassHeading");
             $("#compass").css("transform", "rotate(" + heading + "deg)");
         }
