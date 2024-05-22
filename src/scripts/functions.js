@@ -26,7 +26,6 @@ $(document).ready(function () {
 
     var os = getOS();
     console.log("Operating System: " + os);
-    $("#osInfo").html("Operating System: " + os);
 
     var map = L.map('map').setView([0, 0], 13);
     var marker;
@@ -52,6 +51,7 @@ $(document).ready(function () {
     $("#start").text("Device orientation and geolocation data");
     // Function to handle device orientation data
     function handleOrientationIOS(event) {
+        $("#osInfo").html("Operating System: " + os);
         var alpha;
         if (typeof event.webkitCompassHeading !== "undefined") {
             alpha = event.webkitCompassHeading; //iOS non-standard
@@ -67,6 +67,7 @@ $(document).ready(function () {
         $("#orientationData").html("<br>absolute: " + absolute + "<br>heading: " + heading + "<br>Alpha: " + alpha + "<br>Beta: " + beta + "<br>Gamma: " + gamma);
     }
     function handleOrientationAndroid(event) {
+        $("#osInfo").html("Operating System: " + os);
         var alpha = Math.round(event.alpha * 100) / 100; // Normalize value
         var beta = Math.round(event.beta * 100) / 100;  // rotation around x-axis
         var gamma = Math.round(event.gamma * 100) / 100; // rotation around y-axis
