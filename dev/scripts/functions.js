@@ -67,9 +67,9 @@ $(document).ready(function () {
         $("#orientationData").html("<br>absolute: " + absolute + "<br>heading: " + heading + "<br>Alpha: " + alpha + "<br>Beta: " + beta + "<br>Gamma: " + gamma);
     }
     function handleOrientationAndroid(event) {
-        var alpha = event.alpha; // rotation around z-axis
-        var beta = event.beta;  // rotation around x-axis
-        var gamma = event.gamma; // rotation around y-axis
+        var alpha = Math.round(event.alpha * 100) / 100; // Normalize value
+        var beta = Math.round(event.beta * 100) / 100;  // rotation around x-axis
+        var gamma = Math.round(event.gamma * 100) / 100; // rotation around y-axis
 
         $("#orientationData").html("<br>Alpha: " + alpha + "<br>Beta: " + beta + "<br>Gamma: " + gamma);
     }
