@@ -86,7 +86,8 @@ $(document).ready(function () {
             let accelerationX = evt.acceleration.x;
             let adjustedAccelerationAltitude;
 
-            // gamma and beta are values between -90 and 90.
+            // gamma are values between -90 and 90.
+            // beta are values between -180 and 180.
             // Todo: adjust functionality accordingly.
             switch (true) {
                 case (gammaShift <= 90 && gammaShift >= 0):

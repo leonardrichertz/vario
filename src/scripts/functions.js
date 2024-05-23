@@ -10,12 +10,14 @@ $(document).ready(function () {
             return "Android";
         }
         if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+            //Iphone
             return "iOS";
         }
         if (/Win/i.test(userAgent)) {
             return "Windows";
         }
         if (/Mac/i.test(userAgent)) {
+            //IPAd
             return "MacOS";
         }
         if (/Linux/i.test(userAgent)) {
