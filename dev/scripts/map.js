@@ -36,7 +36,8 @@ $(document).ready(function () {
     
     // Function to handle geolocation data
     function handleGeolocation(position) {
-        var speed = position.coords.speed;
+        
+
         var latlng = [position.coords.latitude, position.coords.longitude];
         if (marker.getLatLng().lat !== 0 && marker.getLatLng().lng !== 0) {
 
@@ -64,18 +65,17 @@ $(document).ready(function () {
 
         // Display geolocation data
         $("#geolocationData").html("<br>Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude);
-
+        
+        var speed = position.coords.speed;
         // Display current speed
         if (speed !== null && !isNaN(speed)) {
             var speed = position.coords.speed;
-            
-            //$("#speed").html("<br>Speed: " + speed.toFixed(2) + " m/s <br> Speed: " + (speed * 3.6).toFixed(2) + " km/h ");
             $("#speed").html("<br>Speed: " + speed.toFixed(2) + " m/s <br> Speed: " + (speed * 3.6).toFixed(2) + " km/h ");
         } else {
             var speed = position.coords.speed;
-            //$("#speed").html("Current speed not available, but it is: " + speed + " m/s <br> Speed: " + (speed * 3.6).toFixed(2) + " km/h " );
             $("#speed").html("<br>Speed: " + 0 + " m/s <br> Speed: " + (speed * 3.6).toFixed(2) + " km/h ");
         }
+        
     }
 
     // Calulation of distance between two position with the Haversine-Formula
