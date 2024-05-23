@@ -169,14 +169,14 @@ $(document).ready(function () {
                         if (permissionState === 'granted') {
                             $("#permission").text("Permission granted for DeviceOrientation");
                             // Permission granted, add event listener
-                            if (os != 'Android') {
+                            // if (os != 'Android') {
                                 console.log("iOS device detected");
                                 window.addEventListener('deviceorientation', handleOrientationIOS);
-                            }
-                            else{
-                                console.log("Android device detected");
-                                window.addEventListener('deviceorientationabsolute', handleOrientationAndroid, true);
-                            }
+                            // }
+                            // else{
+                            //     console.log("Android device detected");
+                            //     window.addEventListener('deviceorientationabsolute', handleOrientationAndroid, true);
+                            // }
                         } else {
                             $("#permission").text("Permission not granted for DeviceOrientation");
                             console.log("Permission not granted for DeviceOrientation");

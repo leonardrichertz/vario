@@ -23,8 +23,7 @@ $(document).ready(function () {
         maximumAge: 30000,
         timeout: 27000,
     };
-
-
+    
     // Add Tile layer for map
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
