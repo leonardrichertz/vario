@@ -6,8 +6,8 @@ $(document).ready(function () {
     let watchId;
     let threshold = 0.1;
     
-    const ascentSound = document.getElementById('ascentSound');
-    const descentSound = document.getElementById('descentSound');
+    const ascentSound = $("#ascentSound");
+    const descentSound = $("#descentSound");
 
     $("#startHeightWatch").click(function () {
         if ('geolocation' in navigator) {
