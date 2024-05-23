@@ -66,9 +66,9 @@ $(document).ready(function () {
         var gamma = Math.round(event.gamma * 100) / 100; // rotation around y-axis
 
         // Display device orientation data
-        $("#orientationData").html("<br>absolute: " + absolute + "<br>heading: " + "<br>Alpha: " + alpha + "<br>Beta: " + beta + "<br>Gamma: " + gamma);
+        $("#orientationData").html("<br>Alpha: " + alpha + "<br>Beta: " + beta + "<br>Gamma: " + gamma);
     }
-    
+
     function handleOrientationAndroid(event) {
         $("#osInfo").html("Operating System: " + os);
         var alpha = Math.round(event.alpha * 100) / 100; // Normalize value
