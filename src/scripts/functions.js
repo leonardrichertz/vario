@@ -10,14 +10,12 @@ $(document).ready(function () {
             return "Android";
         }
         if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-            //Iphone
             return "iOS";
         }
         if (/Win/i.test(userAgent)) {
             return "Windows";
         }
         if (/Mac/i.test(userAgent)) {
-            //IPAd
             return "MacOS";
         }
         if (/Linux/i.test(userAgent)) {
@@ -51,15 +49,14 @@ $(document).ready(function () {
     marker = L.marker([0, 0]).addTo(map).bindPopup("You are here");
 
     $("#start").text("Device orientation and geolocation data");
-    // Function to handle device orientation data
+    
+    // Function to handle device orientation data for iOS
     function handleOrientationIOS(event) {
         $("#osInfo").html("Operating System: " + os);
         var alpha;
         if (typeof event.webkitCompassHeading !== "undefined") {
-            alpha = event.webkitCompassHeading; //iOS non-standard
+            alpha = event.webkitCompassHeading; // iOS non-standard
             alpha = Math.round(alpha * 100) / 100; // Normalize value
-            $("#webkit").text(heading.toFixed([0]));
-            $("#orientationData").html("Supported webkitCompassHeading");
             $("#compass").css("transform", "rotate(" + alpha + "deg)");
         }
         var beta = Math.round(event.beta * 100) / 100;  // rotation around x-axis
@@ -122,7 +119,6 @@ $(document).ready(function () {
             velocity.z + "<br>Displacement x: " + displacement.x + "<br>Displacement y: " + displacement.y + "<br>Displacement z: " + displacement.z + "<br>Delta time: " + deltaTime + "<br>Current timestamp: " + currentTimestamp + "<br>Previous timestamp: " + previousTimestamp);
     }
 
-
     function handleMotionError(event) {
         $("#motionData").html("Error: " + event.error.message);
     }
@@ -139,7 +135,6 @@ $(document).ready(function () {
 
         // Display current speed
         if (speed !== null && !isNaN(speed)) {
-            var speed = position.coords.speed;
             console.log("Current speed:", speed, "m/s");
             $("#speed").html("<br>Speed: " + speed.toFixed(2) + " m/s");
         } else {
@@ -164,20 +159,18 @@ $(document).ready(function () {
                 $("#orientationInfo").text("Requesting permission for DeviceOrientation");
                 console.log("Requesting permission for DeviceOrientation");
                 // Request permission
-                // The request permission is only needed for iOS 13+ devices and it is only available in Safari.
                 DeviceOrientationEvent.requestPermission()
                     .then(permissionState => {
                         if (permissionState === 'granted') {
                             $("#permission").text("Permission granted for DeviceOrientation");
                             // Permission granted, add event listener
-                            // if (os != 'Android') {
+                            if (os === 'iOS') {
                                 console.log("iOS device detected");
                                 window.addEventListener('deviceorientation', handleOrientationIOS);
-                            // }
-                            // else{
-                            //     console.log("Android device detected");
-                            //     window.addEventListener('deviceorientationabsolute', handleOrientationAndroid, true);
-                            // }
+                            } else {
+                                console.log("Android device detected");
+                                window.addEventListener('deviceorientationabsolute', handleOrientationAndroid, true);
+                            }
                         } else {
                             $("#permission").text("Permission not granted for DeviceOrientation");
                             console.log("Permission not granted for DeviceOrientation");
@@ -190,7 +183,11 @@ $(document).ready(function () {
                 $("#orientationInfo").text("No need to request permission for DeviceOrientation");
                 console.log("No need to request permission for DeviceOrientation");
                 // No need to request permission, add event listener directly
-                window.addEventListener('deviceorientation', handleOrientation);
+                if (os === 'iOS') {
+                    window.addEventListener('deviceorientation', handleOrientationIOS);
+                } else {
+                    window.addEventListener('deviceorientationabsolute', handleOrientationAndroid, true);
+                }
             }
         } else {
             $("#orientation").text("Device orientation not supported.");
@@ -205,31 +202,27 @@ $(document).ready(function () {
                 DeviceMotionEvent.requestPermission().then(permissionState => {
                     if (permissionState === 'granted') {
                         window.addEventListener('devicemotion', handleMotion, handleMotionError);
-                    }
-                    else {
+                    } else {
                         alert('Permission not granted for DeviceMotion');
                     }
                 }).catch(console.error);
-            }
-            else {
+            } else {
                 $("#motionInfo").text("No need to request permission for DeviceMotion");
                 window.addEventListener('devicemotion', handleMotion, handleMotionError);
             }
-        }
-        else {
+        } else {
             $("#motionInfo").text("Device motion not supported.");
         }
     });
 
-
-    // Stops trtackiing the users geolocation
+    // Stops tracking the user's geolocation
     $("#stopGeolocation").click(function () {
         navigator.geolocation.clearWatch(watchId);
         $("#geolocationData").text("Geolocation data stopped.");
         $("#startGeolocation").prop("disabled", false);
     });
 
-    // Starts tracking the users geolocation
+    // Starts tracking the user's geolocation
     $("#startGeolocation").click(function () {
         startGeolocation();
     });
