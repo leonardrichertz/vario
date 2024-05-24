@@ -71,27 +71,10 @@ $(document).ready(function () {
         if (speed !== null && !isNaN(speed)) {
             var speed = position.coords.speed;
             console.log("Current speed:", speed, "m/s");
-            console.log("Coords: " , position.coords)
             $("#speed").html("<br>Speed: " + speed.toFixed(2) + " m/s <br> Speed: " + (speed * 3.6).toFixed(2) + " km/h ");
         } else {
-            
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function(position) {
-                  var speed = position.coords.speed;
-                  if (speed !== null) {
-                    console.log('Geschwindigkeit: ' + speed + ' Meter pro Sekunde');
-                  } else {
-                    console.log('Geschwindigkeit nicht verfügbar');
-                  }
-                }, function(error) {
-                  console.error('Fehler beim Abrufen der Position: ' + error.message);
-                });
-              } else {
-                console.log('Geolocation wird nicht unterstützt');
-              }
-              console.log("Current speed:", speed, "m/s");
-              console.log("Koordinaten: " , position.coords)
-               $("#speed").html("Current speed not available, but it is: " + speed + " m/s <br> Speed: " + (speed * 3.6).toFixed(2) + " km/h " );
+            console.log("Current speed:", speed, "m/s");
+            $("#speed").html("Current speed not available, but it is: " + speed + " m/s <br> Speed: " + (speed * 3.6).toFixed(2) + " km/h " );
         }
     }
 
