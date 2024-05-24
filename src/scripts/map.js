@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    var map = L.map('map').setView([0, 0], 13);
+    var map = L.map('map').setView([49.75, 6.63], 12);
     var marker;
     var startMarker
     var watchId;
@@ -29,7 +29,7 @@ $(document).ready(function () {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
-    marker = L.marker([0, 0], { icon: markerIcon }).addTo(map).bindPopup("You are here");
+    marker = L.marker([0,0], { icon: markerIcon }).addTo(map).bindPopup("You are here");
 
 
     $("#start").text("Karte, Geschwindigkeit und Distanz");
@@ -70,12 +70,12 @@ $(document).ready(function () {
         // Display current speed
         if (speed !== null && !isNaN(speed)) {
             var speed = position.coords.speed;
+            console.log("Current speed:", speed, "m/s");
             $("#speed").html("<br>Speed: " + speed.toFixed(2) + " m/s <br> Speed: " + (speed * 3.6).toFixed(2) + " km/h ");
         } else {
-            var speed = position.coords.speed;
-            $("#speed").html("<br>Speed: " + 0 + " m/s <br> Speed: " + (speed * 3.6).toFixed(2) + " km/h ");
+            console.log("Current speed:", speed, "m/s");
+            $("#speed").html("Current speed not available, but it is: " + speed + " m/s <br> Speed: " + (speed * 3.6).toFixed(2) + " km/h " );
         }
-        
     }
 
     // Calulation of distance between two position with the Haversine-Formula
