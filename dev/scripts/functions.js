@@ -75,7 +75,7 @@ $(document).ready(function () {
         $("#compass").css("transform", "rotate(" + (360 - alpha) + "deg)");
 
     
-        $("#orientationData").html("<br>Alpha: " + alpha + "<br>Beta: " + beta + "<br>Gamma: " + gamma);
+        $("#orientationData").html("<br>Alpha: " + (360 - alpha ) + "<br>Beta: " + beta + "<br>Gamma: " + gamma);
     }
 
     function handleMotion(event) {
