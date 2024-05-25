@@ -72,8 +72,9 @@ $(document).ready(function () {
         var beta = Math.round(event.beta * 100) / 100;  // rotation around x-axis
         var gamma = Math.round(event.gamma * 100) / 100; // rotation around y-axis
 
-        $("#compass").css("transform", "rotate(" + alpha + "deg)");
+        $("#compass").css("transform", "rotate(" + (360 - alpha) + "deg)");
 
+    
         $("#orientationData").html("<br>Alpha: " + alpha + "<br>Beta: " + beta + "<br>Gamma: " + gamma);
     }
 
