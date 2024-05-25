@@ -32,6 +32,10 @@ $(document).ready(function () {
     var startMarker
     var watchId;
     var distance = 0;
+    
+    var lastPosition = null;
+    var lastTimestamp = null;
+
     var startMarkerIcon = L.icon({
         iconUrl: '../assets/marker.png',
         iconSize:     [38, 50], // size of the icon
@@ -129,11 +133,15 @@ $(document).ready(function () {
             console.log("Current speed:", speed, "m/s");
             $("#speed").html("<br>Speed: " + speed.toFixed(2) + " m/s <br> Speed: " + (speed * 3.6).toFixed(2) + " km/h ");
         } else {
-            console.log("Current speed:", speed, "m/s");
-            console.log(position.coords)
-            $("#speed").html("Current speed not available, but it is: " + speed + " m/s <br> Speed: " + (speed * 3.6).toFixed(2) + " km/h " );
+            //console.log("Current speed:", speed, "m/s");
+            //console.log(position.coords)
+            //$("#speed").html("Current speed not available, but it is: " + speed + " m/s <br> Speed: " + (speed * 3.6).toFixed(2) + " km/h " );
+        
+            var manualSpeed = calculateManualSpeed(position);
+            console.log("Calculated speed:", manualSpeed, "m/s");
+            $("#speed").html("<br>Calculated Speed: " + manualSpeed.toFixed(2) + " m/s <br> Calculated Speed: " + (manualSpeed * 3.6).toFixed(2) + " km/h ");
         }
-    }
+            }
 
     // Calulation of distance between two position with the Haversine-Formula
     function calculateDistance(lat1, lon1, lat2, lon2) {
@@ -147,6 +155,20 @@ $(document).ready(function () {
         const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         const distance = R * c; // Distance in kilometers
         return distance;
+    }
+
+    function calculateManualSpeed(position) {
+        if (lastPosition && lastTimestamp) {
+            const deltaTime = (position.timestamp - lastTimestamp) / 1000; // Convert ms to s
+            const distance = calculateDistance(lastPosition.coords.latitude, lastPosition.coords.longitude, position.coords.latitude, position.coords.longitude);
+            const speed = distance / deltaTime; // m/s
+            lastPosition = position;
+            lastTimestamp = position.timestamp;
+            return speed;
+        }
+        lastPosition = position;
+        lastTimestamp = position.timestamp;
+        return 0;
     }
 
     // Function to handle geolocation errors
