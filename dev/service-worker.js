@@ -1,4 +1,4 @@
-const CACHE_NAME = 'pwa-app-cache-v1';
+const CACHE_NAME = 'vario-cache-v1';
 const urlsToCache = [
   '/vario/dev/',
   '/vario/dev/index.html',
