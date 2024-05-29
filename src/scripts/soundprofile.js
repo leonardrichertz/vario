@@ -66,7 +66,7 @@ function getValueForClimb(data, climbRate) {
     return data[data.length - 1].value;
 }
 
-document.getElementById('playSound').addEventListener('click', function () {
+function playSound() {
     const climbRate = 2; // example climb rate
 
     const frequency = getValueForClimb(soundProfile.frequency, climbRate);
@@ -75,6 +75,7 @@ document.getElementById('playSound').addEventListener('click', function () {
     const gainValue = getValueForClimb(soundProfile.gain, climbRate);
 
     const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
     const oscillator = audioContext.createOscillator();
     const gainNode = audioContext.createGain();
 
@@ -90,4 +91,6 @@ document.getElementById('playSound').addEventListener('click', function () {
     setTimeout(() => {
         oscillator.stop();
     }, duration);
-});
+}
+
+document.getElementById('playSound').addEventListener('click', playSound);
