@@ -10,8 +10,6 @@ $(document).ready(function(){
             $("#webkit").text("webkitCompassHeading not supported.");
             alpha = event.alpha; // non-iOS
         }
-    
-        
         alpha = Math.round(alpha * 100) / 100; // Normalize value
         
         var beta     = Math.round(event.beta * 100) / 100;  // rotation around x-axis
