@@ -1,6 +1,7 @@
 // scripts/map.js
 import { calculateDistance, calculateManualSpeed } from '../utils/mapUtils.js';
 import { getOS } from '../utils/operatingSystem.js';
+import { handleOrientationAndroid, handleOrientationIOS } from '../utils/orientationUtils.js';
 
 export function map() {
     var os = getOS();
@@ -41,24 +42,14 @@ export function map() {
 
     $("#start").text("Karte, Geschwindigkeit und Distanz");
 
-    function handleOrientationIOS(event) {
-        var alpha;
-        if (typeof event.webkitCompassHeading !== "undefined") {
-            alpha = event.webkitCompassHeading; // iOS non-standard
-            alpha = Math.round(alpha * 100) / 100; // Normalize value
-        }
-        var beta = Math.round(event.beta * 100) / 100;  // rotation around x-axis
-        var gamma = Math.round(event.gamma * 100) / 100; // rotation around y-axis
-
+    function IOS(event) {
+        const {alpha, beta, gamma} = handleOrientationIOS(event);
         $("#compass").css("transform", "rotate(" + alpha + "deg)");
         $("#orientationData").html("<br>Alpha: " + alpha + "<br>Beta: " + beta + "<br>Gamma: " + gamma);
     }
 
-    function handleOrientationAndroid(event) {
-        var alpha = Math.round(event.alpha * 100) / 100; // Normalize value
-        var beta = Math.round(event.beta * 100) / 100;  // rotation around x-axis
-        var gamma = Math.round(event.gamma * 100) / 100; // rotation around y-axis
-
+    function Android(event) {
+        const {alpha, beta, gamma} = handleOrientationAndroid(event);
         $("#compass").css("transform", "rotate(" + (360 - alpha) + "deg)");
         $("#orientationData").html("<br>Alpha: " + (360 - alpha) + "<br>Beta: " + beta + "<br>Gamma: " + gamma);
     }
@@ -105,9 +96,9 @@ export function map() {
                         if (permissionState === 'granted') {
                             $("#permission").text("Permission granted for DeviceOrientation");
                             if (os === 'iOS' || os === 'MacOS') {
-                                window.addEventListener('deviceorientation', handleOrientationIOS);
+                                window.addEventListener('deviceorientation', IOS);
                             } else {
-                                window.addEventListener('deviceorientationabsolute', handleOrientationAndroid, true);
+                                window.addEventListener('deviceorientationabsolute', Android, true);
                             }
                         } else {
                             $("#permission").text("Permission not granted for DeviceOrientation");
@@ -118,6 +109,7 @@ export function map() {
             } else {
                 $("#orientationInfo").text("No need to request permission for DeviceOrientation");
                 if (os === 'iOS') {
+
                     window.addEventListener('deviceorientation', handleOrientationIOS);
                 } else {
                     window.addEventListener('deviceorientationabsolute', handleOrientationAndroid, true);
