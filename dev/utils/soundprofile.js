@@ -1,4 +1,4 @@
-import { playSound } from './utils/sound.js';
+import { playSound } from 'sound.js';
 
 const soundProfile = {
     "version": 1,
