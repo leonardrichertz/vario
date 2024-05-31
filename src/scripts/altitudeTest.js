@@ -5,6 +5,8 @@ $(document).ready(function () {
   let gammaShift = 0;
   let betaShift = 0;
 
+  const thresholdRotation = 1.5
+
   function handleError() {
     $("#altitudeData").text("Error getting altitude.");
 }
@@ -92,8 +94,7 @@ $(document).ready(function () {
     $("#beta").text("Beta: " + evt.beta);
     $("#gamma").text("Gamma: " + evt.gamma);
 
-    $("#betaShift").text("BetaShift: " + betaShift);
-    $("#betaShift").text("GammaShift: " + gammaShift);
+    
     if (evt.gamma < 90 && evt.gamma >= 0) {
         if (evt.gamma > thresholdRotation || evt.gamma - 90 < -thresholdRotation) {
             // adjust the gammaShift value
@@ -130,6 +131,8 @@ $(document).ready(function () {
             betaShift = 0;
         }
     }
+    $("#betaShift").text("BetaShift: " + betaShift);
+    $("#gammaShift").text("GammaShift: " + gammaShift);
     // We do not have to use alpha since it only represents the compass direction (rotation around z-axis)
 }
 });
