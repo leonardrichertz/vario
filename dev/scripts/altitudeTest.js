@@ -123,8 +123,10 @@ $(document).ready(function () {
   }
 
   function calculateSpeedUpDown(acc, interval){
+    if(acc > 0.2 || acc < -0.2){
       let speed = currentSpeedUpDown + acc * interval;
       return speed;
+    }
   }
 
 
