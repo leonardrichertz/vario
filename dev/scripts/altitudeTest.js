@@ -5,9 +5,15 @@ $(document).ready(function () {
   let gammaShift = 0;
   let betaShift = 0;
 
+  let intervalltime = 0
+
   const thresholdRotation = 1.5
 
   let currentSpeedUpDown = 0
+
+  let lastProcessedTime = 0;
+  const throttleInterval = 100; // Intervall in Millisekunden (z.B. 100 ms entspricht 10 mal pro Sekunde)
+
 
   function handleError() {
     $("#altitudeData").text("Error getting altitude.");
@@ -86,40 +92,45 @@ $(document).ready(function () {
   });
 
   function handleMotion(evt) {
-    let interval = evt.interval;
-    let accelarationUpDown = 0
+    const currentTime = Date.now();
+    if (currentTime - lastProcessedTime > throttleInterval) {
+      lastProcessedTime = currentTime;
 
-    let accelerationZ1 = evt.acceleration.z;
-    let accelerationY1 = evt.acceleration.y;
-    let accelerationX1 = evt.acceleration.x;
+      let interval = evt.interval + intervalltime;
+      let accelarationUpDown = 0;
 
-    $("#AccelerationX").text("Acceleration X: "+ accelerationX1.toFixed(2));
-    $("#AccelerationY").text("Acceleration Y: "+ accelerationY1.toFixed(2));
-    $("#AccelerationZ").text("Acceleration Z: "+ accelerationZ1.toFixed(2));
+      let accelerationZ1 = evt.acceleration.z;
+      let accelerationY1 = evt.acceleration.y;
+      let accelerationX1 = evt.acceleration.x;
 
-    switch (true) {
-      case (gammaShift >= 0 && gammaShift <= 90):
-          switch (true) {
-              case (betaShift >= 0 && betaShift <= 90):
-                accelarationUpDown = (betaShift / 90 * accelerationY1) + ((1- betaShift / 90) * accelerationZ1);
-                break;
-              case (betaShift < 0 && betaShift < -90):
-                accelarationUpDown = (betaShift / 90 * accelerationY1) - ((1- betaShift / 90) * accelerationZ1);
-                break;
-            }
-      case(gammaShift < 0 && gammaShift > -90):
-          switch (true) {
-              case (betaShift >= 0 && betaShift <= 90):
-                accelarationUpDown = (betaShift / 90 * accelerationY1) + ((1- betaShift / 90) * accelerationZ1);
-                break;
-              case (betaShift < 0 && betaShift < -90):
-                accelarationUpDown = (betaShift / 90 * accelerationY1) - ((1- betaShift / 90) * accelerationZ1);
-                break;
-        }
-        }
-      $("#AccelerationUpDown").text("Acceleration Up/Down" + accelarationUpDown.toFixed(1));
+      $("#AccelerationX").text("Acceleration X: " + accelerationX1.toFixed(2));
+      $("#AccelerationY").text("Acceleration Y: " + accelerationY1.toFixed(2));
+      $("#AccelerationZ").text("Acceleration Z: " + accelerationZ1.toFixed(2));
+
+      switch (true) {
+        case (gammaShift >= 0 && gammaShift <= 90):
+            switch (true) {
+                case (betaShift >= 0 && betaShift <= 90):
+                  accelarationUpDown = (betaShift / 90 * accelerationY1) + ((1 - betaShift / 90) * accelerationZ1);
+                  break;
+                case (betaShift < 0 && betaShift < -90):
+                  accelarationUpDown = (betaShift / 90 * accelerationY1) - ((1 - betaShift / 90) * accelerationZ1);
+                  break;
+              }
+        case (gammaShift < 0 && gammaShift > -90):
+            switch (true) {
+                case (betaShift >= 0 && betaShift <= 90):
+                  accelarationUpDown = (betaShift / 90 * accelerationY1) + ((1 - betaShift / 90) * accelerationZ1);
+                  break;
+                case (betaShift < 0 && betaShift < -90):
+                  accelarationUpDown = (betaShift / 90 * accelerationY1) - ((1 - betaShift / 90) * accelerationZ1);
+                  break;
+          }
+      }
+      $("#AccelerationUpDown").text("Acceleration Up/Down: " + accelarationUpDown.toFixed(1));
       currentSpeedUpDown = calculateSpeedUpDown(accelarationUpDown, interval);
-      $("#SpeedUpDown").text("Speed Up/Down" + currentSpeedUpDown.toFixed(1));
+      $("#SpeedUpDown").text("Speed Up/Down: " + currentSpeedUpDown.toFixed(1));
+    }
   }
 
   function calculateSpeedUpDown(acc, interval){
