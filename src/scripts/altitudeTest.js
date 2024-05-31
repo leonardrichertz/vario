@@ -2,7 +2,8 @@ $(document).ready(function () {
 
   let initialAltitude = 0;
   let currentAltitude = 0;
-
+  let gammaShift = 0;
+  let betaShift = 0;
 
   function handleError() {
     $("#altitudeData").text("Error getting altitude.");
@@ -86,6 +87,49 @@ $(document).ready(function () {
 
 
   function handleOrientation(evt) {
-    console.log("Handle Orientation" + evt)
-  }
+    console.log("handleOrientationEvent gamma: " + evt.gamma);
+    $("#alpha").text("Alpha: " + evt.alpha);
+    $("#beta").text("Beta: " + evt.beta);
+    $("#gamma").text("Gamma: " + evt.gamma);
+
+    $("#betaShift").text("BetaShift: " + betaShift);
+    $("#betaShift").text("GammaShift: " + gammaShift);
+    if (evt.gamma < 90 && evt.gamma >= 0) {
+        if (evt.gamma > thresholdRotation || evt.gamma - 90 < -thresholdRotation) {
+            // adjust the gammaShift value
+            gammaShift = evt.gamma;
+        }
+        else {
+            gammaShift = 0;
+        }
+    }
+    else if (evt.gamma >= -90 && evt.gamma < 0) {
+        if (evt.gamma < -thresholdRotation || evt.gamma + 90 > thresholdRotation) {
+            // adjust the gammaShift value
+            gammaShift = evt.gamma;
+        }
+        else {
+            gammaShift = 0;
+        }
+    }
+    if (evt.beta < 180  && evt.beta >= 0) {
+        if (evt.beta > thresholdRotation || evt.beta - 180 < -thresholdRotation) {
+            // adjust the betaShift value
+            betaShift = evt.beta;
+        }
+        else {
+            betaShift = 0;
+        }
+    }
+    else if (evt.beta >= -180 && evt.beta < 0) {
+        if (evt.beta < -thresholdRotation || evt.beta + 180 > thresholdRotation) {
+            // adjust the betaShift value
+            betaShift = evt.beta;
+        }
+        else {
+            betaShift = 0;
+        }
+    }
+    // We do not have to use alpha since it only represents the compass direction (rotation around z-axis)
+}
 });
