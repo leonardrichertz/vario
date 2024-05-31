@@ -7,6 +7,8 @@ $(document).ready(function () {
 
   const thresholdRotation = 1.5
 
+  let currentSpeedUpDown = 0
+
   function handleError() {
     $("#altitudeData").text("Error getting altitude.");
 }
@@ -84,8 +86,8 @@ $(document).ready(function () {
   });
 
   function handleMotion(evt) {
-    console.log("Hanlde Motion" + evt)
-    let accelarationInUpDown = 0
+    let interval = evt.interval;
+    let accelarationUpDown = 0
 
     let accelerationZ1 = evt.acceleration.z;
     let accelerationY1 = evt.acceleration.y;
@@ -99,23 +101,30 @@ $(document).ready(function () {
       case (gammaShift >= 0 && gammaShift <= 90):
           switch (true) {
               case (betaShift >= 0 && betaShift <= 90):
-                accelarationInUpDown = (betaShift / 90 * accelerationY1) + ((1- betaShift / 90) * accelerationZ1);
+                accelarationUpDown = (betaShift / 90 * accelerationY1) + ((1- betaShift / 90) * accelerationZ1);
                 break;
               case (betaShift < 0 && betaShift < -90):
-                accelarationInUpDown = (betaShift / 90 * accelerationY1) - ((1- betaShift / 90) * accelerationZ1);
+                accelarationUpDown = (betaShift / 90 * accelerationY1) - ((1- betaShift / 90) * accelerationZ1);
                 break;
             }
       case(gammaShift < 0 && gammaShift > -90):
           switch (true) {
               case (betaShift >= 0 && betaShift <= 90):
-                accelarationInUpDown = (betaShift / 90 * accelerationY1) + ((1- betaShift / 90) * accelerationZ1);
+                accelarationUpDown = (betaShift / 90 * accelerationY1) + ((1- betaShift / 90) * accelerationZ1);
                 break;
               case (betaShift < 0 && betaShift < -90):
-                accelarationInUpDown = (betaShift / 90 * accelerationY1) - ((1- betaShift / 90) * accelerationZ1);
+                accelarationUpDown = (betaShift / 90 * accelerationY1) - ((1- betaShift / 90) * accelerationZ1);
                 break;
         }
         }
-      $("#AccelerationUpDown").text("Acceleration Up/Down" + accelarationInUpDown.toFixed(1));
+      $("#AccelerationUpDown").text("Acceleration Up/Down" + accelarationUpDown.toFixed(1));
+      currentSpeedUpDown = calculateSpeedUpDown(accelarationUpDown, interval);
+      $("#SpeedUpDown").text("Speed Up/Down" + currentSpeedUpDown.toFixed(1));
+  }
+
+  function calculateSpeedUpDown(acc, interval){
+      let speed = currentSpeedUpDown + acc * interval;
+      return speed;
   }
 
 
