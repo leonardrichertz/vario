@@ -91,9 +91,9 @@ $(document).ready(function () {
     let accelerationY1 = evt.acceleration.y;
     let accelerationX1 = evt.acceleration.x;
 
-    $("#AccelerationX").text("Acceleration X: "+ accelerationX1);
-    $("#AccelerationY").text("Acceleration Y: "+ accelerationY1);
-    $("#AccelerationZ").text("Acceleration Z: "+ accelerationZ1);
+    $("#AccelerationX").text("Acceleration X: "+ accelerationX1.toFixed(2));
+    $("#AccelerationY").text("Acceleration Y: "+ accelerationY1.toFixed(2));
+    $("#AccelerationZ").text("Acceleration Z: "+ accelerationZ1.toFixed(2));
 
     switch (true) {
       case (gammaShift >= 0 && gammaShift <= 90):
@@ -115,7 +115,7 @@ $(document).ready(function () {
                 break;
         }
         }
-      $("#AccelerationUpDown").text("Acceleration Up/Down" + accelarationInUpDown);
+      $("#AccelerationUpDown").text("Acceleration Up/Down" + accelarationInUpDown.toFixed(1));
   }
 
 
