@@ -130,6 +130,7 @@ $(document).ready(function () {
                             adjustedAccelerationZ1 = (gammaShift / 90 * accelerationZ1) + (betaShift / 90 * accelerationZ1);
                             adjustedAccelerationY1 = (betaShift / 90 * accelerationY1)
                             adjustedAccelerationX1 = - (gammaShift / 90 * accelerationX1)
+                            console.log("Adjusted Acceleration X: " + adjustedAccelerationX1 + "  ,Y:   " + adjustedAccelerationY1 + "  ,Z:   " + adjustedAccelerationZ1)
                             adjustedAccelerationAltitude1 = adjustedAccelerationZ1 + adjustedAccelerationY1 + adjustedAccelerationX1;
                             actualSpeed = v0 + ((acceleration0Altitude + adjustedAccelerationAltitude1)/2) * evt.interval;
                             console.log("actualSpeed: " + actualSpeed);
