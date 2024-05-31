@@ -20,6 +20,11 @@ $(document).ready(function () {
     function handleError() {
         $("#altitudeData").text("Error getting altitude.");
     }
+
+    function handleMotionError(){
+        $("#motionInfo").text("Error in deviceMotion.");
+    }
+
     const options = {
         enableHighAccuracy: true,
         maximumAge: 30000,
@@ -30,7 +35,7 @@ $(document).ready(function () {
         if ('geolocation' in navigator) {
             navigator.geolocation.getCurrentPosition(function (position) {
                 initialAltitude = position.coords.altitude;
-                $("#altitudeData").text("Altitude: " + altitude);
+                $("#altitudeData").text("Altitude: " + initialAltitude);
             }, handleError, options);
             // Check if the device supports DeviceOrientationEvent
             if (window.DeviceOrientationEvent) {
