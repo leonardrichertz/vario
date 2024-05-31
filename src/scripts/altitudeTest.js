@@ -85,6 +85,21 @@ $(document).ready(function () {
 
   function handleMotion(evt) {
     console.log("Hanlde Motion" + evt)
+    let accelarationInUpDown = 0
+
+    let accelerationZ1 = evt.acceleration.z;
+    let accelerationY1 = evt.acceleration.y;
+    let accelerationX1 = evt.acceleration.x;
+
+
+    switch (true) {
+      case (gammaShift >= 0 && gammaShift <= 90):
+          switch (true) {
+              case (betaShift >= 0 && betaShift <= 90):
+                accelarationInUpDown = (betaShift / 90 * accelerationY1) + (1- betaShift / 90 * accelerationZ1);
+            }
+        }
+      $("#AccelerationUpDown").text("Acceleration Up/Down" + accelarationInUpDown);
   }
 
 
