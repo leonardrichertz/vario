@@ -1,11 +1,20 @@
 $(document).ready(function () {
+    let gammaShift = 0;
+    let betaShift = 0;
     let initialAltitude = 0;
-    let xSpeed = 0;
-    let ySpeed = 0;
-    let zSpeed = 0;
+    let currentAltitude = 0;
+    let verticalSpeed = 0;
+    let isFirstCall = true;
+    let v0 = 0; // Initial speed
+    let v1 = 0; // Speed at the next interval
+    const thresholdRotation = 1.5;
 
     function handleError() {
         $("#altitudeData").text("Error getting altitude.");
+    }
+
+    function handleMotionError() {
+        $("#motionInfo").text("Error in deviceMotion.");
     }
 
     const options = {
@@ -17,27 +26,42 @@ $(document).ready(function () {
     $("#requestAltitudeButton").click(function () {
         if ('geolocation' in navigator) {
             navigator.geolocation.getCurrentPosition(function (position) {
-                initialAltitude = position.coords.altitude || 0;
-                $("#altitudeData").text("Initial Altitude: " + initialAltitude + " meters");
+                initialAltitude = position.coords.altitude || 0; // Fallback to 0 if altitude is not available
+                currentAltitude = initialAltitude;
+                $("#altitudeData").text("Altitude: " + initialAltitude);
             }, handleError, options);
 
-            if (window.DeviceMotionEvent) {
-                $("#motion").text("Device motion supported.");
-                if (typeof DeviceMotionEvent.requestPermission === 'function') {
-                    $("#motionInfo").text("Requesting permission for DeviceMotion");
-                    DeviceMotionEvent.requestPermission().then(permissionState => {
+            if (window.DeviceOrientationEvent) {
+                $("#orientation").text("Device orientation supported.");
+                if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+                    DeviceOrientationEvent.requestPermission().then(permissionState => {
                         if (permissionState === 'granted') {
-                            window.addEventListener('devicemotion', handleMotion);
+                            window.addEventListener('deviceorientation', handleOrientation);
                         } else {
-                            alert('Permission not granted for DeviceMotion');
+                            alert('Permission not granted for DeviceOrientation');
                         }
                     }).catch(console.error);
                 } else {
-                    $("#motionInfo").text("No need to request permission for DeviceMotion");
-                    window.addEventListener('devicemotion', handleMotion);
+                    window.addEventListener('deviceorientation', handleOrientation);
+                }
+
+                if (window.DeviceMotionEvent) {
+                    if (typeof DeviceMotionEvent.requestPermission === 'function') {
+                        DeviceMotionEvent.requestPermission().then(permissionState => {
+                            if (permissionState === 'granted') {
+                                window.addEventListener('devicemotion', handleMotion, handleMotionError);
+                            } else {
+                                alert('Permission not granted for DeviceMotion');
+                            }
+                        }).catch(console.error);
+                    } else {
+                        window.addEventListener('devicemotion', handleMotion, handleMotionError);
+                    }
+                } else {
+                    $("#motionInfo").text("Device motion not supported.");
                 }
             } else {
-                $("#motionInfo").text("Device motion not supported.");
+                $("#orientation").text("Device orientation not supported.");
             }
         } else {
             $("#altitudeData").text("Geolocation not supported.");
@@ -45,18 +69,34 @@ $(document).ready(function () {
     });
 
     function handleMotion(evt) {
-        const interval = evt.interval; // interval in seconds
-        const accelerationX = evt.acceleration.x;
-        const accelerationY = evt.acceleration.y;
-        const accelerationZ = evt.acceleration.z;
-        
-        // Calculate the speed for each axis by integrating the acceleration
-        xSpeed += accelerationX * interval;
-        ySpeed += accelerationY * interval;
-        zSpeed += accelerationZ * interval;
-        console.log("Acceleration: X=" + accelerationX.toFixed(2) + ", Y=" + accelerationY.toFixed(2) + ", Z=" + accelerationZ.toFixed(2));
-        console.log("Speed: X=" + xSpeed.toFixed(2) + ", Y=" + ySpeed.toFixed(2) + ", Z=" + zSpeed.toFixed(2));
-        $("#accelerationData").text("Acceleration: X=" + accelerationX.toFixed(2) + ", Y=" + accelerationY.toFixed(2) + ", Z=" + accelerationZ.toFixed(2));
-        $("#speedData").text("Speed (m/s): X=" + xSpeed.toFixed(2) + ", Y=" + ySpeed.toFixed(2) + ", Z=" + zSpeed.toFixed(2));
+        let interval = evt.interval / 1000; // Convert milliseconds to seconds
+        let accelerationZ1 = evt.accelerationIncludingGravity.z;
+        let accelerationY1 = evt.accelerationIncludingGravity.y;
+        let accelerationX1 = evt.accelerationIncludingGravity.x;
+
+        if (isFirstCall) {
+            isFirstCall = false;
+            return; // Skip the first call as we need an initial reference
+        }
+
+        // Correct accelerations based on orientation
+        let adjustedAccelerationZ1 = accelerationZ1 * Math.cos(gammaShift * Math.PI / 180) + accelerationY1 * Math.sin(betaShift * Math.PI / 180);
+        let adjustedAccelerationY1 = accelerationY1 * Math.cos(betaShift * Math.PI / 180);
+        let adjustedAccelerationX1 = accelerationX1 * Math.cos(gammaShift * Math.PI / 180);
+
+        // Calculate average acceleration for this interval
+        let averageAcceleration = (adjustedAccelerationZ1 + adjustedAccelerationY1 + adjustedAccelerationX1) / 3;
+
+        // Update vertical speed and altitude
+        v1 = v0 + averageAcceleration * interval;
+        currentAltitude += v1 * interval;
+        v0 = v1; // Update v0 for the next interval
+
+        $("#altitudeData").text("Altitude: " + currentAltitude.toFixed(2));
+    }
+
+    function handleOrientation(evt) {
+        gammaShift = evt.gamma || 0;
+        betaShift = evt.beta || 0;
     }
 });
