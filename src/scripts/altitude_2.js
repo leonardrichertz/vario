@@ -83,13 +83,18 @@ $(document).ready(function () {
         let adjustedAccelerationZ1 = accelerationZ1 * Math.cos(gammaShift * Math.PI / 180) + accelerationY1 * Math.sin(betaShift * Math.PI / 180);
         let adjustedAccelerationY1 = accelerationY1 * Math.cos(betaShift * Math.PI / 180);
         let adjustedAccelerationX1 = accelerationX1 * Math.cos(gammaShift * Math.PI / 180);
+        console.log("Adjusted Z: " + adjustedAccelerationZ1);
+        console.log("Adjusted Y: " + adjustedAccelerationY1);
+        console.log("Adjusted X: " + adjustedAccelerationX1);
 
         // Calculate average acceleration for this interval
         let averageAcceleration = (adjustedAccelerationZ1 + adjustedAccelerationY1 + adjustedAccelerationX1) / 3;
+        console.log("Average acceleration: " + averageAcceleration);
 
         // Update vertical speed and altitude
         v1 = v0 + averageAcceleration * interval;
         currentAltitude += v1 * interval;
+        console.log("Current altitude: " + currentAltitude);
         v0 = v1; // Update v0 for the next interval
 
         $("#altitudeData").text("Altitude: " + currentAltitude.toFixed(2));
