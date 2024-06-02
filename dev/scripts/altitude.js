@@ -157,8 +157,8 @@ $(document).ready(function () {
                             // adjustedAccelerationAltitude = (gammaShift / 90 * accelerationZ) - (90 - gammaShift / 90 * accelerationX)  + (betaShift / 90 * accelerationZ) - (90 - betaShift / 90 * accelerationY); 
                         case (betaShift >= 90):
                             //z-negative, y-positive, x-positive
-                            adjustedAccelerationZ1 = -(gammaShift / 90 * accelerationZ1) - (betaShift / 90 * accelerationZ1);
-                            adjustedAccelerationY1 = -(betaShift / 90 * accelerationY1)
+                            adjustedAccelerationZ1 = -(gammaShift / 90 * accelerationZ1) + (betaShift / 180 * accelerationZ1);
+                            adjustedAccelerationY1 = -(betaShift / 180 * accelerationY1)
                             adjustedAccelerationX1 = - (gammaShift / 90 * accelerationX1)
                             adjustedAccelerationAltitude1 = adjustedAccelerationZ1 + adjustedAccelerationY1 + adjustedAccelerationX1;
                             actualSpeed = v0 + ((acceleration0Altitude + adjustedAccelerationAltitude1)/2) * evt.interval;
@@ -167,10 +167,15 @@ $(document).ready(function () {
                             console.log("currentAltitude: " + currentAltitude);
                             break;
                             // adjustedAccelerationAltitude = -(gammaShift / 90 * accelerationZ) + (90 - gammaShift / 90 * accelerationX) - (betaShift / 180 * accelerationZ) + (180 - betaShift / 180 * accelerationZ);
-                            // Todo: add code here
-                            break;
-                        case (betaShift < 0 && betaShift >= -90):
-                            adjustedAccelerationAltitude = (gammaShift / 90 * accelerationZ)  + (90- gammaShift / 90 * accelerationX)  + (betaShift / 360 * accelerationY) + (360 - betaShift / 360 * accelerationZ);
+                        case (betaShift < 0 && betaShift <= -90):
+                            adjustedAccelerationZ1 = -(gammaShift / 90 * accelerationZ1) - (betaShift / 180 * accelerationZ1);
+                            adjustedAccelerationY1 = -(betaShift / 180 * accelerationY1);
+                            adjustedAccelerationX1 = - (gammaShift / 90 * accelerationX1);
+                            adjustedAccelerationAltitude = adjustedAccelerationZ1 + adjustedAccelerationY1 + adjustedAccelerationX1;
+                            actualSpeed = v0 + ((acceleration0Altitude + adjustedAccelerationAltitude1)/2) * evt.interval;
+                            console.log("actualSpeed: " + actualSpeed);
+                            currentAltitude = currentAltitude + actualSpeed * evt.interval;
+                            console.log("currentAltitude: " + currentAltitude);
                             // Todo: add code here
                             break;
                     }
