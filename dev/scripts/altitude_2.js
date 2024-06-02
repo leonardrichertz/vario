@@ -8,6 +8,7 @@ $(document).ready(function () {
     let v0 = 0; // Initial speed
     let v1 = 0; // Speed at the next interval
     const thresholdRotation = 1.5;
+    let counter = 0;
 
     function handleError() {
         $("#altitudeData").text("Error getting altitude.");
@@ -69,6 +70,8 @@ $(document).ready(function () {
     });
 
     function handleMotion(evt) {
+        counter++;
+        console.log(counter)
         let interval = evt.interval / 1000; // Convert milliseconds to seconds
         let accelerationZ1 = evt.accelerationIncludingGravity.z;
         let accelerationY1 = evt.accelerationIncludingGravity.y;
