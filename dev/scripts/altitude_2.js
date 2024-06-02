@@ -72,7 +72,7 @@ $(document).ready(function () {
     function handleMotion(evt) {
         counter++;
         console.log(counter)
-        let interval = evt.interval / 1000; // Convert milliseconds to seconds
+        let interval = evt.interval; // Convert milliseconds to seconds
         let accelerationZ1 = evt.acceleration.z;
         let accelerationY1 = evt.acceleration.y;
         let accelerationX1 = evt.acceleration.x;
