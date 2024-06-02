@@ -96,6 +96,8 @@ $(document).ready(function () {
 
         // Update vertical speed and altitude
         v1 = v0 + averageAcceleration * interval;
+        console.log("Speed before: " + v0);
+        console.log("Speed: " + v1);
         currentAltitude += v1 * interval;
         console.log("Current altitude: " + currentAltitude);
         v0 = v1; // Update v0 for the next interval
