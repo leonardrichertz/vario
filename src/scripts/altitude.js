@@ -110,6 +110,7 @@ $(document).ready(function () {
             acceleration0Y = (betaShift / 90 * accelerationY1);
             acceleration0X = - (gammaShift / 90 * accelerationX1);
             acceleration0Altitude = acceleration0Z + acceleration0Y + acceleration0X;
+            currentAltitude = initialAltitude;
             isFirstCall = false;	
         }
         // Check if the device is not rotated
@@ -132,6 +133,7 @@ $(document).ready(function () {
                             // Maybe we actually only need to adjust the acceleration for the z-axis with the gammaShift value and not the beta value. I am however unsure about this. We would take parts of 90 from each rotation value and thus et a weighted average of the acceleration values.
                             // This is the old code that I am not sure about:
                             // adjustedAccelerationAltitude = (gammaShift / 90 * accelerationZ) + (betaShift / 90 * accelerationZ) - (90 - gammaShift / 90 * accelerationX) + (90 - betaShift / 90 * accelerationY);
+                            // Do we need to adjust the value of the acceleration by signing it? Does that make sense since a negative sum of accelerations would mean we lose speed. If there isn't any acceleration we would stay at the same speed.
                             adjustedAccelerationZ1 = (gammaShift / 90 * accelerationZ1) + (betaShift / 90 * accelerationZ1);
                             adjustedAccelerationY1 = (betaShift / 90 * accelerationY1)
                             adjustedAccelerationX1 = - (gammaShift / 90 * accelerationX1)
@@ -141,6 +143,7 @@ $(document).ready(function () {
                             console.log("actualSpeed: " + actualSpeed);
                             currentAltitude = currentAltitude + actualSpeed * evt.interval;
                             console.log("currentAltitude: " + currentAltitude);
+                            $("#altitudeData").text("Altitude: " + currentAltitude);
                             break;
                         case (betaShift >= -90 && betaShift < 0):
                             // In this case the acceleration for the y-axis is negative because the top of the device is facing downwards.
@@ -152,6 +155,7 @@ $(document).ready(function () {
                             console.log("actualSpeed: " + actualSpeed);
                             currentAltitude = currentAltitude + actualSpeed * evt.interval;
                             console.log("currentAltitude: " + currentAltitude);
+                            $("#altitudeData").text("Altitude: " + currentAltitude);
                             break;
                             // Old code that I am unsure about:
                             // adjustedAccelerationAltitude = (gammaShift / 90 * accelerationZ) - (90 - gammaShift / 90 * accelerationX)  + (betaShift / 90 * accelerationZ) - (90 - betaShift / 90 * accelerationY); 
@@ -165,6 +169,7 @@ $(document).ready(function () {
                             console.log("actualSpeed: " + actualSpeed);
                             currentAltitude = currentAltitude + actualSpeed * evt.interval;
                             console.log("currentAltitude: " + currentAltitude);
+                            $("#altitudeData").text("Altitude: " + currentAltitude);
                             break;
                             // adjustedAccelerationAltitude = -(gammaShift / 90 * accelerationZ) + (90 - gammaShift / 90 * accelerationX) - (betaShift / 180 * accelerationZ) + (180 - betaShift / 180 * accelerationZ);
                         case (betaShift < 0 && betaShift <= -90):
@@ -176,61 +181,64 @@ $(document).ready(function () {
                             console.log("actualSpeed: " + actualSpeed);
                             currentAltitude = currentAltitude + actualSpeed * evt.interval;
                             console.log("currentAltitude: " + currentAltitude);
+                            $("#altitudeData").text("Altitude: " + currentAltitude);
                             // Todo: add code here
                             break;
                     }
                     break;
 
-                case (gammaShift > 90 && gammaShift <= 180):
+                case (gammaShift < 0 && gammaShift >= -90):
                     switch (true) {
-                        case (betaShift <= 90):
-                            adjustedAccelerationAltitude = (gammaShift / 90 * accelerationZ) + (90 - gammaShift / 90 * accelerationX) + (betaShift / 90 * accelerationY) + (90 - betaShift / 90 * accelerationZ);
-                            actualSpeed = adjustedAccelerationAltitude * evt.interval + actualSpeed;
+                        case (betaShift >= 0 && betaShift <= 90):
+                            adjustedAccelerationZ1 = -(gammaShift / 90 * accelerationZ1) + (betaShift / 90 * accelerationZ1);
+                            adjustedAccelerationY1 = (betaShift / 90 * accelerationY1)
+                            adjustedAccelerationX1 = -(gammaShift / 90 * accelerationX1)
+                            console.log("Adjusted Acceleration X: " + adjustedAccelerationX1 + "  ,Y:   " + adjustedAccelerationY1 + "  ,Z:   " + adjustedAccelerationZ1)
+                            adjustedAccelerationAltitude1 = adjustedAccelerationZ1 + adjustedAccelerationY1 + adjustedAccelerationX1;
+                            actualSpeed = v0 + ((acceleration0Altitude + adjustedAccelerationAltitude1)/2) * evt.interval;
+                            console.log("actualSpeed: " + actualSpeed);
+                            currentAltitude = currentAltitude + actualSpeed * evt.interval;
+                            console.log("currentAltitude: " + currentAltitude);
+                            $("#altitudeData").text("Altitude: " + currentAltitude);
                             break;
-                        case (betaShift > 90 && betaShift <= 180):
-                            // Todo: add code here
+                            // adjustedAccelerationAltitude = (gammaShift / 90 * accelerationZ) + (90 - gammaShift / 90 * accelerationX) + (betaShift / 90 * accelerationY) + (90 - betaShift / 90 * accelerationZ);
+                        case (betaShift >= -90 && betaShift < 0):
+                            adjustedAccelerationZ1 = -(gammaShift / 90 * accelerationZ1) - (betaShift / 90 * accelerationZ1);
+                            adjustedAccelerationY1 = -(betaShift / 90 * accelerationY1)
+                            adjustedAccelerationX1 = -(gammaShift / 90 * accelerationX1)
+                            console.log("Adjusted Acceleration X: " + adjustedAccelerationX1 + "  ,Y:   " + adjustedAccelerationY1 + "  ,Z:   " + adjustedAccelerationZ1)
+                            adjustedAccelerationAltitude1 = adjustedAccelerationZ1 + adjustedAccelerationY1 + adjustedAccelerationX1;
+                            actualSpeed = v0 + ((acceleration0Altitude + adjustedAccelerationAltitude1)/2) * evt.interval;
+                            console.log("actualSpeed: " + actualSpeed);
+                            currentAltitude = currentAltitude + actualSpeed * evt.interval;
+                            console.log("currentAltitude: " + currentAltitude);
+                            $("#altitudeData").text("Altitude: " + currentAltitude);
                             break;
-                        case (betaShift > 180 && betaShift <= 270):
-                            // Todo: add code here
-                            break;
-                        case (betaShift > 270 && betaShift <= 360):
-                            // Todo: add code here
-                            break;
-                    }
-                    break;
-
-                case (gammaShift > 180 && gammaShift <= 270):
-                    switch (true) {
-                        case (betaShift <= 90):
-                            adjustedAccelerationAltitude = (gammaShift / 90 * accelerationZ) + (90 - gammaShift / 90 * accelerationX) + (betaShift / 90 * accelerationY) + (90 - betaShift / 90 * accelerationZ);
-                            actualSpeed = adjustedAccelerationAltitude * evt.interval + actualSpeed;
-                            break;
-                        case (betaShift > 90 && betaShift <= 180):
-                            // Todo: add code here
-                            break;
-                        case (betaShift > 180 && betaShift <= 270):
-                            // Todo: add code here
-                            break;
-                        case (betaShift > 270 && betaShift <= 360):
-                            // Todo: add code here
-                            break;
-                    }
-                    break;
-
-                case (gammaShift > 270 && gammaShift <= 360):
-                    switch (true) {
-                        case (betaShift <= 90):
-                            adjustedAccelerationAltitude = (gammaShift / 90 * accelerationZ) + (90 - gammaShift / 90 * accelerationX) + (betaShift / 90 * accelerationY) + (90 - betaShift / 90 * accelerationZ);
-                            actualSpeed = adjustedAccelerationAltitude * evt.interval + actualSpeed;
-                            break;
-                        case (betaShift > 90 && betaShift <= 180):
-                            // Todo: add code here
-                            break;
-                        case (betaShift > 180 && betaShift <= 270):
-                            // Todo: add code here
-                            break;
-                        case (betaShift > 270 && betaShift <= 360):
-                            // Todo: add code here
+                                // Todo: add code here
+                        case (betaShift >= 90):
+                                // Todo: add code here
+                                adjustedAccelerationZ1 = -(gammaShift / 90 * accelerationZ1) + (betaShift / 90 * accelerationZ1);
+                                adjustedAccelerationY1 = (betaShift / 90 * accelerationY1)
+                                adjustedAccelerationX1 = -(gammaShift / 90 * accelerationX1)
+                                console.log("Adjusted Acceleration X: " + adjustedAccelerationX1 + "  ,Y:   " + adjustedAccelerationY1 + "  ,Z:   " + adjustedAccelerationZ1)
+                                adjustedAccelerationAltitude1 = adjustedAccelerationZ1 + adjustedAccelerationY1 + adjustedAccelerationX1;
+                                actualSpeed = v0 + ((acceleration0Altitude + adjustedAccelerationAltitude1)/2) * evt.interval;
+                                console.log("actualSpeed: " + actualSpeed);
+                                currentAltitude = currentAltitude + actualSpeed * evt.interval;
+                                console.log("currentAltitude: " + currentAltitude);
+                                $("#altitudeData").text("Altitude: " + currentAltitude);
+                                break;
+                        case (betaShift < 0 && betaShift <= -90):
+                            adjustedAccelerationZ1 = -(gammaShift / 90 * accelerationZ1) - (betaShift / 90 * accelerationZ1);
+                            adjustedAccelerationY1 = -(betaShift / 90 * accelerationY1)
+                            adjustedAccelerationX1 = -(gammaShift / 90 * accelerationX1)
+                            console.log("Adjusted Acceleration X: " + adjustedAccelerationX1 + "  ,Y:   " + adjustedAccelerationY1 + "  ,Z:   " + adjustedAccelerationZ1)
+                            adjustedAccelerationAltitude1 = adjustedAccelerationZ1 + adjustedAccelerationY1 + adjustedAccelerationX1;
+                            actualSpeed = v0 + ((acceleration0Altitude + adjustedAccelerationAltitude1)/2) * evt.interval;
+                            console.log("actualSpeed: " + actualSpeed);
+                            currentAltitude = currentAltitude + actualSpeed * evt.interval;
+                            console.log("currentAltitude: " + currentAltitude);
+                            $("#altitudeData").text("Altitude: " + currentAltitude);
                             break;
                     }
                     break;
