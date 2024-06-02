@@ -73,9 +73,9 @@ $(document).ready(function () {
         counter++;
         console.log(counter)
         let interval = evt.interval / 1000; // Convert milliseconds to seconds
-        let accelerationZ1 = evt.accelerationIncludingGravity.z;
-        let accelerationY1 = evt.accelerationIncludingGravity.y;
-        let accelerationX1 = evt.accelerationIncludingGravity.x;
+        let accelerationZ1 = evt.acceleration.z;
+        let accelerationY1 = evt.acceleration.y;
+        let accelerationX1 = evt.acceleration.x;
 
         if (isFirstCall) {
             isFirstCall = false;
