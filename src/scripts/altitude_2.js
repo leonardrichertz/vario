@@ -8,6 +8,7 @@ $(document).ready(function () {
     let v0 = 0; // Initial speed
     let v1 = 0; // Speed at the next interval
     const thresholdRotation = 1.5;
+    const accelerationThreshold = 0.1; // Define a threshold for significant acceleration
     let counter = 0;
 
     function handleError() {
@@ -71,8 +72,8 @@ $(document).ready(function () {
 
     function handleMotion(evt) {
         counter++;
-        console.log(counter)
-        let interval = evt.interval; // Convert milliseconds to seconds
+        console.log(counter);
+        let interval = evt.interval;
         let accelerationZ1 = evt.acceleration.z;
         let accelerationY1 = evt.acceleration.y;
         let accelerationX1 = evt.acceleration.x;
@@ -86,6 +87,14 @@ $(document).ready(function () {
         let adjustedAccelerationZ1 = accelerationZ1 * Math.cos(gammaShift * Math.PI / 180) + accelerationY1 * Math.sin(betaShift * Math.PI / 180);
         let adjustedAccelerationY1 = accelerationY1 * Math.cos(betaShift * Math.PI / 180);
         let adjustedAccelerationX1 = accelerationX1 * Math.cos(gammaShift * Math.PI / 180);
+
+        // Check if the adjusted accelerations exceed the threshold
+        if (Math.abs(adjustedAccelerationZ1) < accelerationThreshold && 
+            Math.abs(adjustedAccelerationY1) < accelerationThreshold && 
+            Math.abs(adjustedAccelerationX1) < accelerationThreshold) {
+            return; // Skip this update if movements are minor
+        }
+
         console.log("Adjusted Z: " + adjustedAccelerationZ1);
         console.log("Adjusted Y: " + adjustedAccelerationY1);
         console.log("Adjusted X: " + adjustedAccelerationX1);
