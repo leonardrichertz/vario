@@ -140,7 +140,8 @@ $(document).ready(function () {
   function calculateSpeedUpDown(acc, interval){
     if(acc > 0.1 || acc < -0.1){
       let speed = currentSpeedUpDown + acc * interval / 1000;
-      console.log("kalkulierter Speed: " + speed + "  delta-speed: " + speed - currentSpeedUpDown)
+      console.log("Interval: " + interval)
+      console.log("kalkulierter Speed: " + speed + "  delta-speed: " + (speed - currentSpeedUpDown))
       return speed;
     } else return currentSpeedUpDown
   }
