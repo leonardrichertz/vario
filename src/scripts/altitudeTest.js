@@ -12,7 +12,7 @@ $(document).ready(function () {
   let currentSpeedUpDown = 0
 
   let lastProcessedTime = 0;
-  const throttleInterval = 100; // Intervall in Millisekunden (z.B. 100 ms entspricht 10 mal pro Sekunde)
+  const throttleInterval = 500; // Intervall in Millisekunden (z.B. 100 ms entspricht 10 mal pro Sekunde)
 
 
   function handleError() {
@@ -111,19 +111,19 @@ $(document).ready(function () {
         case (gammaShift >= 0 && gammaShift <= 90):
             switch (true) {
                 case (betaShift >= 0 && betaShift <= 90):
-                  accelarationUpDown = (betaShift / 90 * accelerationY1) + ((1 - betaShift / 90) * accelerationZ1);
+                  accelarationUpDown = (betaShift / 90 * accelerationY1) + ((1 - betaShift / 90) * accelerationZ1) + (betaShift / 90 * accelerationX1);
                   break;
                 case (betaShift < 0 && betaShift < -90):
-                  accelarationUpDown = (betaShift / 90 * accelerationY1) - ((1 - betaShift / 90) * accelerationZ1);
+                  accelarationUpDown = (betaShift / 90 * accelerationY1) - ((1 - betaShift / 90) * accelerationZ1)  + (betaShift / 90 * accelerationX1);
                   break;
               }
         case (gammaShift < 0 && gammaShift > -90):
             switch (true) {
                 case (betaShift >= 0 && betaShift <= 90):
-                  accelarationUpDown = (betaShift / 90 * accelerationY1) + ((1 - betaShift / 90) * accelerationZ1);
+                  accelarationUpDown = (betaShift / 90 * accelerationY1) + ((1 - betaShift / 90) * accelerationZ1) + (betaShift / 90 * accelerationX1);
                   break;
                 case (betaShift < 0 && betaShift < -90):
-                  accelarationUpDown = (betaShift / 90 * accelerationY1) - ((1 - betaShift / 90) * accelerationZ1);
+                  accelarationUpDown = (betaShift / 90 * accelerationY1) - ((1 - betaShift / 90) * accelerationZ1) + (betaShift / 90 * accelerationX1);
                   break;
           }
       }
