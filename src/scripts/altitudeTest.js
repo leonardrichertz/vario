@@ -1,9 +1,13 @@
 $(document).ready(function () {
 
+    import { getOS } from '../utils/operatingSystem.js';
+
   let initialAltitude = 0;
   let currentAltitude = 0;
   let gammaShift = 0;
   let betaShift = 0;
+
+  var os = getOS();
 
   let intervaltime = 0
 
@@ -139,10 +143,18 @@ $(document).ready(function () {
 
   function calculateSpeedUpDown(acc, interval){
     if(acc > 0.1 || acc < -0.1){
-      let speed = currentSpeedUpDown + acc * interval / 1000;
-      console.log("Interval: " + interval)
-      console.log("kalkulierter Speed: " + speed + "  delta-speed: " + (speed - currentSpeedUpDown))
-      return speed;
+        if(os == 'iOS'){
+            //For IOS Intervall seems to be in seconds. For android in ms
+            let speed = currentSpeedUpDown + acc * interval;
+            console.log("Interval: " + interval)
+            console.log("kalkulierter Speed on IOS: " + speed + "  delta-speed: " + (speed - currentSpeedUpDown))
+            return speed;
+        } else {
+            let speed = currentSpeedUpDown + acc * interval / 1000;
+            console.log("Interval: " + interval)
+            console.log("kalkulierter Speed: " + speed + "  delta-speed: " + (speed - currentSpeedUpDown))
+            return speed;
+        }
     } else return currentSpeedUpDown
   }
 
