@@ -166,7 +166,7 @@ $(document).ready(function () {
 
   function calculateSpeedUpDown(acc, interval){
     if(acc > 0.1 || acc < -0.1){
-        if(os == 'iOS'){
+        if(os == 'iOS' || os =='MacOS'){
             //For IOS Intervall seems to be in seconds. For android in ms
             let speed = currentSpeedUpDown + acc * interval;
             console.log("Interval: " + interval)
