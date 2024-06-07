@@ -128,9 +128,9 @@ $(document).ready(function () {
                   break;
           }
       }
-      $("#AccelerationUpDown").text("Acceleration Up/Down: " + accelarationUpDown.toFixed(1));
+      $("#AccelerationUpDown").text("Acceleration Up/Down: " + accelarationUpDown.toFixed(3));
       currentSpeedUpDown = calculateSpeedUpDown(accelarationUpDown, interval);
-      $("#SpeedUpDown").text("Speed Up/Down: " + currentSpeedUpDown.toFixed(1));
+      $("#SpeedUpDown").text("Speed Up/Down: " + currentSpeedUpDown.toFixed(3));
       interval = 0;
       intervaltime = 0;
     }
@@ -140,13 +140,13 @@ $(document).ready(function () {
   function calculateSpeedUpDown(acc, interval){
     if(acc > 0.1 || acc < -0.1){
       let speed = currentSpeedUpDown + acc * interval / 1000;
+      console.log("kalkulierter Speed: " + speed + "  delta-speed: " + speed - currentSpeedUpDown)
       return speed;
     } else return currentSpeedUpDown
   }
 
 
   function handleOrientation(evt) {
-    console.log("handleOrientationEvent gamma: " + evt.gamma);
     $("#alpha").text("Alpha: " + evt.alpha);
     $("#beta").text("Beta: " + evt.beta);
     $("#gamma").text("Gamma: " + evt.gamma);
