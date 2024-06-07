@@ -5,7 +5,7 @@ $(document).ready(function () {
   let gammaShift = 0;
   let betaShift = 0;
 
-  let intervalltime = 0
+  let intervaltime = 0
 
   const thresholdRotation = 1.5
 
@@ -93,10 +93,11 @@ $(document).ready(function () {
 
   function handleMotion(evt) {
     const currentTime = Date.now();
+    let interval = evt.interval + intervaltime;
     if (currentTime - lastProcessedTime > throttleInterval) {
       lastProcessedTime = currentTime;
 
-      let interval = evt.interval + intervalltime;
+      
       let accelarationUpDown = 0;
 
       let accelerationZ1 = evt.acceleration.z;
@@ -130,11 +131,14 @@ $(document).ready(function () {
       $("#AccelerationUpDown").text("Acceleration Up/Down: " + accelarationUpDown.toFixed(1));
       currentSpeedUpDown = calculateSpeedUpDown(accelarationUpDown, interval);
       $("#SpeedUpDown").text("Speed Up/Down: " + currentSpeedUpDown.toFixed(1));
+      interval = 0;
+      intervaltime = 0;
     }
+    intervaltime = intervaltime + evt.interval;
   }
 
   function calculateSpeedUpDown(acc, interval){
-    if(acc > 0.3 || acc < -0.3){
+    if(acc > 0.1 || acc < -0.1){
       let speed = currentSpeedUpDown + acc * interval / 1000;
       return speed;
     } else return currentSpeedUpDown
