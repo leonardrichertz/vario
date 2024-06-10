@@ -11,14 +11,14 @@ export function calculateDistance(lat1, lon1, lat2, lon2) {
     return distance;
 }
 
-export function calculateManualSpeed(position) {
+export function calculateManualSpeed(position, lastPosition, lastTimestamp) {
     if (lastPosition && lastTimestamp) {
         const deltaTime = (position.timestamp - lastTimestamp) / 1000; // Convert ms to s
         const distance = calculateDistance(lastPosition.coords.latitude, lastPosition.coords.longitude, position.coords.latitude, position.coords.longitude);
         const speed = distance / deltaTime; // m/s
         lastPosition = position;
         lastTimestamp = position.timestamp;
-        return speed;
+        return speed, lastPosition, lastTimestamp;
     }
     lastPosition = position;
     lastTimestamp = position.timestamp;
