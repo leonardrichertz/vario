@@ -80,7 +80,7 @@ export function map() {
             $("#speed").html(speed.toFixed(2));
         } else {
             var manualSpeed, lastPosition, lastTimestamp = calculateManualSpeed(position, lastPosition, lastTimestamp);
-            $("#speed").html( manualSpeed.toFixed(2));
+            $("#speed").html(manualSpeed.toFixed(2));
         }
     }
 
