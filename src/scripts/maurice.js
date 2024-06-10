@@ -77,10 +77,10 @@ export function map() {
 
         var speed = position.coords.speed;
         if (speed !== null && !isNaN(speed)) {
-            $("#speed").html("<br>Speed: " + speed.toFixed(2) + " m/s <br> Speed: " + (speed * 3.6).toFixed(2) + " km/h ");
+            $("#speed").html(speed.toFixed(2));
         } else {
             var manualSpeed, lastPosition, lastTimestamp = calculateManualSpeed(position, lastPosition, lastTimestamp);
-            $("#speed").html("<br>Calculated Speed: " + manualSpeed.toFixed(2) + " m/s <br> Calculated Speed: " + (manualSpeed * 3.6).toFixed(2) + " km/h ");
+            $("#speed").html( manualSpeed.toFixed(2));
         }
     }
 
