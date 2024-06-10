@@ -1,60 +1,49 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="functions.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My PWA</title>
+    <link rel="manifest" href="manifest.webmanifest">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-    <style>
-        body {
-            padding: 0;
-            margin: 0;
-        }
-
-        html,
-        body,
-        #map {
-            height: 50%;
-            width: 50vw;
-        }
-
-        #map {
-            height: 520px;
-        }
-    </style>
 </head>
-
 <body>
+    <!-- Include the header -->
+    <!-- <div id="header"></div> -->
 
+    <!-- Main content -->
+    <main>
+        Hello, World!
+    </main>
 
-    <p id="start"></p>
+    <div id="map"></div>
 
-    <img id="compass" src="assets/compass.png">
-    <p id="orientation"></p>
-    <p id="orientationInfo"></p>
-    <p id="permission"></p>
-    <p id="motion"></p>
-    <p id="motionInfo"></p>
-    <p id="webkit"></p>
-    <button id="requestOrientationPermissionButton">Click here for starting orientation </button>
-    <button id="requestMotionPermissionButton">Click here for starting the Motion data</button>
-    <button id="stopGeolocation">stop watching geolocation</button>
-    <button id="startGeolocation">Restart the Geolocation</button>
-    <p id ="motionSpeed"></p>
-    <p id="groundSpeedInfo"></p>
-    <p id="speed"></p>
+    <!-- Include the footer -->
+    <!-- <div id="footer"></div> -->
 
-    <!-- <button id="toggleButton">Toggle Device Motion</button> -->
+    <!-- Add your service worker registration script here -->
+    <script>
+        $(document).ready(function(){
+            // $("#header").load("/path/to/header.html");
+            // $("#footer").load("/path/to/footer.html");
+            $("#map").load("views/map.html", function() {
+                $.getScript("scripts/map.js");
+            });
+        });
 
-    <!-- Elements to display device orientation and geolocation data -->
-    <div id="orientationData"></div>
-    <div id="geolocationData"></div>
-    <div id="motionData"></div>
-    <div id="map">Map</div>
-
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('service-worker.js')
+                    .then(registration => {
+                        console.log('Service Worker registered with scope:', registration.scope);
+                    })
+                    .catch(error => {
+                        console.log('Service Worker registration failed:', error);
+                    });
+            });
+        }
+    </script>
 </body>
-
 </html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Höhenmessung</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="../scripts/noahfunctions.js"></script>
+</head>
+<body>
+    <h1>Höhenmessung</h1>
+    <p>Diese Seite verwendet die Geolokalisierungsfunktionen des Browsers, um die Höhe des Benutzers zu verfolgen.</p>
+    <button id="startHeightWatch">Höhenüberwachung starten</button>
+    <button id="stopHeightWatch">Höhenüberwachung stoppen</button>
+    <div id="height"></div>
+    <div id="latitude"></div>
+    <div id="ascent_descent"></div>
+    <div id="threshold"></div>
+
+    <audio id="ascentSound" src="../assets/Ascent_sound.mp3" preload="auto"></audio>
+    <audio id="descentSound" src="../assets/Descent_sound.mp3" preload="auto"></audio>
+</body>
+</html>

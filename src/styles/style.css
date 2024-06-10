@@ -1,0 +1,163 @@
+:root {
+    --primary-color: #232323;
+    --highlight-color: yellow;
+    --hover-highlight-color: yellow;
+    --text-color: white;
+    --text-color-contrast: white;
+}
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+/* General CSS */
+.container {
+    background-color: #1B1B1B ;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 100%;
+}
+
+.middle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.middle img {
+    margin: 10px; /* Add margin to separate the images */
+}
+
+.container .navbar .color-text {
+    color: #E8E8E8; /* Replace this with your desired color */
+}
+
+.color-text {
+    color: #E8E8E8; /* Replace this with your desired color */
+}
+
+.badge-lg {
+    font-size: 1.5em; /* Adjust the font size as needed */
+    padding: 0.25em 0.5em; /* Adjust padding as needed */
+}
+
+
+/* Speed Circles CSS */
+.middle-circles {
+    display: flex;
+    justify-content: center; /* Center items horizontally */
+    align-items: center;
+    height: 25vh; /* Set the container height to 25% of the viewport height */
+    padding: 0 15px; /* Add padding to the left and right sides of the container */
+}
+
+.circle-label {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 90px;
+    height: 90px;
+    line-height: 1;
+    border: 2px solid #E8E8E8; /* Stroke color */
+    border-radius: 50%;
+    background-color: #252525;
+    color: white;
+    text-align: center;
+    font-size: 14px;
+}
+
+.circle-label-container {
+    text-align: center;
+    flex: 1 1 200px; /* Grow, shrink, and set a base width of 200px */
+    margin: 20px; /* Adjust vertical margin as needed */
+}
+
+/* Save Button CSS */
+.save-button {
+    height: 10vh; /* Set the container height to 100% of the viewport height */
+}
+
+.container {
+    background-color: #1B1B1B ;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 100%;
+}
+
+/* Sidebar CSS */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: -250px; /* Initially hide the sidebar off-screen */
+    width: 250px;
+    height: 100vh;
+    background-color: #1B1B1B;
+    transition: left 0.3s ease;
+}
+.sidebar.show {
+    left: 0; /* Show the sidebar by setting left to 0 */
+}
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+.sidebar ul li {
+    padding: 10px;
+    color: #E8E8E8;
+}
+
+.container-stats {
+    background-color: #171717;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 100%;
+}
+
+.container-pair {
+    display: flex;
+    align-items: center;
+    margin-right: 20px; /* Adjust the margin between each pair */
+}
+
+
+
+/* Map CSS */
+#map {
+    border-top: 5px solid #656565; /* Top border */
+    border-bottom: 5px solid #656565; /* Bottom border */
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    /*min-height: 00px; /* Specify the minimum height */
+}
+
+#search-box {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 1000;
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/*#search-input {
+    width: 200px;
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}*/
+
+

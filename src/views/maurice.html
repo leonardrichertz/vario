@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, width=device-width">
+  <link rel="stylesheet" href="../styles/style.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=SF Pro Text:wght@600&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Segoe UI:wght@400&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+  <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+  <title>studienprojekt</title>
+</head>
+<body>
+    <script type="module">
+        import { map } from '../scripts/map.js'; 
+        $(document).ready(function () {
+            console.log("Document ready, initializing map.");
+            map();
+        });
+    </script>
+
+    <!-- Navbar -->
+    <div class="container" style="max-width: 100%">
+      <nav class="navbar">
+        <div class="container d-flex justify-content-between align-items-center">
+          <a class="navbar-brand" href="#" id="sidebarToggle">
+            <img src="../assets/img/Menu.svg" alt="Bootstrap" width="30" height="24">
+          </a>
+          <span class="navbar-text mx-auto color-text">Variometer</span>
+        </div>
+      </nav>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+      <ul>
+        <li onclick="closeSidebar()">Zurück zur Übersicht</li>
+        <li>Gespeicherte Flüge</li>
+        <li>Einstellungen</li>
+      </ul>
+    </div>
+
+    <!-- Compass and Height Change -->
+    <div class="container middle" style="max-width: 100%">
+      <img src="../assets/img/height.svg" alt="Height">
+      <div class="container">
+        <span class="badge badge-secondary badge-lg" style="font-size: 20px; padding: 5px 10px;">0.0</span>
+      </div>
+      <img id="compass" src="../assets/img/compass.svg" alt="Compass">
+    </div>
+
+    <button id="requestOrientationPermissionButton">Start</button>
+
+    <!-- Map -->
+    <div id="map" style="max-width: 100%; min-width: 20%;"></div>
+
+    <!-- Speed Labels -->
+    <div class="container middle-circles" style="max-width: 100%">
+      <div class="circle-label-container">
+        <span class="circle-label"></span>
+        <div class="label-text color-text">Geschwindigkeit von Aufstieg</div>
+      </div>
+      <div class="circle-label-container">
+        <span class="circle-label"></span>
+        <div class="label-text color-text">Geschwindigkeit von Abstieg</div>
+      </div>
+      <div class="circle-label-container">
+        <span id="speed" class="circle-label"></span>
+        <div class="label-text color-text">Geschwindigkeit über Boden</div>
+      </div>
+    </div>
+
+    <!-- Statistics Labels -->
+    <div class="container container-stats" style="max-width: 100%">
+      <div class="container-pair">
+        <div class="circle-label-container">
+            <span class="circle-label">
+              <img src="../assets/img/Vector.svg" alt="Image 1">
+            </span>
+        </div>
+        <div class="label-text color-text">Zeit in min</div>
+      </div>
+      <div class="container-pair">
+        <div class="circle-label-container">
+            <span class="circle-label">
+              <img src="../assets/img/Map.svg" alt="Image 2">
+            </span>
+        </div>
+        <div class="label-text color-text">Strecke in m</div>
+      </div>
+    </div>
+
+    <!-- Save Route Button -->
+    <div class="container container-button d-flex justify-content-center save-button" style="max-width: 100%; padding: 50px;">
+      <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModal" style="padding: 20px 30px; font-size: 24px;">
+        Strecke abspeichern
+      </button>
+    </div>
+
+    <!-- Modal for saving-->
+    <div class="modal fade container" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="max-width: 100%">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Strecke abspeichern</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            This is the modal body. You can add any content here.
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success">Strecke abspeichern</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.7.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+      function closeSidebar() {
+        $('#sidebar').removeClass('show'); // Close the sidebar
+      }
+
+      $(document).ready(function() {
+        $('#sidebarToggle').click(function(e) {
+          e.stopPropagation(); // Prevent the click event from bubbling up to the document
+          $('#sidebar').toggleClass('show'); // Toggle the 'show' class on the sidebar
+        });
+
+        $(document).click(function(e) {
+          if (!$(e.target).closest('#sidebar').length) {
+            $('#sidebar').removeClass('show'); // Close the sidebar
+          }
+        });
+
+        $('#requestOrientationPermissionButton').click(function() {
+          console.log("Button clicked, requesting orientation permission.");
+          if (DeviceOrientationEvent && typeof DeviceOrientationEvent.requestPermission === "function") {
+            DeviceOrientationEvent.requestPermission().then(permissionState => {
+              if (permissionState === 'granted') {
+                window.addEventListener('deviceorientation', handleOrientation);
+              }
+            }).catch(console.error);
+          } else {
+            window.addEventListener('deviceorientation', handleOrientation);
+          }
+        });
+      });
+
+      function handleOrientation(event) {
+        var alpha = event.alpha;
+        var beta = event.beta;
+        var gamma = event.gamma;
+        console.log(`Alpha: ${alpha}, Beta: ${beta}, Gamma: ${gamma}`);
+      }
+    </script>
+</body>
+</html>
