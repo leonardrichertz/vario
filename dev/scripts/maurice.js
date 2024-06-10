@@ -89,6 +89,7 @@ export function map() {
     }
 
     $("#requestOrientationPermissionButton").click(function () {
+        console.log("Button clicked");
         if (window.DeviceOrientationEvent) {
             $("#orientation").text("Device orientation supported.");
             if (typeof DeviceOrientationEvent.requestPermission === 'function') {
