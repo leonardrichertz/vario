@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,18 +8,6 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css"> <!-- Link to external CSS file -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
-    <!-- Leaflet JavaScript -->
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
-    <!-- Leaflet Control Geocoder JavaScript -->
-    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
-    <!-- Leaflet Control Geocoder CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
-    
-    <title>Studienprojekt</title>
 </head>
 <body>
     <!-- Include the header -->
@@ -58,47 +45,5 @@
             });
         }
     </script>
-    <header>
-        Studienprojekt
-    </header>
-    <div class="compass">
-        <div class="arrow"></div>
-    </div>
-    <div class="label-container">
-        <div class="label">Geschwindigkeit von Aufstieg:</div>
-        <div class="label">Geschwindigkeit von Abstieg:</div>
-    </div>
-    <div class="label-container">
-        <div class="label">Tatsächliche Geschwindigkeit:</div>
-        <div class="label">Geschwindigkeit über Boden:</div>
-    </div>
-
-    <div id="map"></div>
-
-    <script>
-        var map = L.map('map').setView([51.505, -0.09], 13); // Set the initial center and zoom leve
-
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
-
-        var searchControl = L.Control.geocoder({
-            defaultMarkGeocode: false,
-            collapsed: false,
-            placeholder: 'Search for a location...',
-            errorMessage: 'Nothing found.',
-            geocoder: L.Control.Geocoder.nominatim()
-        }).on('markgeocode', function(e) {
-            var bbox = e.geocode.bbox;
-            var poly = L.polygon([
-                bbox.getSouthEast(),
-                bbox.getNorthEast(),
-                bbox.getNorthWest(),
-                bbox.getSouthWest()
-            ]).addTo(map);
-            map.fitBounds(poly.getBounds());
-        }).addTo(map);
-    </script>
 </body>
 </html>
-
