@@ -27,6 +27,12 @@
 
 </head>
 <body>
+    <script type="module">
+        import { map } from '../scripts/map.js'; 
+        $(document).ready(function () {
+            map();
+        });
+    </script>
 
 <!-- Navbar -->
 <div class="container" style="max-width: 100%">
@@ -55,12 +61,12 @@
   <div class="container">
     <span class="badge badge-secondary badge-lg" style="font-size: 20px; padding: 5px 10px;">0.0</span>
   </div>
-  <img src="../assets/img/compass.svg" alt="Compass">
+  <img id="compass" src="../assets/img/compass.svg" alt="Compass">
 </div>
 
 
 <!-- Map -->
-<div id="map" style="max-width: 100%; min-height: 20%;">
+<div id="map" style="max-width: 100%, min-width 20%;">
 </div>
 
 
@@ -83,7 +89,7 @@
     <div class="label-text color-text">Geschwindigkeit von Abstieg</div>
   </div>
   <div class="circle-label-container">
-    <span class="circle-label"></span>
+    <span id="speed" class="circle-label"></span>
     <div class="label-text color-text">Geschwindigkeit über Boden</div>
   </div>
 </div>
