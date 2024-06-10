@@ -16,6 +16,8 @@ $(document).ready(function () {
     let v1 = 0;
     // TODO add code that gets the orientation data and the accelaration data and uses it to get the change in altitude.
     const thresholdRotation = 1.5; // Define threshold for rotation
+    // Todo: set threshold value for significant acceleration.
+    // set threshold value for significant acceleration.
 
     function handleError() {
         $("#altitudeData").text("Error getting altitude.");
