@@ -28,7 +28,7 @@
 </head>
 <body>
     <script type="module">
-        import { map } from '../scripts/map.js'; 
+        import { map } from '../scripts/maurice.js'; 
         $(document).ready(function () {
             map();
         });
@@ -147,20 +147,6 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.7.0/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-
-
-
-
-<!-- Javascript Map -->
-<script>
-    var map = L.map('map').setView([51.505, -0.09], 13); // Set the initial center and zoom level
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
-
-</script>
 
 <!-- Javascript Close Sidebar -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
