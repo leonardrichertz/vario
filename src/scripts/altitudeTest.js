@@ -24,7 +24,6 @@ $(document).ready(function () {
         return "unknown";
     }
 
-    
   let initialAltitude = 0;
   let currentAltitude = 0;
   let gammaShift = 0;
