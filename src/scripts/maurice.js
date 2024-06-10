@@ -6,6 +6,8 @@ import { handleOrientationAndroid, handleOrientationIOS } from '../utils/orienta
 export function map() {
     var os = getOS();
     console.log("Operating System: " + os);
+    lastPosition = null;
+    lastTimestamp = null;
 
     var map = L.map('map').setView([49.75, 6.63], 12);
     var marker;
@@ -77,7 +79,7 @@ export function map() {
         if (speed !== null && !isNaN(speed)) {
             $("#speed").html("<br>Speed: " + speed.toFixed(2) + " m/s <br> Speed: " + (speed * 3.6).toFixed(2) + " km/h ");
         } else {
-            var manualSpeed = calculateManualSpeed(position);
+            var manualSpeed, lastPosition, lastTimestamp = calculateManualSpeed(position, lastPosition, lastTimestamp);
             $("#speed").html("<br>Calculated Speed: " + manualSpeed.toFixed(2) + " m/s <br> Calculated Speed: " + (manualSpeed * 3.6).toFixed(2) + " km/h ");
         }
     }
