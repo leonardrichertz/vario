@@ -22,5 +22,5 @@ export function calculateManualSpeed(position, lastPosition, lastTimestamp) {
     }
     lastPosition = position;
     lastTimestamp = position.timestamp;
-    return 0;
+    return lastPosition, lastTimestamp;
 }
