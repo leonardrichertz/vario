@@ -3,7 +3,6 @@ import { getOS } from '../utils/operatingSystem.js';
 import { handleOrientationAndroid, handleOrientationIOS } from '../utils/orientationUtils.js';
 import Timer from '../utils/timer.js'; // Import Timer
 
-
 export function closeSidebar() {
     $('#sidebar').removeClass('show'); // Close the sidebar
 }
