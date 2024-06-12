@@ -17,11 +17,8 @@ export function calculateManualSpeed(position, lastPosition, lastTimestamp) {
         const deltaTime = (position.timestamp - lastTimestamp) / 1000; // Convert ms to s
         const distance = calculateDistance(lastPosition.coords.latitude, lastPosition.coords.longitude, position.coords.latitude, position.coords.longitude);
         speed = distance / deltaTime; // m/s
-        lastPosition = position;
-        lastTimestamp = position.timestamp;
-        return speed, lastPosition, lastTimestamp;
     }
-    var lastPosition = position;
-    var lastTimestamp = position.timestamp;
-    return speed, lastPosition, lastTimestamp;
+    lastPosition = position;
+    lastTimestamp = position.timestamp;
+    return { manualSpeed: speed, lastPosition, lastTimestamp };
 }
