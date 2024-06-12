@@ -1,4 +1,7 @@
+import {getOS} from '../utils/operatingSystem.js'; // Import getOS function from operatingSystem.js
+
 $(document).ready(function () {
+    const os = getOS(); // Get the operating system
     let gammaShift = 0;
     let betaShift = 0;
     let initialAltitude = 0;
@@ -96,7 +99,18 @@ $(document).ready(function () {
     });
 
     function handleMotion(evt) {
-        let interval = evt.interval;
+        let interval = null;
+        // For IOS we already have it in seconds
+        if(os == 'iOS' || os =='MacOS'){
+            interval = evt.interval;
+            console.log("IOS interval: ", interval);
+        }
+        // For Android we have it in milliseconds
+        else{
+            interval = evt.interval / 1000;
+            console.log("Android interval: ", interval);
+        }
+        console.log(interval);
         let accelerationZ1 = evt.acceleration.z;
         let accelerationY1 = evt.acceleration.y;
         let accelerationX1 = evt.acceleration.x;
