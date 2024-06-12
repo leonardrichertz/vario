@@ -109,6 +109,7 @@ export function index() {
                     .then(permissionState => {
                         if (permissionState === 'granted') {
                             $("#permission").text("Permission granted for DeviceOrientation");
+                            console.log(os);
                             if (os === 'iOS' || os === 'MacOS') {
                                 window.addEventListener('deviceorientation', IOS);
                             } else {
