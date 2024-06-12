@@ -1,4 +1,4 @@
-function calculateFlownTime(trackingStartTime) {
+export function calculateFlownTime(trackingStartTime) {
     if (trackingStartTime === null) {
         return 0;
     }
