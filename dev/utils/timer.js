@@ -4,11 +4,23 @@ class Timer {
         this.intervalId = null;
     }
 
+    //starts timer
     start() {
         this.intervalId = setInterval(() => {
             this.seconds++;
             $('#timeFlown').html(this.getTimeValues().toString());
         }, 1000);
+    }
+
+    // pauses timer, but does not clear the time
+    pause() {
+        clearInterval(this.intervalId);
+    }
+
+    // stops timer and clears the time
+    stop() {
+        clearInterval(this.intervalId);
+        this.seconds = 0;
     }
 
     getTimeValues() {
