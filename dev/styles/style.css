@@ -96,22 +96,25 @@ body {
 .sidebar {
     position: fixed;
     top: 0;
-    left: -250px; /* Initially hide the sidebar off-screen */
+    left: 0;
     width: 250px;
-    height: 100vh;
-    background-color: #1B1B1B;
-    transition: left 0.3s ease;
+    height: 100%;
+    background-color: var(--primary-color); /* Use your primary color variable */
+    z-index: 1000; /* Ensure the sidebar is above other elements */
+    transition: left 0.3s ease; /* Add transition for smooth animation */
 }
-.sidebar.show {
-    left: 0; /* Show the sidebar by setting left to 0 */
-}
+
 .sidebar ul {
     list-style-type: none;
     padding: 0;
 }
+
 .sidebar ul li {
     padding: 10px;
-    color: #E8E8E8;
+    color: var(--text-color); /* Use your text color variable */
+}
+.sidebar.show {
+    left: 0; /* Show the sidebar by setting left to 0 */
 }
 
 .container-stats {
@@ -130,15 +133,15 @@ body {
 
 
 
-/* Map CSS */
 #map {
+    position: relative; /* Ensure the map container respects other positioned elements */
+    left: 250px; /* Adjust to match sidebar width */
+    width: calc(100% - 250px); /* Adjust width to fill remaining space */
+    height: 100%;
     border-top: 5px solid #656565; /* Top border */
     border-bottom: 5px solid #656565; /* Bottom border */
-    width: 100%;
-    height: 100%;
-    max-width: 100%;
-    /*min-height: 00px; /* Specify the minimum height */
 }
+
 
 #search-box {
     position: absolute;
