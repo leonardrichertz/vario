@@ -19,10 +19,10 @@
 </head>
 <body>
     <script type="module">
-        import { map } from '../scripts/map.js'; 
+        import { index } from '../scripts/index.js'; 
         $(document).ready(function () {
             console.log("Document ready, initializing map.");
-            map();
+            index();
         });
     </script>
 
@@ -128,44 +128,5 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.7.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-    <script>
-      function closeSidebar() {
-        $('#sidebar').removeClass('show'); // Close the sidebar
-      }
-
-      $(document).ready(function() {
-        $('#sidebarToggle').click(function(e) {
-          e.stopPropagation(); // Prevent the click event from bubbling up to the document
-          $('#sidebar').toggleClass('show'); // Toggle the 'show' class on the sidebar
-        });
-
-        $(document).click(function(e) {
-          if (!$(e.target).closest('#sidebar').length) {
-            $('#sidebar').removeClass('show'); // Close the sidebar
-          }
-        });
-
-        $('#requestOrientationPermissionButton').click(function() {
-          console.log("Button clicked, requesting orientation permission.");
-          if (DeviceOrientationEvent && typeof DeviceOrientationEvent.requestPermission === "function") {
-            DeviceOrientationEvent.requestPermission().then(permissionState => {
-              if (permissionState === 'granted') {
-                window.addEventListener('deviceorientation', handleOrientation);
-              }
-            }).catch(console.error);
-          } else {
-            window.addEventListener('deviceorientation', handleOrientation);
-          }
-        });
-      });
-
-      function handleOrientation(event) {
-        var alpha = event.alpha;
-        var beta = event.beta;
-        var gamma = event.gamma;
-        console.log(`Alpha: ${alpha}, Beta: ${beta}, Gamma: ${gamma}`);
-      }
-    </script>
 </body>
 </html>
