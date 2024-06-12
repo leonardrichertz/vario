@@ -1,4 +1,4 @@
-import {getOS} from '../utils/operatingSystem.js'; // Import getOS function from operatingSystem.js
+import { getOS } from '../utils/operatingSystem.js'; // Import getOS function from operatingSystem.js
 
 $(document).ready(function () {
     const os = getOS(); // Get the operating system
