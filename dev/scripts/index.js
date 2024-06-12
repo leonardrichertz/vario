@@ -1,7 +1,7 @@
 import { calculateDistance, calculateManualSpeed } from '../utils/mapUtils.js';
 import { getOS } from '../utils/operatingSystem.js';
 import { handleOrientationAndroid, handleOrientationIOS } from '../utils/orientationUtils.js';
-import Timer from '..utils/timer.js'; // Import Timer
+import Timer from '../utils/timer.js'; // Import Timer
 
 
 export function closeSidebar() {
