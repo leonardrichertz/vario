@@ -16,7 +16,7 @@ export function index() {
     var watchId;
     var distance = 0;
     var intervalId;
-    var timer = new Timer();
+    var timer = new easytimer.Timer();
     timer.start();
     timer.addEventListener('secondsUpdated', function (e) {
         $('#timeFlown').html(timer.getTimeValues().toString());
