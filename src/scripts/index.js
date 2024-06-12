@@ -8,7 +8,6 @@ export function closeSidebar() {
 
 export function index() {
     var os = getOS();
-    var trackingStartTime = null;
     var lastPosition = null;
     var lastTimestamp = null;
     var map = L.map('map').setView([49.75, 6.63], 12);
@@ -17,6 +16,11 @@ export function index() {
     var watchId;
     var distance = 0;
     var intervalId;
+    var timer = new Timer();
+    timer.start();
+    timer.addEventListener('secondsUpdated', function (e) {
+        $('#timeFlown').html(timer.getTimeValues().toString());
+    });
 
     var startMarkerIcon = L.icon({
         iconUrl: '../assets/marker.png',
@@ -145,11 +149,6 @@ export function index() {
 
     function startGeolocation() {
         if ('geolocation' in navigator) {
-            var timer = new Timer();
-            timer.start();
-            timer.addEventListener('secondsUpdated', function (e) {
-                $('#timeFlown').html(timer.getTimeValues().toString());
-            });
             watchId = navigator.geolocation.watchPosition(handleGeolocation, handleError, options);
         } else {
             $("#geolocationData").text("Geolocation not supported.");
