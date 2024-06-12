@@ -100,6 +100,7 @@ export function altitude() {
 
     function handleMotion(evt) {
         let interval = null;
+        console.log(os);
         // For IOS we already have it in seconds
         if (os == 'iOS' || os == 'MacOS') {
             interval = evt.interval;
