@@ -8,7 +8,7 @@ export function closeSidebar() {
 }
 
 export function index() {
-    var os = getOS(); 
+    var os = getOS();
     var trackingStartTime = null;
 
     console.log("Operating System: " + os);
@@ -20,6 +20,7 @@ export function index() {
     var startMarker;
     var watchId;
     var distance = 0;
+    var intervalId; // Variable to store the interval ID
 
     var startMarkerIcon = L.icon({
         iconUrl: '../assets/marker.png',
@@ -69,7 +70,6 @@ export function index() {
         $("#compass").css("transform", "rotate(" + (360 - alpha) + "deg)");
     }
 
-
     function handleGeolocation(position) {
         var latlng = [position.coords.latitude, position.coords.longitude];
         if (marker.getLatLng().lat !== 0 && marker.getLatLng().lng !== 0) {
@@ -78,16 +78,16 @@ export function index() {
             distance += calculateDistance(oldLatLng.lat, oldLatLng.lng, position.coords.latitude, position.coords.longitude);
             $("#distance").html("Strecke in m: " + distance.toFixed(3));
         }
-    
+
         marker.setLatLng(latlng).setIcon(markerIcon).update();
         map.setView(latlng);
-    
+
         if (typeof startMarker == 'undefined') {
             startMarker = L.marker([position.coords.latitude, position.coords.longitude], { icon: startMarkerIcon }).addTo(map);
         }
-    
+
         $("#distance").html("Strecke in m: " + distance.toFixed(3));
-    
+
         var speed = position.coords.speed;
         if (speed !== null && !isNaN(speed)) {
             $("#speed").html(speed.toFixed(2) + " m/s");
@@ -98,7 +98,6 @@ export function index() {
             $("#speed").html(result.manualSpeed.toFixed(2) + " m/s");
         }
     }
-    
 
     function handleError(error) {
         $("#geolocationData").text("Geolocation error: " + error.message);
@@ -127,7 +126,7 @@ export function index() {
                     .catch(console.error);
             } else {
                 $("#orientationInfo").text("No need to request permission for DeviceOrientation");
-                if (os === 'iOS' || os === 'MacOS') {
+                if (os === 'iOS') {
                     window.addEventListener('deviceorientation', handleOrientationIOS);
                 } else {
                     window.addEventListener('deviceorientationabsolute', handleOrientationAndroid, true);
@@ -140,6 +139,7 @@ export function index() {
 
     $("#stopGeolocation").click(function () {
         navigator.geolocation.clearWatch(watchId);
+        clearInterval(intervalId); // Clear the interval
         $("#geolocationData").text("Geolocation data stopped.");
         $("#startGeolocation").prop("disabled", false);
     });
@@ -150,7 +150,11 @@ export function index() {
 
     function startGeolocation() {
         if ('geolocation' in navigator) {
+            trackingStartTime = new Date().getTime(); // Capture the start time
             watchId = navigator.geolocation.watchPosition(handleGeolocation, handleError, options);
+            if (!intervalId) { // Ensure interval is set up only once
+                intervalId = setInterval(updateFlownTime, 1000); // Start the interval
+            }
         } else {
             $("#geolocationData").text("Geolocation not supported.");
         }
@@ -160,12 +164,15 @@ export function index() {
         trackingStartTime = new Date().getTime(); // Capture the start time
         watchId = navigator.geolocation.watchPosition(handleGeolocation, handleError, options);
         $("#startGeolocation").prop("disabled", true);
+        if (!intervalId) { // Ensure interval is set up only once
+            intervalId = setInterval(updateFlownTime, 1000); // Start the interval
+        }
     } else {
         $("#geolocationData").text("Geolocation not supported.");
     }
 
-    setInterval(function () {
+    function updateFlownTime() {
         var flownTime = calculateFlownTime(trackingStartTime);
         $("#timeFlown").text("Zeit in min: " + (flownTime / 60).toFixed(2)); // Convert seconds to minutes and display
-    }, 1000); // Update every second
+    }
 }
