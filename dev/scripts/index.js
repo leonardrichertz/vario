@@ -1,7 +1,6 @@
 import { calculateDistance, calculateManualSpeed } from '../utils/mapUtils.js';
 import { getOS } from '../utils/operatingSystem.js';
 import { handleOrientationAndroid, handleOrientationIOS } from '../utils/orientationUtils.js';
-import { calculateFlownTime } from '../utils/routeUtils.js';
 
 export function closeSidebar() {
     $('#sidebar').removeClass('show'); // Close the sidebar
@@ -10,17 +9,14 @@ export function closeSidebar() {
 export function index() {
     var os = getOS();
     var trackingStartTime = null;
-
-    console.log("Operating System: " + os);
     var lastPosition = null;
     var lastTimestamp = null;
-
     var map = L.map('map').setView([49.75, 6.63], 12);
     var marker;
     var startMarker;
     var watchId;
     var distance = 0;
-    var intervalId; // Variable to store the interval ID
+    var intervalId;
 
     var startMarkerIcon = L.icon({
         iconUrl: '../assets/marker.png',
@@ -172,7 +168,7 @@ export function index() {
     }
 
     function updateFlownTime() {
-        var flownTime = calculateFlownTime(trackingStartTime);
-        $("#timeFlown").text("Zeit in min: " + (flownTime / 60).toFixed(2)); // Convert seconds to minutes and display
+        var elapsedTime = (new Date().getTime() - trackingStartTime) / 1000; // Elapsed time in seconds
+        $("#timeFlown").text("Zeit in min: " + (elapsedTime / 60).toFixed(2)); // Convert seconds to minutes and display
     }
 }
