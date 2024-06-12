@@ -1,7 +1,7 @@
 import { calculateDistance, calculateManualSpeed } from '../utils/mapUtils.js';
 import { getOS } from '../utils/operatingSystem.js';
 import { handleOrientationAndroid, handleOrientationIOS } from '../utils/orientationUtils.js';
-import { Timer } from 'easytimer.js';
+
 export function closeSidebar() {
     $('#sidebar').removeClass('show'); // Close the sidebar
 }
@@ -16,11 +16,6 @@ export function index() {
     var watchId;
     var distance = 0;
     var intervalId;
-    var timer = new Timer();
-    timer.start();
-    timer.addEventListener('secondsUpdated', function (e) {
-        $('#timeFlown').html(timer.getTimeValues().toString());
-    });
 
     var startMarkerIcon = L.icon({
         iconUrl: '../assets/marker.png',
