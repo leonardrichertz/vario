@@ -74,25 +74,27 @@ export function index() {
             distance += calculateDistance(oldLatLng.lat, oldLatLng.lng, position.coords.latitude, position.coords.longitude);
             $("#distance").html("Strecke in m: " + distance.toFixed(3));
         }
-
+    
         marker.setLatLng(latlng).setIcon(markerIcon).update();
         map.setView(latlng);
-
+    
         if (typeof startMarker == 'undefined') {
             startMarker = L.marker([position.coords.latitude, position.coords.longitude], { icon: startMarkerIcon }).addTo(map);
         }
-
+    
         $("#distance").html("Strecke in m: " + distance.toFixed(3));
-
+    
         var speed = position.coords.speed;
         if (speed !== null && !isNaN(speed)) {
             $("#speed").html(speed.toFixed(2) + " m/s");
         } else {
-            var manualSpeed;
-            ({ manualSpeed, lastPosition, lastTimestamp } = calculateManualSpeed(position, lastPosition, lastTimestamp));
-            $("#speed").html(manualSpeed.toFixed(2) + " m/s");
+            var result = calculateManualSpeed(position, lastPosition, lastTimestamp);
+            lastPosition = result.lastPosition;
+            lastTimestamp = result.lastTimestamp;
+            $("#speed").html(result.manualSpeed.toFixed(2) + " m/s");
         }
     }
+    
 
     function handleError(error) {
         $("#geolocationData").text("Geolocation error: " + error.message);
