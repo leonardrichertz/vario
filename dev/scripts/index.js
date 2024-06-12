@@ -2,6 +2,10 @@ import { calculateDistance, calculateManualSpeed } from '../utils/mapUtils.js';
 import { getOS } from '../utils/operatingSystem.js';
 import { handleOrientationAndroid, handleOrientationIOS } from '../utils/orientationUtils.js';
 
+export function closeSidebar() {
+    $('#sidebar').removeClass('show'); // Close the sidebar
+}
+
 export function index() {
     var os = getOS();
     console.log("Operating System: " + os);
@@ -52,10 +56,6 @@ export function index() {
         }
     });
 
-    function closeSidebar() {
-        $('#sidebar').removeClass('show'); // Close the sidebar
-    }
-
     function IOS(event) {
         const { alpha } = handleOrientationIOS(event);
         $("#compass").css("transform", "rotate(" + alpha + "deg)");
@@ -72,7 +72,7 @@ export function index() {
             var oldLatLng = marker.getLatLng();
             L.polyline([oldLatLng, latlng], { color: 'blue' }).addTo(map);
             distance += calculateDistance(oldLatLng.lat, oldLatLng.lng, position.coords.latitude, position.coords.longitude);
-            $("#distance").html("<br>distance: " + distance.toFixed(3));
+            $("#distance").html("Strecke in m: " + distance.toFixed(3));
         }
 
         marker.setLatLng(latlng).setIcon(markerIcon).update();
@@ -82,16 +82,15 @@ export function index() {
             startMarker = L.marker([position.coords.latitude, position.coords.longitude], { icon: startMarkerIcon }).addTo(map);
         }
 
-        $("#distance").html("<br>distance: " + distance.toFixed(3));
-        $("#geolocationData").html("<br>Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude);
+        $("#distance").html("Strecke in m: " + distance.toFixed(3));
 
         var speed = position.coords.speed;
         if (speed !== null && !isNaN(speed)) {
-            $("#speed").html("<br>Speed: " + speed.toFixed(2) + " m/s <br> Speed: " + (speed * 3.6).toFixed(2) + " km/h ");
+            $("#speed").html(speed.toFixed(2) + " m/s");
         } else {
             var manualSpeed;
             ({ manualSpeed, lastPosition, lastTimestamp } = calculateManualSpeed(position, lastPosition, lastTimestamp));
-            $("#speed").html("<br>Calculated Speed: " + manualSpeed.toFixed(2) + " m/s <br> Calculated Speed: " + (manualSpeed * 3.6).toFixed(2) + " km/h ");
+            $("#speed").html(manualSpeed.toFixed(2) + " m/s");
         }
     }
 
