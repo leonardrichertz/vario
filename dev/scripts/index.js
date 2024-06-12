@@ -149,7 +149,7 @@ export function index() {
             var timer = new Timer();
             timer.start();
             timer.addEventListener('secondsUpdated', function (e) {
-                $('#timeFlown').html("Zeit in min: ", timer.getTimeValues().toString());
+                $('#timeFlown').html(timer.getTimeValues().toString());
             });
             watchId = navigator.geolocation.watchPosition(handleGeolocation, handleError, options);
         } else {
