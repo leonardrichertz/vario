@@ -1,13 +1,16 @@
 import { calculateDistance, calculateManualSpeed } from '../utils/mapUtils.js';
 import { getOS } from '../utils/operatingSystem.js';
 import { handleOrientationAndroid, handleOrientationIOS } from '../utils/orientationUtils.js';
+import { calculateFlownTime } from '../utils/routeUtils.js';
 
 export function closeSidebar() {
     $('#sidebar').removeClass('show'); // Close the sidebar
 }
 
 export function index() {
-    var os = getOS();
+    var os = getOS(); 
+    var trackingStartTime = null;
+
     console.log("Operating System: " + os);
     var lastPosition = null;
     var lastTimestamp = null;
@@ -66,6 +69,7 @@ export function index() {
         $("#compass").css("transform", "rotate(" + (360 - alpha) + "deg)");
     }
 
+
     function handleGeolocation(position) {
         var latlng = [position.coords.latitude, position.coords.longitude];
         if (marker.getLatLng().lat !== 0 && marker.getLatLng().lng !== 0) {
@@ -123,7 +127,7 @@ export function index() {
                     .catch(console.error);
             } else {
                 $("#orientationInfo").text("No need to request permission for DeviceOrientation");
-                if (os === 'iOS') {
+                if (os === 'iOS' || os === 'MacOS') {
                     window.addEventListener('deviceorientation', handleOrientationIOS);
                 } else {
                     window.addEventListener('deviceorientationabsolute', handleOrientationAndroid, true);
@@ -153,9 +157,15 @@ export function index() {
     }
 
     if ('geolocation' in navigator) {
+        trackingStartTime = new Date().getTime(); // Capture the start time
         watchId = navigator.geolocation.watchPosition(handleGeolocation, handleError, options);
         $("#startGeolocation").prop("disabled", true);
     } else {
         $("#geolocationData").text("Geolocation not supported.");
     }
+
+    setInterval(function () {
+        var flownTime = calculateFlownTime(trackingStartTime);
+        $("#timeFlown").text("Zeit in min: " + (flownTime / 60).toFixed(2)); // Convert seconds to minutes and display
+    }, 1000); // Update every second
 }
