@@ -1,6 +1,7 @@
 import { calculateDistance, calculateManualSpeed } from '../utils/mapUtils.js';
 import { getOS } from '../utils/operatingSystem.js';
 import { handleOrientationAndroid, handleOrientationIOS } from '../utils/orientationUtils.js';
+var { Timer } = require('lib/easytimer/dist/easytimer.min.js');
 
 export function closeSidebar() {
     $('#sidebar').removeClass('show'); // Close the sidebar
@@ -135,7 +136,6 @@ export function index() {
 
     $("#stopGeolocation").click(function () {
         navigator.geolocation.clearWatch(watchId);
-        clearInterval(intervalId); // Clear the interval
         $("#geolocationData").text("Geolocation data stopped.");
         $("#startGeolocation").prop("disabled", false);
     });
@@ -146,29 +146,21 @@ export function index() {
 
     function startGeolocation() {
         if ('geolocation' in navigator) {
-            trackingStartTime = new Date().getTime(); // Capture the start time
+            var timer = new Timer();
+            timer.start();
+            timer.addEventListener('secondsUpdated', function (e) {
+                $('#timeFlown').html("Zeit in min: ", timer.getTimeValues().toString());
+            });
             watchId = navigator.geolocation.watchPosition(handleGeolocation, handleError, options);
-            if (!intervalId) { // Ensure interval is set up only once
-                intervalId = setInterval(updateFlownTime, 1000); // Start the interval
-            }
         } else {
             $("#geolocationData").text("Geolocation not supported.");
         }
     }
 
     if ('geolocation' in navigator) {
-        trackingStartTime = new Date().getTime(); // Capture the start time
         watchId = navigator.geolocation.watchPosition(handleGeolocation, handleError, options);
         $("#startGeolocation").prop("disabled", true);
-        if (!intervalId) { // Ensure interval is set up only once
-            intervalId = setInterval(updateFlownTime, 1000); // Start the interval
-        }
     } else {
         $("#geolocationData").text("Geolocation not supported.");
-    }
-
-    function updateFlownTime() {
-        var elapsedTime = (new Date().getTime() - trackingStartTime) / 1000; // Elapsed time in seconds
-        $("#timeFlown").text("Zeit in min: " + (elapsedTime / 60).toFixed(2)); // Convert seconds to minutes and display
     }
 }
