@@ -135,14 +135,13 @@ body {
 
 /* Map CSS */
 #map {
-    position: relative; /* Ensure the map container respects other positioned elements */
-    width: calc(100% - 250px); /* Adjust width to fill remaining space */
-    height: 100vh;
     border-top: 5px solid #656565; /* Top border */
     border-bottom: 5px solid #656565; /* Bottom border */
-    margin-left: 250px; /* Adjust to match sidebar width */
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    /*min-height: 00px; /* Specify the minimum height */
 }
-
 
 #search-box {
     position: absolute;
