@@ -1,6 +1,8 @@
 import { calculateDistance, calculateManualSpeed } from '../utils/mapUtils.js';
 import { getOS } from '../utils/operatingSystem.js';
 import { handleOrientationAndroid, handleOrientationIOS } from '../utils/orientationUtils.js';
+import Timer from '..utils/timer.js'; // Import Timer
+
 
 export function closeSidebar() {
     $('#sidebar').removeClass('show'); // Close the sidebar
@@ -16,6 +18,8 @@ export function index() {
     var watchId;
     var distance = 0;
     var intervalId;
+    var timer = new Timer(); // Create a new Timer instance
+    timer.start(); // Start the timer
 
     var startMarkerIcon = L.icon({
         iconUrl: '../assets/marker.png',
