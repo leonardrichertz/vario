@@ -21,6 +21,7 @@
     crossorigin=""></script>
   <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
   <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+  <script src="https://unpkg.com/easytimer.js/dist/easytimer.min.js"></script> <!-- Add this line -->
   <title>studienprojekt</title>
 </head>
 
@@ -48,7 +49,7 @@
   <!-- Sidebar -->
   <div class="sidebar" id="sidebar">
     <ul>
-      <li onclick=closeSidebar()>Zurück zur Übersicht</li>
+      <li onclick="closeSidebar()">Zurück zur Übersicht</li>
       <li>Gespeicherte Flüge</li>
       <li>Einstellungen</li>
     </ul>
@@ -65,7 +66,6 @@
     </div>
     <img id="compass" src="../assets/img/compass.svg" alt="Compass">
   </div>
-
 
   <button id="requestOrientationPermissionButton">Start</button>
 

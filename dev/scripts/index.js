@@ -1,7 +1,6 @@
 import { calculateDistance, calculateManualSpeed } from '../utils/mapUtils.js';
 import { getOS } from '../utils/operatingSystem.js';
 import { handleOrientationAndroid, handleOrientationIOS } from '../utils/orientationUtils.js';
-var { Timer } = require('lib/easytimer/dist/easytimer.min.js');
 
 export function closeSidebar() {
     $('#sidebar').removeClass('show'); // Close the sidebar
