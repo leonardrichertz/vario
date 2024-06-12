@@ -7,6 +7,13 @@
 </head>
 
 <body>
+    <script type="module">
+        import { altitude } from '../scripts/altitude.js';
+        $(document).ready(function () {
+          console.log("Document ready, initializing map.");
+          altitude();
+        });
+      </script>
     <h1>
         Altitude Data
     </h1>
