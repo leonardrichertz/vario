@@ -19,7 +19,7 @@
 </head>
 <body>
     <script type="module">
-        import { index } from '../scripts/index.js'; 
+        import { index, closeSidebar } from '../scripts/index.js'; 
         $(document).ready(function () {
             console.log("Document ready, initializing map.");
             index();
@@ -41,7 +41,7 @@
     <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
       <ul>
-        <li onclick="closeSidebar()">Zurück zur Übersicht</li>
+        <li onclick=closeSidebar()>Zurück zur Übersicht</li>
         <li>Gespeicherte Flüge</li>
         <li>Einstellungen</li>
       </ul>
@@ -93,7 +93,7 @@
               <img src="../assets/img/Map.svg" alt="Image 2">
             </span>
         </div>
-        <div class="label-text color-text">Strecke in m</div>
+        <div id="distance" class="label-text color-text">Strecke in m: </div>
       </div>
     </div>
 
