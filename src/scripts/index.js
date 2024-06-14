@@ -124,10 +124,10 @@ export function index() {
                     .catch(console.error);
             } else {
                 $("#orientationInfo").text("No need to request permission for DeviceOrientation");
-                if (os === 'iOS') {
+                if (os === 'iOS' || os == 'MacOS') {
                     window.addEventListener('deviceorientation', handleOrientationIOS);
                 } else {
-                    window.addEventListener('deviceorientationabsolute', handleOrientationAndroid, true);
+                    window.addEventListener('deviceorientationabsolute', Android, true);
                 }
             }
         } else {
