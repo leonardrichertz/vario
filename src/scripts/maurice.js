@@ -51,6 +51,7 @@ export function map() {
     }
 
     function Android(event) {
+        console.log("Android function called");
         const {alpha, beta, gamma} = handleOrientationAndroid(event);
         $("#compass").css("transform", "rotate(" + (360 - alpha) + "deg)");
         console.log(alpha);
@@ -115,7 +116,7 @@ export function map() {
                 if (os === 'iOS' || os === 'MacOS') {
                     window.addEventListener('deviceorientation', handleOrientationIOS);
                 } else {
-                    window.addEventListener('deviceorientationabsolute', Android, true);
+                    window.addEventListener('deviceorientationabsolute', handleOrientationAndroid, true);
                 }
             }
         } else {
