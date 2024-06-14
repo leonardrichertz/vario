@@ -116,7 +116,7 @@ export function map() {
                 if (os === 'iOS' || os === 'MacOS') {
                     window.addEventListener('deviceorientation', handleOrientationIOS);
                 } else {
-                    window.addEventListener('deviceorientationabsolute', handleOrientationAndroid, true);
+                    //window.addEventListener('deviceorientationabsolute', handleOrientationAndroid, true);
                     window.addEventListener('deviceorientationabsolute', Android, true);
                 }
             }
