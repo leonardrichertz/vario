@@ -14,6 +14,7 @@ export function map() {
     var startMarker;
     var watchId;
     var distance = 0;
+    var initialOrientationCallAndroid = true; // Variable to track the initial call
 
     var startMarkerIcon = L.icon({
         iconUrl: '../assets/marker.png',
@@ -103,7 +104,14 @@ export function map() {
                             if (os === 'iOS' || os === 'MacOS') {
                                 window.addEventListener('deviceorientation', IOS);
                             } else {
-                                window.addEventListener('deviceorientationabsolute', Android, true);
+                                window.addEventListener('deviceorientationabsolute', function(event) {
+                                    if (initialOrientationCall) {
+                                        handleOrientationAndroid(event);
+                                        initialOrientationCall = false;
+                                    } else {
+                                        Android(event);
+                                    }
+                                }, true);
                             }
                         } else {
                             $("#permission").text("Permission not granted for DeviceOrientation");
@@ -116,8 +124,14 @@ export function map() {
                 if (os === 'iOS' || os === 'MacOS') {
                     window.addEventListener('deviceorientation', handleOrientationIOS);
                 } else {
-                    //window.addEventListener('deviceorientationabsolute', handleOrientationAndroid, true);
-                    window.addEventListener('deviceorientationabsolute', Android, true);
+                    window.addEventListener('deviceorientationabsolute', function(event) {
+                        if (initialOrientationCall) {
+                            handleOrientationAndroid(event);
+                            initialOrientationCall = false;
+                        } else {
+                            Android(event);
+                        }
+                    }, true);
                 }
             }
         } else {
