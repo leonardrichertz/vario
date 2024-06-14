@@ -52,7 +52,7 @@ export function map() {
 
     function Android(event) {
         const {alpha, beta, gamma} = handleOrientationAndroid(event);
-        $("#compass").css("transform", "rotate(" + (360 - alpha) + "deg)");
+        $("#compass").css("transform", "rotate(" + alpha + "deg)");
         $("#orientationData").html("<br>Alpha: " + (360 - alpha) + "<br>Beta: " + beta + "<br>Gamma: " + gamma);
     }
 
