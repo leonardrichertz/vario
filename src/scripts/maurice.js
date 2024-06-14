@@ -1,3 +1,4 @@
+
 // scripts/map.js
 import { calculateDistance, calculateManualSpeed } from '../utils/mapUtils.js';
 import { getOS } from '../utils/operatingSystem.js';
@@ -14,7 +15,6 @@ export function map() {
     var startMarker;
     var watchId;
     var distance = 0;
-    var initialOrientationCallAndroid = true; // Variable to track the initial call
 
     var startMarkerIcon = L.icon({
         iconUrl: '../assets/marker.png',
@@ -52,10 +52,8 @@ export function map() {
     }
 
     function Android(event) {
-        console.log("Android function called");
         const {alpha, beta, gamma} = handleOrientationAndroid(event);
         $("#compass").css("transform", "rotate(" + (360 - alpha) + "deg)");
-        console.log(alpha);
         $("#orientationData").html("<br>Alpha: " + (360 - alpha) + "<br>Beta: " + beta + "<br>Gamma: " + gamma);
     }
 
@@ -102,16 +100,11 @@ export function map() {
                         if (permissionState === 'granted') {
                             $("#permission").text("Permission granted for DeviceOrientation");
                             if (os === 'iOS' || os === 'MacOS') {
+                                console.log("case 1 Apple");
                                 window.addEventListener('deviceorientation', IOS);
                             } else {
-                                window.addEventListener('deviceorientationabsolute', function(event) {
-                                    if (initialOrientationCall) {
-                                        handleOrientationAndroid(event);
-                                        initialOrientationCall = false;
-                                    } else {
-                                        Android(event);
-                                    }
-                                }, true);
+                                console.log("case 1 Android");
+                                window.addEventListener('deviceorientationabsolute', Android, true);
                             }
                         } else {
                             $("#permission").text("Permission not granted for DeviceOrientation");
@@ -122,16 +115,11 @@ export function map() {
             } else {
                 $("#orientationInfo").text("No need to request permission for DeviceOrientation");
                 if (os === 'iOS' || os === 'MacOS') {
+                    console.log("case 2 Apple");
                     window.addEventListener('deviceorientation', handleOrientationIOS);
                 } else {
-                    window.addEventListener('deviceorientationabsolute', function(event) {
-                        if (initialOrientationCall) {
-                            handleOrientationAndroid(event);
-                            initialOrientationCall = false;
-                        } else {
-                            Android(event);
-                        }
-                    }, true);
+                    console.log("case 2 Android");
+                    window.addEventListener('deviceorientationabsolute', handleOrientationAndroid, true);
                 }
             }
         } else {
