@@ -117,6 +117,7 @@ export function map() {
                     window.addEventListener('deviceorientation', handleOrientationIOS);
                 } else {
                     window.addEventListener('deviceorientationabsolute', handleOrientationAndroid, true);
+                    window.addEventListener('deviceorientationabsolute', Android, true);
                 }
             }
         } else {
