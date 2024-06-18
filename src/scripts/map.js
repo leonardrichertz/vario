@@ -1,4 +1,3 @@
-// scripts/map.js
 import { calculateDistance, calculateManualSpeed } from '../utils/mapUtils.js';
 import { getOS } from '../utils/operatingSystem.js';
 import { handleOrientationAndroid, handleOrientationIOS } from '../utils/orientationUtils.js';
@@ -6,8 +5,10 @@ import { handleOrientationAndroid, handleOrientationIOS } from '../utils/orienta
 export function map() {
     var os = getOS();
     console.log("Operating System: " + os);
-    lastPosition = null;
-    lastTimestamp = null;
+
+    // Define these variables in the correct scope
+    var lastPosition = null;
+    var lastTimestamp = null;
 
     var map = L.map('map').setView([49.75, 6.63], 12);
     var marker;
@@ -79,7 +80,10 @@ export function map() {
         if (speed !== null && !isNaN(speed)) {
             $("#speed").html("<br>Speed: " + speed.toFixed(2) + " m/s <br> Speed: " + (speed * 3.6).toFixed(2) + " km/h ");
         } else {
-            var manualSpeed, lastPosition, lastTimestamp = calculateManualSpeed(position, lastPosition, lastTimestamp);
+            var result = calculateManualSpeed(position, lastPosition, lastTimestamp);
+            lastPosition = result.lastPosition;
+            lastTimestamp = result.lastTimestamp;
+            var manualSpeed = result.manualSpeed;
             $("#speed").html("<br>Calculated Speed: " + manualSpeed.toFixed(2) + " m/s <br> Calculated Speed: " + (manualSpeed * 3.6).toFixed(2) + " km/h ");
         }
     }
@@ -94,7 +98,6 @@ export function map() {
             console.log("DeviceOrientation supported");
             if (typeof DeviceOrientationEvent.requestPermission === 'function') {
                 console.log("Requesting permission for DeviceOrientation");
-
                 DeviceOrientationEvent.requestPermission()
                     .then(permissionState => {
                         if (permissionState === 'granted') {
@@ -113,7 +116,6 @@ export function map() {
             } else {
                 $("#orientationInfo").text("No need to request permission for DeviceOrientation");
                 if (os === 'iOS') {
-
                     window.addEventListener('deviceorientation', handleOrientationIOS);
                 } else {
                     window.addEventListener('deviceorientationabsolute', handleOrientationAndroid, true);
