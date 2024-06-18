@@ -93,8 +93,9 @@ export function map() {
         if (window.DeviceOrientationEvent) {
             console.log("DeviceOrientation supported");
             if (typeof DeviceOrientationEvent.requestPermission === 'function') {
-                DeviceOrientationEvent.requestPermission()
                 console.log("Requesting permission for DeviceOrientation");
+
+                DeviceOrientationEvent.requestPermission()
                     .then(permissionState => {
                         if (permissionState === 'granted') {
                             $("#permission").text("Permission granted for DeviceOrientation");
