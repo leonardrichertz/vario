@@ -24,19 +24,18 @@ body {
 /* Navbar */
 .navbar-custom {
     background-color: #212121; /* Dark background color */
-}
-
-.start-button-section {
-    background-color: #2d2d2d; /* Light gray background color */
-    padding-top: 15px;
-    padding-bottom: 15px;
-    display: flex;
-    justify-content: center; /* Center align button horizontally */
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
 .start-button {
-    width: 100%; /* Make the button take full width of its container */
-    max-width: 100px; /* Optionally limit the maximum width of the button */
+    border-radius: 15px; /* Adjust the value to make it more curvy */
+    padding: 5px 15px; /* Adjust padding if needed */
+    /*border: 10px; /* Remove border if you want a cleaner look */
+    background-color: #464646; /* Adjust background color */
+    border-color: #7c7c7c;
+    color: white; /* Adjust text color */
+    font-size: 16px; /* Adjust font size */
 }
 
 /* Compass */
@@ -157,7 +156,4 @@ body {
     position: relative;
     z-index: 999; /* Ensure map is below sidebar */
 }
-
-
-
 
