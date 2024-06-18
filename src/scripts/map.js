@@ -89,11 +89,12 @@ export function map() {
     }
 
     $("#requestOrientationPermissionButton").click(function () {
+        console.log("Requesting permission for DeviceOrientation");
         if (window.DeviceOrientationEvent) {
-            $("#orientation").text("Device orientation supported.");
+            console.log("DeviceOrientation supported");
             if (typeof DeviceOrientationEvent.requestPermission === 'function') {
-                $("#orientationInfo").text("Requesting permission for DeviceOrientation");
                 DeviceOrientationEvent.requestPermission()
+                console.log("Requesting permission for DeviceOrientation");
                     .then(permissionState => {
                         if (permissionState === 'granted') {
                             $("#permission").text("Permission granted for DeviceOrientation");
