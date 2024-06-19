@@ -65,7 +65,7 @@ export function map() {
             var oldLatLng = marker.getLatLng();
             L.polyline([oldLatLng, latlng], { color: 'blue' }).addTo(map);
             distance += calculateDistance(oldLatLng.lat, oldLatLng.lng, position.coords.latitude, position.coords.longitude);
-            $("#distance").html("<br>distance: " + distance.toFixed(3));
+            $("#distance").html("Zurückgelegte Distanz: " + distance.toFixed(3));
         }
 
         marker.setLatLng(latlng).setIcon(markerIcon).update();
