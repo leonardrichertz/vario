@@ -80,13 +80,13 @@ export function map() {
 
         var speed = position.coords.speed;
         if (speed !== null && !isNaN(speed)) {
-            $("#speed").html("<br>Speed: " + speed.toFixed(2) + " m/s <br> Speed: " + (speed * 3.6).toFixed(2) + " km/h ");
+            $("#speed").html(speed.toFixed(2));
         } else {
             var result = calculateManualSpeed(position, lastPosition, lastTimestamp);
             lastPosition = result.lastPosition;
             lastTimestamp = result.lastTimestamp;
             var manualSpeed = result.manualSpeed;
-            $("#speed").html("<br>Calculated Speed: " + manualSpeed.toFixed(2) + " m/s <br> Calculated Speed: " + (manualSpeed * 3.6).toFixed(2) + " km/h ");
+            $("#speed").html(manualSpeed.toFixed(2));
         }
     }
 
@@ -109,8 +109,10 @@ export function map() {
                         if (permissionState === 'granted') {
                             $("#permission").text("Permission granted for DeviceOrientation");
                             if (os === 'iOS' || os === 'MacOS') {
+                                console.log("case 1 Apple");
                                 window.addEventListener('deviceorientation', IOS);
                             } else {
+                                console.log("case 1 Android");
                                 window.addEventListener('deviceorientationabsolute', Android, true);
                             }
                         } else {
@@ -122,8 +124,10 @@ export function map() {
             } else {
                 $("#orientationInfo").text("No need to request permission for DeviceOrientation");
                 if (os === 'iOS') {
+                    console.log("case 2 Apple");
                     window.addEventListener('deviceorientation', handleOrientationIOS);
                 } else {
+                    console.log("case 2 Android");
                     window.addEventListener('deviceorientationabsolute', handleOrientationAndroid, true);
                 }
             }
