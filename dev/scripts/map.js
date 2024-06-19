@@ -97,7 +97,7 @@ export function map() {
     $("#requestOrientationPermissionButton").click(function () {
         if($(this).text() === "Start"){
             $(this).text("Stop");
-            $(this).atrr("id", "stopOrientation");
+            $(this).attr("id", "stopOrientation");
             timer.start();
         console.log("Requesting permission for DeviceOrientation");
         if (window.DeviceOrientationEvent) {
@@ -132,7 +132,7 @@ export function map() {
         }
     } else {
         $(this).text("Start");
-        $(this).atrr("id", "requestOrientationPermissionButton");
+        $(this).attr("id", "requestOrientationPermissionButton");
         navigator.geolocation.clearWatch(watchId);
         timer.stop();
     }
