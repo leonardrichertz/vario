@@ -65,7 +65,7 @@ export function map() {
             var oldLatLng = marker.getLatLng();
             L.polyline([oldLatLng, latlng], { color: 'blue' }).addTo(map);
             distance += calculateDistance(oldLatLng.lat, oldLatLng.lng, position.coords.latitude, position.coords.longitude);
-            $("#distance").html("Zurückgelegte Distanz: " + distance.toFixed(3));
+            $("#distance").html("Strecke in m: " + distance.toFixed(3));
         }
 
         marker.setLatLng(latlng).setIcon(markerIcon).update();
@@ -75,7 +75,7 @@ export function map() {
             startMarker = L.marker([position.coords.latitude, position.coords.longitude], { icon: startMarkerIcon }).addTo(map);
         }
 
-        $("#distance").html("Zurückgelegte Distanz: " + distance.toFixed(3));
+        $("#distance").html("Strecke in m: " + distance.toFixed(3));
         $("#geolocationData").html("<br>Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude);
 
         var speed = position.coords.speed;
