@@ -8,7 +8,8 @@ class Timer {
     start() {
         this.intervalId = setInterval(() => {
             this.seconds++;
-            $('#timeFlown').html("Zeit", this.getTimeValues().toString());
+            console.log(this.getTimeValues());
+            $('#timeFlown').html("Zeit: ", this.getTimeValues().toString());
         }, 1000);
     }
 
