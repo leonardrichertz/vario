@@ -96,9 +96,11 @@ export function map() {
 
     $("#requestOrientationPermissionButton").click(function () {
         if($(this).text() === "Start"){
+            console.log("startOrientation clicked");
             $(this).text("Stop");
             $(this).attr("id", "stopOrientation");
             timer.start();
+            console.log("timer started");
         console.log("Requesting permission for DeviceOrientation");
         if (window.DeviceOrientationEvent) {
             console.log("DeviceOrientation supported");
