@@ -1,6 +1,7 @@
 import { calculateDistance, calculateManualSpeed } from '../utils/mapUtils.js';
 import { getOS } from '../utils/operatingSystem.js';
 import { handleOrientationAndroid, handleOrientationIOS } from '../utils/orientationUtils.js';
+import Timer from '../utils/timer.js';
 
 export function map() {
     var os = getOS();
@@ -9,6 +10,7 @@ export function map() {
     // Define these variables in the correct scope
     var lastPosition = null;
     var lastTimestamp = null;
+    const timer = new Timer();
 
     var map = L.map('map').setView([49.75, 6.63], 12);
     var marker;
@@ -93,6 +95,10 @@ export function map() {
     }
 
     $("#requestOrientationPermissionButton").click(function () {
+        if($(this).text() === "Start"){
+            $(this).text("Stop");
+            $(this).atrr("id", "stopOrientation");
+            timer.start();
         console.log("Requesting permission for DeviceOrientation");
         if (window.DeviceOrientationEvent) {
             console.log("DeviceOrientation supported");
@@ -124,6 +130,12 @@ export function map() {
         } else {
             $("#orientation").text("Device orientation not supported.");
         }
+    } else {
+        $(this).text("Start");
+        $(this).atrr("id", "requestOrientationPermissionButton");
+        navigator.geolocation.clearWatch(watchId);
+        timer.stop();
+    }
     });
 
     $("#stopGeolocation").click(function () {
