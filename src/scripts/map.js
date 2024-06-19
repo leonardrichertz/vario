@@ -75,7 +75,7 @@ export function map() {
             startMarker = L.marker([position.coords.latitude, position.coords.longitude], { icon: startMarkerIcon }).addTo(map);
         }
 
-        $("#distance").html("<br>distance: " + distance.toFixed(3));
+        $("#distance").html("Zurückgelegte Distanz: " + distance.toFixed(3));
         $("#geolocationData").html("<br>Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude);
 
         var speed = position.coords.speed;
