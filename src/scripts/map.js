@@ -80,13 +80,13 @@ export function map() {
 
         var speed = position.coords.speed;
         if (speed !== null && !isNaN(speed)) {
-            $("#speed").html(speed.toFixed(2));
+            $("#speed").html("Geschwindigkeit: ", speed.toFixed(2));
         } else {
             var result = calculateManualSpeed(position, lastPosition, lastTimestamp);
             lastPosition = result.lastPosition;
             lastTimestamp = result.lastTimestamp;
             var manualSpeed = result.manualSpeed;
-            $("#speed").html(manualSpeed.toFixed(2));
+            $("#speed").html("Geschwindigkeit: ", manualSpeed.toFixed(2));
         }
     }
 
