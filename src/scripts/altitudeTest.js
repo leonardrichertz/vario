@@ -1,4 +1,4 @@
-$(document).ready(function () {
+/* $(document).ready(function () {
     function getOS() {
         var userAgent = navigator.userAgent || navigator.vendor || window.opera;
         if (/windows phone/i.test(userAgent)) return "Windows Phone";
@@ -192,29 +192,85 @@ $(document).ready(function () {
         $("#gammaShift").text("GammaShift: " + gammaShift);
     }
 
-    function updateAltitude() {
-        console.log("updateAltitude Function");
-        if ('geolocation' in navigator) {
-            navigator.geolocation.getCurrentPosition(function (position) {
-                var newAltitude = position.coords.altitude;
-                var currentTime = Date.now();
-                var deltaAltitude = newAltitude - currentAltitude;
-                var deltaTime = (currentTime - lastUpdateTime) / 1000; // Zeitdifferenz in Sekunden
-                var speed = deltaAltitude / deltaTime; // Geschwindigkeit in Metern pro Sekunde
+}); */
 
-                $("#altitudeData").text("Current Altitude: " + newAltitude + 
-                                        ", Delta: " + deltaAltitude + 
-                                        ", Speed: " + speed + " m/s");
-                                        
-                console.log("Current Altitude: " + newAltitude + 
-                                        ", Delta: " + deltaAltitude + 
-                                        ", Speed: " + speed + " m/s");
-                // Update die Variablen für die nächste Messung
+
+
+
+$(document).ready(function () {
+    let currentAltitude = 0;
+    let lastAltitude = 0;
+    let lastUpdateTime = 0;
+    let currentSpeedUpDown = 0;
+    let watchId;
+
+    function handleError() {
+        $("#altitudeData").text("Error getting altitude.");
+    }
+
+    const options = { enableHighAccuracy: true, maximumAge: 30000, timeout: 27000 };
+
+    $("#requestAltitudeButton").click(function () {
+        if ('geolocation' in navigator) {
+            watchId = navigator.geolocation.watchPosition(function (position) {
+                const newAltitude = position.coords.altitude;
+                const currentTime = Date.now();
+
+                if (lastUpdateTime !== 0 && newAltitude !== null) {
+                    const deltaAltitude = newAltitude - currentAltitude;
+                    const deltaTime = (currentTime - lastUpdateTime) / 1000; // Time difference in seconds
+                    currentSpeedUpDown = deltaAltitude / deltaTime; // Speed in meters per second
+
+                    $("#altitudeData").text(`Current Altitude: ${newAltitude.toFixed(2)} m, Delta: ${deltaAltitude.toFixed(2)} m, Speed: ${currentSpeedUpDown.toFixed(2)} m/s`);
+                } else {
+                    $("#altitudeData").text(`Current Altitude: ${newAltitude.toFixed(2)} m`);
+                }
+
+                // Update the variables for the next measurement
                 currentAltitude = newAltitude;
                 lastUpdateTime = currentTime;
             }, handleError, options);
         } else {
             $("#altitudeData").text("Geolocation not supported.");
         }
+
+        if (window.DeviceMotionEvent) {
+            window.addEventListener('devicemotion', handleMotion, handleMotionError);
+        }
+    });
+
+    $("#stopTrackingButton").click(function () {
+        if (watchId) {
+            navigator.geolocation.clearWatch(watchId);
+            watchId = null;
+            $("#altitudeData").text("Tracking stopped.");
+        }
+        window.removeEventListener('devicemotion', handleMotion);
+    });
+
+    function handleMotion(evt) {
+        const currentTime = Date.now();
+        const deltaTime = (currentTime - lastUpdateTime) / 1000; // Time difference in seconds
+        const acceleration = evt.acceleration;
+        const beta = evt.rotationRate.beta;
+        const gamma = evt.rotationRate.gamma;
+
+        // Calculate the resultant acceleration considering device inclination
+        if (deltaTime > 0 && acceleration) {
+            // Adjust acceleration based on device tilt
+            const adjustedAccelerationZ = acceleration.z * Math.cos(beta * Math.PI / 180) * Math.cos(gamma * Math.PI / 180);
+            const resultantAcceleration = Math.sqrt(
+                Math.pow(acceleration.x * Math.cos(gamma * Math.PI / 180), 2) +
+                Math.pow(acceleration.y * Math.cos(beta * Math.PI / 180), 2) +
+                Math.pow(adjustedAccelerationZ, 2)
+            );
+            currentSpeedUpDown += resultantAcceleration * deltaTime;
+        }
+
+        $("#motionData").text(`Current Speed (based on acceleration): ${currentSpeedUpDown.toFixed(2)} m/s`);
+    }
+
+    function handleMotionError() {
+        $("#motionData").text("Error in deviceMotion.");
     }
 });
