@@ -218,15 +218,15 @@ $(document).ready(function () {
 
                 if (lastUpdateTime !== 0 && newAltitude !== null) {
                     const deltaAltitude = newAltitude - currentAltitude;
-                    const deltaTime = (currentTime - lastUpdateTime) / 1000; // Time difference in seconds
-                    currentSpeedUpDown = deltaAltitude / deltaTime; // Speed in meters per second
+                    const deltaTime = (currentTime - lastUpdateTime) / 1000; // Zeitdifferenz in Sekunden
+                    currentSpeedUpDown = deltaAltitude / deltaTime; // Geschwindigkeit in Metern pro Sekunde
 
                     $("#altitudeData").text(`Current Altitude: ${newAltitude.toFixed(2)} m, Delta: ${deltaAltitude.toFixed(2)} m, Speed: ${currentSpeedUpDown.toFixed(2)} m/s`);
                 } else {
                     $("#altitudeData").text(`Current Altitude: ${newAltitude.toFixed(2)} m`);
                 }
 
-                // Update the variables for the next measurement
+                // Variablen für die nächste Messung aktualisieren
                 currentAltitude = newAltitude;
                 lastUpdateTime = currentTime;
             }, handleError, options);
@@ -250,20 +250,23 @@ $(document).ready(function () {
 
     function handleMotion(evt) {
         const currentTime = Date.now();
-        const deltaTime = (currentTime - lastUpdateTime) / 1000; // Time difference in seconds
+        const deltaTime = (currentTime - lastUpdateTime) / 1000; // Zeitdifferenz in Sekunden
         const acceleration = evt.acceleration;
-        const beta = evt.rotationRate.beta;
-        const gamma = evt.rotationRate.gamma;
+        const beta = evt.rotationRate.beta * (Math.PI / 180); // Konvertiere in Bogenmaß
+        const gamma = evt.rotationRate.gamma * (Math.PI / 180); // Konvertiere in Bogenmaß
 
-        // Calculate the resultant acceleration considering device inclination
+        // Berechne die resultierende Beschleunigung unter Berücksichtigung der Neigung
         if (deltaTime > 0 && acceleration) {
-            // Adjust acceleration based on device tilt
-            const adjustedAccelerationZ = acceleration.z * Math.cos(beta * Math.PI / 180) * Math.cos(gamma * Math.PI / 180);
+            // Justiere die Beschleunigung basierend auf der Neigung des Geräts
+            const adjustedAccelerationZ = acceleration.z * Math.cos(beta) * Math.cos(gamma);
+            const adjustedAccelerationX = acceleration.x * Math.cos(gamma);
+            const adjustedAccelerationY = acceleration.y * Math.cos(beta);
             const resultantAcceleration = Math.sqrt(
-                Math.pow(acceleration.x * Math.cos(gamma * Math.PI / 180), 2) +
-                Math.pow(acceleration.y * Math.cos(beta * Math.PI / 180), 2) +
+                Math.pow(adjustedAccelerationX, 2) +
+                Math.pow(adjustedAccelerationY, 2) +
                 Math.pow(adjustedAccelerationZ, 2)
             );
+
             currentSpeedUpDown += resultantAcceleration * deltaTime;
         }
 
