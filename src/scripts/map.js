@@ -130,7 +130,7 @@ export function map() {
                     window.addEventListener('deviceorientation', handleOrientationIOS);
                 } else {
                     console.log("case 2 Android");
-                    window.addEventListener('deviceorientationabsolute', handleOrientationAndroid, true);
+                    window.addEventListener('deviceorientationabsolute', Android, true);
                 }
             }
         } else {
