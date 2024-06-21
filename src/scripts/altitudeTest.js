@@ -10,6 +10,7 @@ $(document).ready(function () {
         return "unknown";
     }
     let lastUpdateTime = 0;
+    let watchId;
     let initialAltitude = 0;
     let currentAltitude = 0;
     let gammaShift = 0;
@@ -32,15 +33,25 @@ $(document).ready(function () {
 
     $("#requestAltitudeButton").click(function () {
         if ('geolocation' in navigator) {
-            navigator.geolocation.getCurrentPosition(function (position) {
-                initialAltitude = position.coords.altitude;
-                currentAltitude = initialAltitude;
-                lastAltitude = initialAltitude;
-                lastUpdateTime = Date.now();
-                $("#altitudeData").text("Altitude: " + initialAltitude);
-                // kontinuierliches Update der Höhe
-                setInterval(updateAltitude, throttleInterval);
-                console.log("initial Height: " + initialAltitude);
+            watchId = navigator.geolocation.watchPosition(function (position) {
+                var newAltitude = position.coords.altitude;
+                var currentTime = Date.now();
+
+                if (lastUpdateTime !== 0) {
+                    var deltaAltitude = newAltitude - currentAltitude;
+                    var deltaTime = (currentTime - lastUpdateTime) / 1000; // Zeitdifferenz in Sekunden
+                    var speed = deltaAltitude / deltaTime; // Geschwindigkeit in Metern pro Sekunde
+
+                    $("#altitudeData").text("Current Altitude: " + newAltitude + 
+                                            ", Delta: " + deltaAltitude + 
+                                            ", Speed: " + speed + " m/s");
+                } else {
+                    $("#altitudeData").text("Current Altitude: " + newAltitude);
+                }
+
+                // Update die Variablen für die nächste Messung
+                currentAltitude = newAltitude;
+                lastUpdateTime = currentTime;
             }, handleError, options);
             
             if (window.DeviceOrientationEvent) {
