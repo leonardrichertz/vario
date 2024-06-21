@@ -261,11 +261,7 @@ $(document).ready(function () {
             const adjustedAccelerationZ = acceleration.z * Math.cos(beta) * Math.cos(gamma);
             const adjustedAccelerationX = acceleration.x * Math.cos(gamma);
             const adjustedAccelerationY = acceleration.y * Math.cos(beta);
-            const resultantAcceleration = Math.sqrt(
-                Math.pow(adjustedAccelerationX, 2) +
-                Math.pow(adjustedAccelerationY, 2) +
-                Math.pow(adjustedAccelerationZ, 2)
-            );
+            const resultantAcceleration = adjustedAccelerationX + adjustedAccelerationY + adjustedAccelerationZ;
 
             $("#AccelerationX").text("AccelerationX: " + adjustedAccelerationX);
             $("#AccelerationY").text("AccelerationY: " + adjustedAccelerationY);
