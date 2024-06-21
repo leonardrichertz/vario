@@ -38,9 +38,9 @@ $(document).ready(function () {
                 lastAltitude = initialAltitude;
                 lastUpdateTime = Date.now();
                 $("#altitudeData").text("Altitude: " + initialAltitude);
-                // Starte das kontinuierliche Update der Höhe
+                // kontinuierliches Update der Höhe
                 setInterval(updateAltitude, throttleInterval);
-
+                console.log("initial Height: " + initialAltitude);
             }, handleError, options);
             
             if (window.DeviceOrientationEvent) {
@@ -182,6 +182,7 @@ $(document).ready(function () {
     }
 
     function updateAltitude() {
+        console.log("updateAltitude Function");
         if ('geolocation' in navigator) {
             navigator.geolocation.getCurrentPosition(function (position) {
                 var newAltitude = position.coords.altitude;
@@ -193,7 +194,10 @@ $(document).ready(function () {
                 $("#altitudeData").text("Current Altitude: " + newAltitude + 
                                         ", Delta: " + deltaAltitude + 
                                         ", Speed: " + speed + " m/s");
-
+                                        
+                console.log("Current Altitude: " + newAltitude + 
+                                        ", Delta: " + deltaAltitude + 
+                                        ", Speed: " + speed + " m/s");
                 // Update die Variablen für die nächste Messung
                 currentAltitude = newAltitude;
                 lastUpdateTime = currentTime;
