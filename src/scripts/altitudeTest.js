@@ -267,6 +267,10 @@ $(document).ready(function () {
                 Math.pow(adjustedAccelerationZ, 2)
             );
 
+            $("#AccelerationX").text("AccelerationX: " + adjustedAccelerationX);
+            $("#AccelerationY").text("AccelerationY: " + adjustedAccelerationY);
+            $("#AccelerationZ").text("AccelerationZ: " + adjustedAccelerationZ + "\n Resultierende Beschleunigung: " + resultantAcceleration);
+
             currentSpeedUpDown += resultantAcceleration * deltaTime;
         }
 
