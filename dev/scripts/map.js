@@ -50,13 +50,11 @@ export function map() {
     function IOS(event) {
         const { alpha, beta, gamma } = handleOrientationIOS(event);
         $("#compass").css("transform", "rotate(" + alpha + "deg)");
-        $("#orientationData").html("<br>Alpha: " + alpha + "<br>Beta: " + beta + "<br>Gamma: " + gamma);
     }
 
     function Android(event) {
         const { alpha, beta, gamma } = handleOrientationAndroid(event);
         $("#compass").css("transform", "rotate(" + alpha + "deg)");
-        $("#orientationData").html("<br>Alpha: " + (360 - alpha) + "<br>Beta: " + beta + "<br>Gamma: " + gamma);
     }
 
     function handleGeolocation(position) {
