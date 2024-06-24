@@ -49,7 +49,7 @@ export function map() {
 
     function IOS(event) {
         const { alpha, beta, gamma } = handleOrientationIOS(event);
-        $("#compass").css("transform", "rotate(" + alpha + "deg)");
+        $("#compass").css("transform", "rotate(" + (360 -alpha) + "deg)");
     }
 
     function Android(event) {
@@ -127,9 +127,9 @@ export function map() {
                         .catch(console.error);
                 } else {
                     $("#orientationInfo").text("No need to request permission for DeviceOrientation");
-                    if (os === 'iOS') {
+                    if (os === 'iOS'|| os === 'MacOS') {
                         console.log("case 2 Apple");
-                        window.addEventListener('deviceorientation', handleOrientationIOS);
+                        window.addEventListener('deviceorientation', IOS);
                     } else {
                         console.log("case 2 Android");
                         window.addEventListener('deviceorientationabsolute', Android, true);
