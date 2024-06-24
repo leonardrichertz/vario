@@ -3,7 +3,7 @@ import { getOS } from '../utils/operatingSystem.js';
 import { handleOrientationAndroid, handleOrientationIOS } from '../utils/orientationUtils.js';
 import Timer from '../utils/timer.js';
 
-export function map() {
+export function altitudeOnlyGPS() {
     var os = getOS();
     console.log("Operating System: " + os);
 
