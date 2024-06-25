@@ -7,7 +7,6 @@ export function altitudeGPSAcceleration() {
     const os = getOS();
     console.log("Operating System: " + os);
 
-    // Define these variables in the correct scope
     let lastPosition = null;
     let lastTimestamp = null;
     const timer = new Timer();
@@ -20,22 +19,22 @@ export function altitudeGPSAcceleration() {
 
     let previousHeight = null;
     let previousTime = null;
-    let verticalSpeed = 0;  // Initial vertical speed
-    let accelerationBuffer = []; // Buffer for storing acceleration data
-    let lastMotionUpdate = Date.now(); // Time of the last devicemotion event
+    let verticalSpeed = 0;
+    let accelerationBuffer = [];
+    let lastMotionUpdate = Date.now();
 
     const startMarkerIcon = L.icon({
         iconUrl: '../assets/marker.png',
-        iconSize: [38, 50], // size of the icon
-        iconAnchor: [19, 50], // point of the icon which will correspond to marker's location
-        popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
+        iconSize: [38, 50],
+        iconAnchor: [19, 50],
+        popupAnchor: [-3, -76]
     });
 
     const markerIcon = L.icon({
         iconUrl: '../assets/paraglider.png',
-        iconSize: [38, 50], // size of the icon
-        iconAnchor: [19, 50], // point of the icon which will correspond to marker's location
-        popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
+        iconSize: [38, 50],
+        iconAnchor: [19, 50],
+        popupAnchor: [-3, -76]
     });
 
     const options = {
@@ -44,7 +43,6 @@ export function altitudeGPSAcceleration() {
         timeout: 27000,
     };
 
-    // Add Tile layer for map
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
@@ -95,13 +93,13 @@ export function altitudeGPSAcceleration() {
 
         // Altitude handling
         const currentHeight = position.coords.altitude;
-        if (currentHeight !== null) {
+        if (currentHeight !== null && !isNaN(currentHeight)) {
             $("#height").html(currentHeight.toFixed(2) + " m");
 
             const currentTime = Date.now();
             if (previousHeight !== null && previousTime !== null) {
                 const speed = calculateVerticalSpeed(currentHeight, currentTime);
-                verticalSpeed = (verticalSpeed + speed) / 2;  // Average speed
+                verticalSpeed = (verticalSpeed + speed) / 2;
             }
             previousHeight = currentHeight;
             previousTime = currentTime;
@@ -114,17 +112,17 @@ export function altitudeGPSAcceleration() {
 
     function updateDeviceMotion(event) {
         const currentTime = Date.now();
-        const timeDifference = (currentTime - lastMotionUpdate) / 1000; // convert to seconds
+        const timeDifference = (currentTime - lastMotionUpdate) / 1000;
 
         const accelerationZ = event.acceleration.z;
-        if (accelerationZ !== null) {
+        if (accelerationZ !== null && !isNaN(accelerationZ)) {
             accelerationBuffer.push({
                 acceleration: accelerationZ,
                 timestamp: currentTime
             });
         }
 
-        if (timeDifference >= 0.2) { // Only update if 200ms have passed
+        if (timeDifference >= 0.2) {
             let sumAcceleration = 0;
             let validDataPoints = 0;
 
@@ -135,13 +133,12 @@ export function altitudeGPSAcceleration() {
 
             if (validDataPoints > 0) {
                 const averageAcceleration = sumAcceleration / validDataPoints;
-                const timeDiff = (currentTime - previousTime) / 1000;  // convert to seconds
+                const timeDiff = (currentTime - lastMotionUpdate) / 1000;
 
-                if (previousTime !== null) {
-                    verticalSpeed += averageAcceleration * timeDiff;  // integrate acceleration to get speed
+                if (previousTime !== null && !isNaN(previousTime)) {
+                    verticalSpeed += averageAcceleration * timeDiff;
                 }
 
-                // Update the UI
                 if (verticalSpeed > 0) {
                     $("#ascentSpeed").html(verticalSpeed.toFixed(2));
                     $("#descentSpeed").html("0.00");
@@ -153,8 +150,8 @@ export function altitudeGPSAcceleration() {
                 previousTime = currentTime;
             }
 
-            accelerationBuffer = []; // Clear the buffer
-            lastMotionUpdate = currentTime; // Update the last motion update time
+            accelerationBuffer = [];
+            lastMotionUpdate = currentTime;
         }
     }
 
@@ -164,11 +161,10 @@ export function altitudeGPSAcceleration() {
             console.log("current Height: " + currentHeight);
             const currentTime = Date.now();
 
-            if (currentHeight !== null) {
+            if (currentHeight !== null && !isNaN(currentHeight)) {
                 const speed = calculateVerticalSpeed(currentHeight, currentTime);
-                verticalSpeed = (verticalSpeed + speed) / 2;  // Average speed
+                verticalSpeed = (verticalSpeed + speed) / 2;
 
-                // Update the UI
                 if (verticalSpeed > 0) {
                     $("#ascentSpeed").html(verticalSpeed.toFixed(2));
                     $("#descentSpeed").html("0.00");
@@ -190,10 +186,10 @@ export function altitudeGPSAcceleration() {
     }
 
     function calculateVerticalSpeed(currentHeight, currentTime) {
-        if (previousHeight !== null && previousTime !== null) {
+        if (previousHeight !== null && previousTime !== null && !isNaN(previousHeight) && !isNaN(previousTime)) {
             const heightDifference = currentHeight - previousHeight;
-            const timeDifference = (currentTime - previousTime) / 1000;  // convert to seconds
-            return heightDifference / timeDifference;  // speed in m/s
+            const timeDifference = (currentTime - previousTime) / 1000;
+            return heightDifference / timeDifference;
         }
         return 0;
     }
