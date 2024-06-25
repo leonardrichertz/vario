@@ -21,6 +21,8 @@ export function altitudeGPSAcceleration() {
     let previousHeight = null;
     let previousTime = null;
     let verticalSpeed = 0;  // Initial vertical speed
+    let accelerationBuffer = []; // Buffer for storing acceleration data
+    let lastMotionUpdate = Date.now(); // Time of the last devicemotion event
 
     const startMarkerIcon = L.icon({
         iconUrl: '../assets/marker.png',
@@ -111,27 +113,48 @@ export function altitudeGPSAcceleration() {
     }
 
     function updateDeviceMotion(event) {
+        const currentTime = Date.now();
+        const timeDifference = (currentTime - lastMotionUpdate) / 1000; // convert to seconds
+
         const accelerationZ = event.acceleration.z;
-        console.log("Acceleration in z: " + accelerationZ);
-
         if (accelerationZ !== null) {
-            const currentTime = Date.now();
-            const timeDifference = (currentTime - previousTime) / 1000;  // convert to seconds
+            accelerationBuffer.push({
+                acceleration: accelerationZ,
+                timestamp: currentTime
+            });
+        }
 
-            if (previousTime !== null) {
-                verticalSpeed += accelerationZ * timeDifference;  // integrate acceleration to get speed
+        if (timeDifference >= 0.2) { // Only update if 200ms have passed
+            let sumAcceleration = 0;
+            let validDataPoints = 0;
+
+            for (let i = 0; i < accelerationBuffer.length; i++) {
+                sumAcceleration += accelerationBuffer[i].acceleration;
+                validDataPoints++;
             }
 
-            // Update the UI
-            if (verticalSpeed > 0) {
-                $("#ascentSpeed").html(verticalSpeed.toFixed(2));
-                $("#descentSpeed").html("0.00");
-            } else {
-                $("#ascentSpeed").html("0.00");
-                $("#descentSpeed").html((-verticalSpeed).toFixed(2));
+            if (validDataPoints > 0) {
+                const averageAcceleration = sumAcceleration / validDataPoints;
+                const timeDiff = (currentTime - previousTime) / 1000;  // convert to seconds
+
+                if (previousTime !== null) {
+                    verticalSpeed += averageAcceleration * timeDiff;  // integrate acceleration to get speed
+                }
+
+                // Update the UI
+                if (verticalSpeed > 0) {
+                    $("#ascentSpeed").html(verticalSpeed.toFixed(2));
+                    $("#descentSpeed").html("0.00");
+                } else {
+                    $("#ascentSpeed").html("0.00");
+                    $("#descentSpeed").html((-verticalSpeed).toFixed(2));
+                }
+
+                previousTime = currentTime;
             }
 
-            previousTime = currentTime;
+            accelerationBuffer = []; // Clear the buffer
+            lastMotionUpdate = currentTime; // Update the last motion update time
         }
     }
 
@@ -229,7 +252,7 @@ export function altitudeGPSAcceleration() {
                 window.addEventListener('devicemotion', updateDeviceMotion);
             }
 
-            setInterval(updateGeolocation, 5000);
+            setInterval(updateGeolocation, 1000);
         } else {
             $(this).text("Start");
             navigator.geolocation.clearWatch(watchId);
@@ -237,4 +260,3 @@ export function altitudeGPSAcceleration() {
         }
     });
 }
-
