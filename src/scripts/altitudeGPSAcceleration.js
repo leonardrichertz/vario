@@ -112,6 +112,7 @@ export function altitudeGPSAcceleration() {
 
     function updateDeviceMotion(event) {
         const accelerationZ = event.acceleration.z;
+        console.log("Acceleration in z: " + accelerationZ);
 
         if (accelerationZ !== null) {
             const currentTime = Date.now();
@@ -132,6 +133,37 @@ export function altitudeGPSAcceleration() {
 
             previousTime = currentTime;
         }
+    }
+
+    function updateGeolocation() {
+        navigator.geolocation.getCurrentPosition((position) => {
+            const currentHeight = position.coords.altitude;
+            console.log("current Height: " + currentHeight);
+            const currentTime = Date.now();
+
+            if (currentHeight !== null) {
+                const speed = calculateVerticalSpeed(currentHeight, currentTime);
+                verticalSpeed = (verticalSpeed + speed) / 2;  // Average speed
+
+                // Update the UI
+                if (verticalSpeed > 0) {
+                    $("#ascentSpeed").html(verticalSpeed.toFixed(2));
+                    $("#descentSpeed").html("0.00");
+                } else {
+                    $("#ascentSpeed").html("0.00");
+                    $("#descentSpeed").html((-verticalSpeed).toFixed(2));
+                }
+            }
+
+            previousHeight = currentHeight;
+            previousTime = currentTime;
+        }, (error) => {
+            console.error('Geolocation error:', error);
+        }, {
+            enableHighAccuracy: true,
+            maximumAge: 0,
+            timeout: 5000
+        });
     }
 
     function calculateVerticalSpeed(currentHeight, currentTime) {
