@@ -16,6 +16,8 @@ let acceleration0Y = 0;
 let acceleration0Z = 0;
 let acceleration0Altitude = 0;
 let isFirstCall = true;
+var lastAltitude = 0;
+var currentAltitude = 0;
 
 export function altitudeGPSandAcceleration() {
     var os = getOS();
@@ -31,7 +33,6 @@ export function altitudeGPSandAcceleration() {
     var startMarker;
     var watchId;
     var distance = 0;
-    var lastAltitude = 0;
 
     var startMarkerIcon = L.icon({
         iconUrl: '../assets/marker.png',
@@ -142,13 +143,22 @@ export function altitudeGPSandAcceleration() {
     }
     async function handleMotion(evt) {
         console.log("handleMotion event triggered");
-        const {lastAltitude : lastAlt, isFirstCall: first, verticalSpeed : vspeed, acceleration0X : acc0x, acceleration0Y: acc0y, acceleration0Z: acc0z} = await getverticalSpeedFromInterval(evt, gammaShift, betaShift, thresholdRotation, lastAltitude, os, isFirstCall, verticalSpeed, acceleration0X, acceleration0Y, acceleration0Z, acceleration0Altitude);
+        const {
+        currentAltitude : lastAlt,
+        isFirstCall: first,
+        verticalSpeed : vspeed,
+        acceleration0X : acc0x,
+        acceleration0Y: acc0y,
+        acceleration0Z: acc0z,
+        acceleration0Altitude: acc0alt } = await getverticalSpeedFromInterval(evt, gammaShift, betaShift, thresholdRotation, lastAltitude, os, isFirstCall, verticalSpeed, acceleration0X, acceleration0Y, acceleration0Z, acceleration0Altitude);
         lastAltitude = lastAlt;
+        currentAltitude = lastAlt;
         isFirstCall = first;
         verticalSpeed = vspeed;
         acceleration0X = acc0x;
         acceleration0Y = acc0y;
         acceleration0Z = acc0z;
+        acceleration0Altitude = acc0alt;
         console.log("outside of getverticalSpeedFromInterval function")
         console.log("Vertical speed: " + verticalSpeed);
         console.log("Acceleration0X: " + acceleration0X);

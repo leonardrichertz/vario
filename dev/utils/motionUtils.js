@@ -26,10 +26,10 @@ export async function getverticalSpeedFromInterval(evt, gammaShift, betaShift, t
         acceleration0Z = (gammaShift / 90 * accelerationZ1) + (betaShift / 90 * accelerationZ1);
         acceleration0Y = (betaShift / 90 * accelerationY1);
         acceleration0X = - (gammaShift / 90 * accelerationX1);
-        acceleration0Altitude = acceleration0Z + acceleration0Y + acceleration0X;
         currentAltitude = lastAltitude;
         isFirstCall = false;
     }
+    acceleration0Altitude = acceleration0Z + acceleration0Y + acceleration0X;
     // Check if the device is not rotated
     if (Math.abs(gammaShift) <= thresholdRotation && Math.abs(betaShift) <= thresholdRotation) {
         // No rotation
@@ -133,7 +133,7 @@ export async function getverticalSpeedFromInterval(evt, gammaShift, betaShift, t
             acceleration0Y = adjustedAccelerationY1;
             acceleration0Z = adjustedAccelerationZ1;
         }
-        console.log("startfunction");
+        console.log("startfunction")
         console.log("Current altitude: ", currentAltitude);
         console.log("Vertical speed: ", verticalSpeed);
         console.log("Acceleration Z: ", acceleration0Z);
@@ -142,6 +142,6 @@ export async function getverticalSpeedFromInterval(evt, gammaShift, betaShift, t
         console.log("Is first call: ", isFirstCall);
         console.log("endfunction");
 
-        return { currentAltitude, isFirstCall, verticalSpeed, acceleration0X, acceleration0Y, acceleration0Z}
+        return { currentAltitude, isFirstCall, verticalSpeed, acceleration0X, acceleration0Y, acceleration0Z, acceleration0Altitude}
     }
 }
