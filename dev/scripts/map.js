@@ -49,7 +49,7 @@ export function map() {
 
     function IOS(event) {
         const alpha = handleOrientationIOS(event);
-        $("#compass").css("transform", "rotate(" + (360 -alpha) + "deg)");
+        $("#compass").css("transform", "rotate(" + (360 - alpha) + "deg)");
     }
 
     function Android(event) {
@@ -99,9 +99,8 @@ export function map() {
             console.log("timer started");
             if ('geolocation' in navigator) {
                 watchId = navigator.geolocation.watchPosition(handleGeolocation, handleError, options);
-                $("#startGeolocation").prop("disabled", true);
             } else {
-                $("#geolocationData").text("Geolocation not supported.");
+                console.log("Geolocation not supported.");
             }
             console.log("Requesting permission for DeviceOrientation");
             if (window.DeviceOrientationEvent) {
@@ -111,7 +110,7 @@ export function map() {
                     DeviceOrientationEvent.requestPermission()
                         .then(permissionState => {
                             if (permissionState === 'granted') {
-                                $("#permission").text("Permission granted for DeviceOrientation");
+                                console.log("Permission granted for DeviceOrientation");
                                 if (os === 'iOS' || os === 'MacOS') {
                                     console.log("case 1 Apple");
                                     window.addEventListener('deviceorientation', IOS);
@@ -120,13 +119,12 @@ export function map() {
                                     window.addEventListener('deviceorientationabsolute', Android, true);
                                 }
                             } else {
-                                $("#permission").text("Permission not granted for DeviceOrientation");
-                                alert('Permission not granted for DeviceOrientation');
+                               console.log("Permission not granted for DeviceOrientation");
                             }
                         })
                         .catch(console.error);
                 } else {
-                    $("#orientationInfo").text("No need to request permission for DeviceOrientation");
+                    console.log("No need to request permission for DeviceOrientation");
                     if (os === 'iOS'|| os === 'MacOS') {
                         console.log("case 2 Apple");
                         window.addEventListener('deviceorientation', IOS);
@@ -136,7 +134,7 @@ export function map() {
                     }
                 }
             } else {
-                $("#orientation").text("Device orientation not supported.");
+                console.log("Device orientation not supported.");
             }
         } else {
             $(this).text("Start");
