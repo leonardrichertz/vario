@@ -149,6 +149,7 @@ export function altitudeGPSandAcceleration() {
         acceleration0X = acc0x;
         acceleration0Y = acc0y;
         acceleration0Z = acc0z;
+        console.log("outside of getverticalSpeedFromInterval function")
         console.log("Vertical speed: " + verticalSpeed);
         console.log("Acceleration0X: " + acceleration0X);
         console.log("Acceleration0Y: " + acceleration0Y);
@@ -156,6 +157,7 @@ export function altitudeGPSandAcceleration() {
         console.log("Acceleration0Altitude: " + acceleration0Altitude);
         console.log("Is first call: " + isFirstCall);
         console.log("Last altitude: " + lastAltitude);
+        console.log("endof handleMotion event")
     }
 
     function handleError(error) {
