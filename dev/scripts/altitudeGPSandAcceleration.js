@@ -108,6 +108,7 @@ export function altitudeGPSandAcceleration() {
                 $("#ascentSpeed").html("0.00");
                 $("#descentSpeed").html(Math.abs(speed.toFixed(2)));
             }
+            console.log("after if block in vertical speed calculation")
             lastAltitude = newAltitude;
             currentAltitude = newAltitude;
             console.log("Altitude from GPS: " + newAltitude);
