@@ -63,11 +63,14 @@ export function altitudeOnlyGPS() {
         var latlng = [position.coords.latitude, position.coords.longitude];
         //Added altitude handling and displaying it on the website.
         const newAltitude = position.coords.altitude;
+        console.log("new Altitude: " + newAltitude);
+        console.log("last Altitude: " + lastAltitude);
         const currrentTime = Date.now();
+        console.log("current time: " + currrentTime);
+        console.log("last timestamp: " + lastTimestamp);
 
         if (lastTimestamp !== 0 && newAltitude !== null) {
             console.log("Vertical speed calculation started")
-            console.log("Altitude: " + newAltitude);
             const altitudeDifference = newAltitude - lastAltitude;
             const timeDifference = currrentTime - lastTimestamp;
             console.log("Altitude difference: " + altitudeDifference);
