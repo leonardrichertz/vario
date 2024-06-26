@@ -29,3 +29,47 @@ export function requestOrientationPermission(os) {
         return Promise.resolve({ granted: false, os });
     }
 }
+
+// return the orientation shift values for an event and the threshold rotation.
+export function getOrientationShift(evt, thresholdRotation){
+    let gammaShift = 0;
+    let betaShift = 0;
+    if (evt.gamma < 90 && evt.gamma >= 0) {
+        if (evt.gamma > thresholdRotation || evt.gamma - 90 < -thresholdRotation) {
+            // adjust the gammaShift value
+            gammaShift = evt.gamma;
+        }
+        else {
+            gammaShift = 0;
+        }
+    }
+    else if (evt.gamma >= -90 && evt.gamma < 0) {
+        if (evt.gamma < -thresholdRotation || evt.gamma + 90 > thresholdRotation) {
+            // adjust the gammaShift value
+            gammaShift = evt.gamma;
+        }
+        else {
+            gammaShift = 0;
+        }
+    }
+    if (evt.beta < 180 && evt.beta >= 0) {
+        if (evt.beta > thresholdRotation || evt.beta - 180 < -thresholdRotation) {
+            // adjust the betaShift value
+            betaShift = evt.beta;
+        }
+        else {
+            betaShift = 0;
+        }
+    }
+    else if (evt.beta >= -180 && evt.beta < 0) {
+        if (evt.beta < -thresholdRotation || evt.beta + 180 > thresholdRotation) {
+            // adjust the betaShift value
+            betaShift = evt.beta;
+        }
+        else {
+            betaShift = 0;
+        }
+    }
+    return { gammaShift, betaShift };
+    // We do not have to use alpha since it only represents the compass direction (rotation around z-axis)
+}
