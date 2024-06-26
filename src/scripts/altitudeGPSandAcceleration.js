@@ -110,6 +110,8 @@ export function altitudeGPSandAcceleration() {
             }
             lastAltitude = newAltitude;
             currentAltitude = newAltitude;
+            console.log("Altitude from GPS: " + newAltitude);
+            console.log("Vertical speed calculation ended")
             lastTimestamp = currrentTime;
         }
 
@@ -152,7 +154,6 @@ export function altitudeGPSandAcceleration() {
         acceleration0Y: acc0y,
         acceleration0Z: acc0z,
         acceleration0Altitude: acc0alt } = await getverticalSpeedFromInterval(evt, gammaShift, betaShift, thresholdRotation, lastAltitude, os, isFirstCall, verticalSpeed, acceleration0X, acceleration0Y, acceleration0Z, acceleration0Altitude, currentAltitude);
-        lastAltitude = lastAlt;
         currentAltitude = lastAlt;
         isFirstCall = first;
         verticalSpeed = vspeed;
@@ -167,7 +168,7 @@ export function altitudeGPSandAcceleration() {
         console.log("Acceleration0Z: " + acceleration0Z);
         console.log("Acceleration0Altitude: " + acceleration0Altitude);
         console.log("Is first call: " + isFirstCall);
-        console.log("Last altitude: " + lastAltitude);
+        console.log("Current altitude: " + currentAltitude);
         console.log("endof handleMotion event")
     }
 
