@@ -142,6 +142,7 @@ export function altitudeGPSandAcceleration() {
         }
     }
     async function handleMotion(evt) {
+        console.log("handleMotion event triggered");
         lastAltitude, isFirstCall, verticalSpeed, acceleration0X, acceleration0Y, acceleration0Z = await getverticalSpeedFromInterval(evt, gammaShift, betaShift, thresholdRotation, lastAltitude, os, isFirstCall, verticalSpeed, acceleration0X, acceleration0Y, acceleration0Z, acceleration0Altitude);
     }
 
@@ -185,7 +186,7 @@ export function altitudeGPSandAcceleration() {
                     console.log("No need to request permission for DeviceOrientation");
                     if (os === 'iOS') {
                         console.log("case 2 Apple");
-                        window.addEventListener('deviceorientation', handleOrientationIOS);
+                        window.addEventListener('deviceorientation', handleOrientationIOS, handleError);
                     } else {
                         console.log("case 2 Android");
                         window.addEventListener('deviceorientationabsolute', Android, true);
@@ -197,6 +198,7 @@ export function altitudeGPSandAcceleration() {
                         console.log("Requesting permission for DeviceMotion");
                         DeviceMotionEvent.requestPermission().then(permissionState => {
                             if (permissionState === 'granted') {
+                                console.log("Permission granted for DeviceMotion");
                                 window.addEventListener('devicemotion', handleMotion, handleError);
                             }
                             else {
