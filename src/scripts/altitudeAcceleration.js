@@ -145,12 +145,12 @@ export function altitudeAcceleration() {
         console.log("Current altitude: " + currentAltitude);
         console.log("endof handleMotion event")
         if (verticalSpeed > 0){
-            $("ascentSpeed").html(verticalSpeed.toFixed(2));
-            $("descentSpeed").html("0.00");
+            $("#ascentSpeed").html(verticalSpeed.toFixed(2));
+            $("#descentSpeed").html("0.00");
         }
         else{
-            $("ascentSpeed").html("0.00");
-            $("descentSpeed").html(verticalSpeed.toFixed(2));
+            $("#ascentSpeed").html("0.00");
+            $("#descentSpeed").html(verticalSpeed.toFixed(2));
         }
     }
 
