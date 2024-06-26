@@ -144,7 +144,7 @@ export function altitudeGPSandAcceleration() {
             $("#speed").html(manualSpeed.toFixed(2));
         }
     }
-    async function handleMotion(evt) {
+    function handleMotion(evt) {
         console.log("handleMotion event triggered");
         const {
         currentAltitude : lastAlt,
@@ -153,7 +153,7 @@ export function altitudeGPSandAcceleration() {
         acceleration0X : acc0x,
         acceleration0Y: acc0y,
         acceleration0Z: acc0z,
-        acceleration0Altitude: acc0alt } = await getverticalSpeedFromInterval(evt, gammaShift, betaShift, thresholdRotation, lastAltitude, os, isFirstCall, verticalSpeed, acceleration0X, acceleration0Y, acceleration0Z, acceleration0Altitude, currentAltitude);
+        acceleration0Altitude: acc0alt } = getverticalSpeedFromInterval(evt, gammaShift, betaShift, thresholdRotation, lastAltitude, os, isFirstCall, verticalSpeed, acceleration0X, acceleration0Y, acceleration0Z, acceleration0Altitude, currentAltitude);
         currentAltitude = lastAlt;
         isFirstCall = first;
         verticalSpeed = vspeed;
