@@ -52,12 +52,12 @@ export function altitudeGPSAcceleration() {
     $("#start").text("Karte, Geschwindigkeit und Distanz");
 
     function IOS(event) {
-        const { alpha, beta, gamma } = handleOrientationIOS(event);
+        const alpha = handleOrientationIOS(event);
         $("#compass").css("transform", "rotate(" + alpha + "deg)");
     }
 
     function Android(event) {
-        const { alpha, beta, gamma } = handleOrientationAndroid(event);
+        const alpha = handleOrientationAndroid(event);
         $("#compass").css("transform", "rotate(" + alpha + "deg)");
     }
 
@@ -146,7 +146,6 @@ export function altitudeGPSAcceleration() {
                     $("#ascentSpeed").html("0.00");
                     $("#descentSpeed").html((-verticalSpeed).toFixed(2));
                 }
-
                 previousTime = currentTime;
             }
 
