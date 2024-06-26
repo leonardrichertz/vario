@@ -70,6 +70,8 @@ export function altitudeOnlyGPS() {
             console.log("Altitude: " + newAltitude);
             const altitudeDifference = newAltitude - lastAltitude;
             const timeDifference = currrentTime - lastTimestamp;
+            console.log("Altitude difference: " + altitudeDifference);
+            console.log("Time difference: " + timeDifference);
             const speed = altitudeDifference / timeDifference;
             if (speed > 0) {
                 console.log("Ascent speed: " + speed.toFixed(2));
