@@ -50,7 +50,7 @@ export function altitudeOnlyGPS() {
 
     function IOS(event) {
         const alpha = handleOrientationIOS(event);
-        $("#compass").css("transform", "rotate(" + alpha + "deg)");
+        $("#compass").css("transform", "rotate(" + (360 - alpha) + "deg)");
     }
 
     function Android(event) {
