@@ -69,8 +69,6 @@ export function altitudeGPSandAcceleration() {
         const { gammaShift: gamma, betaShift: beta } = getOrientationShift(evt, thresholdRotation);
         gammaShift = gamma;
         betaShift = beta;
-        console.log("gammaShift: " + gammaShift);
-        console.log("betaShift: " + betaShift);
     }
 
     function Android(evt) {
@@ -78,8 +76,7 @@ export function altitudeGPSandAcceleration() {
         $("#compass").css("transform", "rotate(" + alpha + "deg)");
         const { gammaShift: gamma, betaShift: beta } = getOrientationShift(evt, thresholdRotation);
         gammaShift = gamma;
-        betaShift = beta;        console.log("gammaShift: " + gammaShift);
-        console.log("betaShift: " + betaShift);
+        betaShift = beta;
     }
 
     function handleGeolocation(position) {
@@ -147,6 +144,13 @@ export function altitudeGPSandAcceleration() {
     async function handleMotion(evt) {
         console.log("handleMotion event triggered");
         lastAltitude, isFirstCall, verticalSpeed, acceleration0X, acceleration0Y, acceleration0Z = await getverticalSpeedFromInterval(evt, gammaShift, betaShift, thresholdRotation, lastAltitude, os, isFirstCall, verticalSpeed, acceleration0X, acceleration0Y, acceleration0Z, acceleration0Altitude);
+        console.log("Vertical speed: " + verticalSpeed);
+        console.log("Acceleration0X: " + acceleration0X);
+        console.log("Acceleration0Y: " + acceleration0Y);
+        console.log("Acceleration0Z: " + acceleration0Z);
+        console.log("Acceleration0Altitude: " + acceleration0Altitude);
+        console.log("Is first call: " + isFirstCall);
+        console.log("Last altitude: " + lastAltitude);
     }
 
     function handleError(error) {
