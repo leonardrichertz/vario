@@ -59,6 +59,7 @@ export function altitudeOnlyGPS() {
     }
 
     function handleGeolocation(position) {
+        console.log("handleGeolocation event triggered");
         var latlng = [position.coords.latitude, position.coords.longitude];
         //Added altitude handling and displaying it on the website.
         const newAltitude = position.coords.altitude;
@@ -121,7 +122,6 @@ export function altitudeOnlyGPS() {
             console.log("timer started");
             if ('geolocation' in navigator) {
                 watchId = navigator.geolocation.watchPosition(handleGeolocation, handleError, options);
-                $("#startGeolocation").prop("disabled", true);
             } else {
                 $("#geolocationData").text("Geolocation not supported.");
             }
@@ -133,7 +133,7 @@ export function altitudeOnlyGPS() {
                     DeviceOrientationEvent.requestPermission()
                         .then(permissionState => {
                             if (permissionState === 'granted') {
-                                $("#permission").text("Permission granted for DeviceOrientation");
+                                console.log("Permission granted for DeviceOrientation");
                                 if (os === 'iOS' || os === 'MacOS') {
                                     console.log("case 1 Apple");
                                     window.addEventListener('deviceorientation', IOS);
@@ -142,13 +142,12 @@ export function altitudeOnlyGPS() {
                                     window.addEventListener('deviceorientationabsolute', Android, true);
                                 }
                             } else {
-                                $("#permission").text("Permission not granted for DeviceOrientation");
-                                alert('Permission not granted for DeviceOrientation');
+                                console.log("Permission not granted for DeviceOrientation");
                             }
                         })
                         .catch(console.error);
                 } else {
-                    $("#orientationInfo").text("No need to request permission for DeviceOrientation");
+                    console.log("No need to request permission for DeviceOrientation");
                     if (os === 'iOS') {
                         console.log("case 2 Apple");
                         window.addEventListener('deviceorientation', handleOrientationIOS);
@@ -158,7 +157,7 @@ export function altitudeOnlyGPS() {
                     }
                 }
             } else {
-                $("#orientation").text("Device orientation not supported.");
+               console.log("Device orientation not supported.");
             }
         } else {
             $(this).text("Start");
