@@ -72,7 +72,8 @@ export function altitudeOnlyGPS() {
         if (lastTimestamp !== 0 && newAltitude !== null) {
             console.log("Vertical speed calculation started")
             const altitudeDifference = newAltitude - lastAltitude;
-            const timeDifference = currrentTime - lastTimestamp;
+            // convert milliseconds to seconds
+            const timeDifference = (currrentTime - lastTimestamp) / 1000;
             console.log("Altitude difference: " + altitudeDifference);
             console.log("Time difference: " + timeDifference);
             const speed = altitudeDifference / timeDifference;
