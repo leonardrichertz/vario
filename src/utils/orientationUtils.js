@@ -34,6 +34,10 @@ export function requestOrientationPermission(os) {
 export function getOrientationShift(evt, thresholdRotation){
     let gammaShift = 0;
     let betaShift = 0;
+    console.log(evt);
+    console.log(thresholdRotation);
+    console.log("Evt.gamma: ", evt.gamma);
+    console.log("Evt.bete: ", evt.beta);
     if (evt.gamma < 90 && evt.gamma >= 0) {
         if (evt.gamma > thresholdRotation || evt.gamma - 90 < -thresholdRotation) {
             // adjust the gammaShift value
