@@ -133,6 +133,15 @@ export async function getverticalSpeedFromInterval(evt, gammaShift, betaShift, t
             acceleration0Y = adjustedAccelerationY1;
             acceleration0Z = adjustedAccelerationZ1;
         }
+        console.log("startfunction");
+        console.log("Current altitude: ", currentAltitude);
+        console.log("Vertical speed: ", verticalSpeed);
+        console.log("Acceleration Z: ", acceleration0Z);
+        console.log("Acceleration Y: ", acceleration0Y);
+        console.log("Acceleration X: ", acceleration0X);
+        console.log("Is first call: ", isFirstCall);
+        console.log("endfunction");
+
         return { currentAltitude, isFirstCall, verticalSpeed, acceleration0X, acceleration0Y, acceleration0Z}
     }
 }
