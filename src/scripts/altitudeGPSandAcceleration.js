@@ -98,6 +98,7 @@ export function altitudeGPSandAcceleration() {
             console.log("Altitude difference: " + altitudeDifference);
             console.log("Time difference: " + timeDifference);
             verticalSpeed = altitudeDifference / timeDifference;
+            console.log("Vertical speed GPS: " + verticalSpeed);
             if (verticalSpeed > 0) {
                 console.log("Ascent speed: " + speed.toFixed(2));
                 $("#ascentSpeed").html(speed.toFixed(2));
