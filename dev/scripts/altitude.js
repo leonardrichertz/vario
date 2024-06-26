@@ -259,6 +259,12 @@ export function altitude() {
                             break;
                     }
                     break;
+
+            }
+            if (!isFirstCall) {
+                acceleration0X = adjustedAccelerationX1;
+                acceleration0Y = adjustedAccelerationY1;
+                acceleration0Z = adjustedAccelerationZ1;
             }
         }
     }

@@ -128,6 +128,11 @@ export function getverticalSpeedFromInterval(evt, gammaShift, betaShift, thresho
                 }
                 break;
         }
-        return {currentAltitude, isFirstCall, verticalSpeed}
+        if (!isFirstCall) {
+            acceleration0X = adjustedAccelerationX1;
+            acceleration0Y = adjustedAccelerationY1;
+            acceleration0Z = adjustedAccelerationZ1;
+        }
+        return { currentAltitude, isFirstCall, verticalSpeed, acceleration0X, acceleration0Y, acceleration0Z}
     }
 }

@@ -20,8 +20,11 @@ export function altitudeGPSandAcceleration() {
     let verticalSpeed = 0; // Used for the calculation of the vertical speed
 
     // Used for the calculation of the vertical speed using vectors
+    let acceleration0X = 0;
+    let acceleration0Y = 0;
+    let acceleration0Z = 0;
+    let acceleration0Altitude = 0;
     let isFirstCall = true;
-    // v0 is the speed at time t0
 
 
     var map = L.map('map').setView([49.75, 6.63], 12);
@@ -139,7 +142,7 @@ export function altitudeGPSandAcceleration() {
         }
     }
     function handleMotion(evt) {
-        lastAltitude, isFirstCall, verticalSpeed = getverticalSpeedFromInterval(evt, gammaShift, betaShift, thresholdRotation, lastAltitude, os, isFirstCall, verticalSpeed);
+        lastAltitude, isFirstCall, verticalSpeed, acceleration0X, acceleration0Y, acceleration0Z = getverticalSpeedFromInterval(evt, gammaShift, betaShift, thresholdRotation, lastAltitude, os, isFirstCall, verticalSpeed, acceleration0X, acceleration0Y, acceleration0Z, acceleration0Altitude);
     }
 
     function handleError(error) {
