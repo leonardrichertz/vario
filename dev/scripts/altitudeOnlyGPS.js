@@ -66,14 +66,18 @@ export function altitudeOnlyGPS() {
         const currrentTime = Date.now();
 
         if (lastTimestamp !== 0 && newAltitude !== null) {
+            console.log("Vertical speed calculation started")
+            console.log("Altitude: " + newAltitude);
             const altitudeDifference = newAltitude - lastAltitude;
             const timeDifference = currrentTime - lastTimestamp;
             const speed = altitudeDifference / timeDifference;
             if (speed > 0) {
+                console.log("Ascent speed: " + speed.toFixed(2));
                 $("#ascentSpeed").html(speed.toFixed(2));
                 $("#descentSpeed").html("0.00");
             }
             else {
+                console.log("Descent speed: " + speed.toFixed(2));
                 $("#ascentSpeed").html("0.00");
                 $("#descentSpeed").html(speed.toFixed(2));
             }
