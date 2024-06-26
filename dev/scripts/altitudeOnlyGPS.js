@@ -104,8 +104,10 @@ export function altitudeOnlyGPS() {
 
         var speed = position.coords.speed;
         if (speed !== null && !isNaN(speed)) {
+            console.log("speed is coming from GPS")
             $("#speed").html(speed.toFixed(2));
         } else {
+            console.log("speed is calculated manually")
             var result = calculateManualSpeed(position, lastPosition, lastTimestamp);
             lastPosition = result.lastPosition;
             lastTimestamp = result.lastTimestamp;
