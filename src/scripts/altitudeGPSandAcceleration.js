@@ -109,6 +109,7 @@ export function altitudeGPSandAcceleration() {
                 $("#descentSpeed").html(Math.abs(speed.toFixed(2)));
             }
             lastAltitude = newAltitude;
+            currentAltitude = newAltitude;
             lastTimestamp = currrentTime;
         }
 
@@ -150,7 +151,7 @@ export function altitudeGPSandAcceleration() {
         acceleration0X : acc0x,
         acceleration0Y: acc0y,
         acceleration0Z: acc0z,
-        acceleration0Altitude: acc0alt } = await getverticalSpeedFromInterval(evt, gammaShift, betaShift, thresholdRotation, lastAltitude, os, isFirstCall, verticalSpeed, acceleration0X, acceleration0Y, acceleration0Z, acceleration0Altitude);
+        acceleration0Altitude: acc0alt } = await getverticalSpeedFromInterval(evt, gammaShift, betaShift, thresholdRotation, lastAltitude, os, isFirstCall, verticalSpeed, acceleration0X, acceleration0Y, acceleration0Z, acceleration0Altitude, currentAltitude);
         lastAltitude = lastAlt;
         currentAltitude = lastAlt;
         isFirstCall = first;
