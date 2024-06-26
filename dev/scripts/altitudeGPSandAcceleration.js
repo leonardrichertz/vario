@@ -63,18 +63,18 @@ export function altitudeGPSandAcceleration() {
 
     $("#start").text("Karte, Geschwindigkeit und Distanz");
 
-    function IOS(event) {
-        const alpha = handleOrientationIOS(event);
+    function IOS(evt) {
+        const alpha = handleOrientationIOS(evt);
         $("#compass").css("transform", "rotate(" + (360 - alpha) + "deg)");
-        gammaShift, betaShift = getOrientationShift(event, thresholdRotation);
+        gammaShift, betaShift = getOrientationShift(evt, thresholdRotation);
         console.log("gammaShift: " + gammaShift);
         console.log("betaShift: " + betaShift);
     }
 
-    function Android(event) {
-        const alpha = handleOrientationAndroid(event);
+    function Android(evt) {
+        const alpha = handleOrientationAndroid(evt);
         $("#compass").css("transform", "rotate(" + alpha + "deg)");
-        gammaShift, betaShift = getOrientationShift(event, thresholdRotation);
+        gammaShift, betaShift = getOrientationShift(etv, thresholdRotation);
         console.log("gammaShift: " + gammaShift);
         console.log("betaShift: " + betaShift);
     }
