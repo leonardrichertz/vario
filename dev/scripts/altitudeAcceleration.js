@@ -5,17 +5,17 @@ import Timer from '../utils/timer.js';
 import { getverticalSpeedFromInterval } from '../utils/motionUtils.js';
 
 // Used for adjusting the devices orientation
-let gammaShift = 0;
-let betaShift = 0;
+var gammaShift = 0;
+var betaShift = 0;
 const thresholdRotation = 1.5; // Define threshold for rotation, which is passed to the getOrientationShift function
-let verticalSpeed = 0; // Used for the calculation of the vertical speed
+var verticalSpeed = 0; // Used for the calculation of the vertical speed
 
 // Used for the calculation of the vertical speed using vectors
-let acceleration0X = 0;
-let acceleration0Y = 0;
-let acceleration0Z = 0;
-let acceleration0Altitude = 0;
-let isFirstCall = true;
+var acceleration0X = 0;
+var acceleration0Y = 0;
+var acceleration0Z = 0;
+var acceleration0Altitude = 0;
+var isFirstCall = true;
 var lastAltitude = 0;
 var currentAltitude = 0;
 
