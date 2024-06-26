@@ -141,8 +141,8 @@ export function altitudeGPSandAcceleration() {
             $("#speed").html(manualSpeed.toFixed(2));
         }
     }
-    function handleMotion(evt) {
-        lastAltitude, isFirstCall, verticalSpeed, acceleration0X, acceleration0Y, acceleration0Z = getverticalSpeedFromInterval(evt, gammaShift, betaShift, thresholdRotation, lastAltitude, os, isFirstCall, verticalSpeed, acceleration0X, acceleration0Y, acceleration0Z, acceleration0Altitude);
+    async function handleMotion(evt) {
+        lastAltitude, isFirstCall, verticalSpeed, acceleration0X, acceleration0Y, acceleration0Z = await getverticalSpeedFromInterval(evt, gammaShift, betaShift, thresholdRotation, lastAltitude, os, isFirstCall, verticalSpeed, acceleration0X, acceleration0Y, acceleration0Z, acceleration0Altitude);
     }
 
     function handleError(error) {
@@ -205,7 +205,7 @@ export function altitudeGPSandAcceleration() {
                         }).catch(console.error);
                     }
                     else {
-                        $("#motionInfo").text("No need to request permission for DeviceMotion");
+                        console.log("No need to request permission for DeviceMotion");
                         window.addEventListener('devicemotion', handleMotion, handleError);
                     }
                 }
