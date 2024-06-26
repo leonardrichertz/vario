@@ -1,4 +1,4 @@
-export function getverticalSpeedFromInterval(evt, gammaShift, betaShift, thresholdRotation, lastAltitude, os, isFirstCall, verticalSpeed) {
+export function getverticalSpeedFromInterval(evt, gammaShift, betaShift, thresholdRotation, lastAltitude, os, isFirstCall, verticalSpeed, acceleration0Z, acceleration0Y, acceleration0X, acceleration0Altitude, currentAltitude) {
     let interval = null;
     console.log(os);
     // For IOS we already have it in seconds
