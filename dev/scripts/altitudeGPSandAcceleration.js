@@ -66,7 +66,7 @@ export function altitudeGPSandAcceleration() {
     function IOS(event) {
         const alpha = handleOrientationIOS(event);
         $("#compass").css("transform", "rotate(" + (360 - alpha) + "deg)");
-        gammaShift, betaShift = getOrientationShifts(event, thresholdRotation);
+        gammaShift, betaShift = getOrientationShift(event, thresholdRotation);
         console.log("gammaShift: " + gammaShift);
         console.log("betaShift: " + betaShift);
     }
@@ -74,7 +74,7 @@ export function altitudeGPSandAcceleration() {
     function Android(event) {
         const alpha = handleOrientationAndroid(event);
         $("#compass").css("transform", "rotate(" + alpha + "deg)");
-        gammaShift, betaShift = getOrientationShifts(event, thresholdRotation);
+        gammaShift, betaShift = getOrientationShift(event, thresholdRotation);
         console.log("gammaShift: " + gammaShift);
         console.log("betaShift: " + betaShift);
     }
