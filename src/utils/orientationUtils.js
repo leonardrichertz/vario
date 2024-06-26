@@ -74,6 +74,8 @@ export function getOrientationShift(evt, thresholdRotation){
             betaShift = 0;
         }
     }
+    console.log("gammaShift in function: ", gammaShift);
+    console.log("betaShift in function: ", betaShift);
     return { gammaShift, betaShift };
     // We do not have to use alpha since it only represents the compass direction (rotation around z-axis)
 }
