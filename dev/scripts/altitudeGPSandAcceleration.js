@@ -4,6 +4,12 @@ import { handleOrientationAndroid, handleOrientationIOS, getOrientationShift } f
 import Timer from '../utils/timer.js';
 import { getverticalSpeedFromInterval } from '../utils/motionUtils.js';
 
+// Used for adjusting the devices orientation
+let gammaShift = 0;
+let betaShift = 0;
+const thresholdRotation = 1.5; // Define threshold for rotation, which is passed to the getOrientationShift function
+let verticalSpeed = 0; // Used for the calculation of the vertical speed
+
 export function altitudeGPSandAcceleration() {
     var os = getOS();
     console.log("Operating System: " + os);
@@ -12,12 +18,6 @@ export function altitudeGPSandAcceleration() {
     var lastPosition = null;
     var lastTimestamp = null;
     const timer = new Timer();
-
-    // Used for adjusting the devices orientation
-    let gammaShift = 0;
-    let betaShift = 0;
-    const thresholdRotation = 1.5; // Define threshold for rotation, which is passed to the getOrientationShift function
-    let verticalSpeed = 0; // Used for the calculation of the vertical speed
 
     // Used for the calculation of the vertical speed using vectors
     let acceleration0X = 0;
@@ -215,7 +215,7 @@ export function altitudeGPSandAcceleration() {
                     $("#motionInfo").text("Device motion not supported.");
                 }
             } else {
-               console.log("Device orientation not supported.");
+                console.log("Device orientation not supported.");
             }
         } else {
             $(this).text("Start");
