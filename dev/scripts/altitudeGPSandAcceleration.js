@@ -10,6 +10,13 @@ let betaShift = 0;
 const thresholdRotation = 1.5; // Define threshold for rotation, which is passed to the getOrientationShift function
 let verticalSpeed = 0; // Used for the calculation of the vertical speed
 
+// Used for the calculation of the vertical speed using vectors
+let acceleration0X = 0;
+let acceleration0Y = 0;
+let acceleration0Z = 0;
+let acceleration0Altitude = 0;
+let isFirstCall = true;
+
 export function altitudeGPSandAcceleration() {
     var os = getOS();
     console.log("Operating System: " + os);
@@ -18,14 +25,6 @@ export function altitudeGPSandAcceleration() {
     var lastPosition = null;
     var lastTimestamp = null;
     const timer = new Timer();
-
-    // Used for the calculation of the vertical speed using vectors
-    let acceleration0X = 0;
-    let acceleration0Y = 0;
-    let acceleration0Z = 0;
-    let acceleration0Altitude = 0;
-    let isFirstCall = true;
-
 
     var map = L.map('map').setView([49.75, 6.63], 12);
     var marker;
@@ -143,7 +142,13 @@ export function altitudeGPSandAcceleration() {
     }
     async function handleMotion(evt) {
         console.log("handleMotion event triggered");
-        lastAltitude, isFirstCall, verticalSpeed, acceleration0X, acceleration0Y, acceleration0Z = await getverticalSpeedFromInterval(evt, gammaShift, betaShift, thresholdRotation, lastAltitude, os, isFirstCall, verticalSpeed, acceleration0X, acceleration0Y, acceleration0Z, acceleration0Altitude);
+        const {lastAltitude : lastAlt, isFirstCall: first, verticalSpeed : vspeed, acceleration0X : acc0x, acceleration0Y: acc0y, acceleration0Z: acc0z} = await getverticalSpeedFromInterval(evt, gammaShift, betaShift, thresholdRotation, lastAltitude, os, isFirstCall, verticalSpeed, acceleration0X, acceleration0Y, acceleration0Z, acceleration0Altitude);
+        lastAltitude = lastAlt;
+        isFirstCall = first;
+        verticalSpeed = vspeed;
+        acceleration0X = acc0x;
+        acceleration0Y = acc0y;
+        acceleration0Z = acc0z;
         console.log("Vertical speed: " + verticalSpeed);
         console.log("Acceleration0X: " + acceleration0X);
         console.log("Acceleration0Y: " + acceleration0Y);
