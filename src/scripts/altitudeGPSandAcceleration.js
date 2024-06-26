@@ -25,7 +25,7 @@ export function altitudeGPSandAcceleration() {
 
     // Define these variables in the correct scope
     var lastPosition = null;
-    var lastTimestamp = null;
+    var lastTimestamp = Date.now();
     const timer = new Timer();
 
     var map = L.map('map').setView([49.75, 6.63], 12);
