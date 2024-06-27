@@ -101,15 +101,15 @@ export function altitudeGPSandAcceleration() {
             console.log("Vertical speed GPS: " + verticalSpeed);
             if (verticalSpeed > 0) {
                 console.log("positive vertical speed from GPS");
-                console.log("Ascent speed: " + speed.toFixed(2));
-                $("#ascentSpeed").html(speed.toFixed(2));
+                console.log("Ascent speed: " + verticalSpeed.toFixed(2));
+                $("#ascentSpeed").html(verticalSpeed.toFixed(2));
                 $("#descentSpeed").html("0.00");
             }
             else {
                 console.log("negative vertical speed from GPS");
-                console.log("Descent speed: " + speed.toFixed(2));
+                console.log("Descent speed: " + verticalSpeed.toFixed(2));
                 $("#ascentSpeed").html("0.00");
-                $("#descentSpeed").html(Math.abs(speed.toFixed(2)));
+                $("#descentSpeed").html(Math.abs(verticalSpeed.toFixed(2)));
             }
             console.log("after if block in vertical speed calculation")
             lastAltitude = newAltitude;
