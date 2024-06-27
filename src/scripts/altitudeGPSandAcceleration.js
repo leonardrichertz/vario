@@ -188,7 +188,7 @@ export function altitudeGPSandAcceleration() {
         }
         else{
             $("#ascentSpeed").html("0.00");
-            $("#descentSpeed").html(verticalSpeed.toFixed(2));
+            $("#descentSpeed").html(Math.abs(verticalSpeed.toFixed(2)));
         }
     }
 
