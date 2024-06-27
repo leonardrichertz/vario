@@ -11,11 +11,11 @@ const thresholdRotation = 1.5; // Define threshold for rotation, which is passed
 let verticalSpeed = 0; // Used for the calculation of the vertical speed
 
 // Used for the calculation of the vertical speed using vectors
-let acceleration0X = 0;
-let acceleration0Y = 0;
-let acceleration0Z = 0;
-let acceleration0Altitude = 0;
-let isFirstCall = true;
+var acceleration0X = 0;
+var acceleration0Y = 0;
+var acceleration0Z = 0;
+var acceleration0Altitude = 0;
+var isFirstCall = true;
 var lastAltitude = 0;
 var currentAltitude = 0;
 
@@ -24,6 +24,7 @@ export function altitudeGPSandAcceleration() {
     console.log("Operating System: " + os);
 
     // Define these variables in the correct scope
+    var initialPosition = null;
     var lastPosition = null;
     var lastTimestamp = Date.now();
     const timer = new Timer();
@@ -152,7 +153,7 @@ export function altitudeGPSandAcceleration() {
         lastAltitude = position.coords.altitude;
         currentAltitude = lastAltitude;
     }
-    
+
     function handleMotion(evt) {
         console.log("handleMotion event triggered");
         const {
