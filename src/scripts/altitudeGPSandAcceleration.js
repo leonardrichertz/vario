@@ -17,7 +17,6 @@ var acceleration0Z = 0;
 var acceleration0Altitude = 0;
 var isFirstCall = true;
 var lastAltitude = 0;
-var currentAltitude = 0;
 
 export function altitudeGPSandAcceleration() {
     var os = getOS();
@@ -112,7 +111,6 @@ export function altitudeGPSandAcceleration() {
             }
             console.log("after if block in vertical speed calculation")
             lastAltitude = newAltitude;
-            currentAltitude = newAltitude;
             console.log("Altitude from GPS: " + newAltitude);
             console.log("Vertical speed calculation ended")
             lastTimestamp = currrentTime;
@@ -151,20 +149,19 @@ export function altitudeGPSandAcceleration() {
     function setPosition(position) {
         initialPosition = position;
         lastAltitude = position.coords.altitude;
-        currentAltitude = lastAltitude;
     }
 
     function handleMotion(evt) {
         console.log("handleMotion event triggered");
         const {
-        currentAltitude : lastAlt,
+        lastAltitude : lastAlt,
         isFirstCall: first,
         verticalSpeed : vspeed,
         acceleration0X : acc0x,
         acceleration0Y: acc0y,
         acceleration0Z: acc0z,
-        acceleration0Altitude: acc0alt } = getverticalSpeedFromInterval(evt, gammaShift, betaShift, thresholdRotation, lastAltitude, os, isFirstCall, verticalSpeed, acceleration0X, acceleration0Y, acceleration0Z, acceleration0Altitude, currentAltitude);
-        currentAltitude = lastAlt;
+        acceleration0Altitude: acc0alt } = getverticalSpeedFromInterval(evt, gammaShift, betaShift, thresholdRotation, lastAltitude, os, isFirstCall, verticalSpeed, acceleration0X, acceleration0Y, acceleration0Z, acceleration0Altitude);
+        lastAltitude = lastAlt;
         isFirstCall = first;
         verticalSpeed = vspeed;
         acceleration0X = acc0x;
