@@ -175,7 +175,7 @@ export function altitudeGPSandAcceleration() {
         console.log("Acceleration0Z: " + acceleration0Z);
         console.log("Acceleration0Altitude: " + acceleration0Altitude);
         console.log("Is first call: " + isFirstCall);
-        console.log("Current altitude: " + currentAltitude);
+        console.log("Last altitude: " + lastAltitude);
         console.log("endof handleMotion event")
     }
 
