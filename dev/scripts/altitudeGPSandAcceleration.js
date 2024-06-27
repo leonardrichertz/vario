@@ -111,7 +111,7 @@ export function altitudeGPSandAcceleration() {
             }
             console.log("after if block in vertical speed calculation")
             lastAltitude = newAltitude;
-            console.log("Altitude from GPS: " + newAltitude);
+            console.log("last altitude from GPS: " + lastAltitude);
             console.log("Vertical speed calculation ended")
             lastTimestamp = currrentTime;
         }
