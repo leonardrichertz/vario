@@ -1,5 +1,5 @@
-export function getverticalSpeedFromInterval(evt, gammaShift, betaShift, thresholdRotation, lastAltitude, os, isFirstCall, verticalSpeed, acceleration0Z, acceleration0Y, acceleration0X, acceleration0Altitude, currentAltitude) {
-    let interval = null;
+export function getverticalSpeedFromInterval(evt, gammaShift, betaShift, thresholdRotation, lastAltitude, os, isFirstCall, verticalSpeed, acceleration0Z, acceleration0Y, acceleration0X, acceleration0Altitude) {
+    var interval = null;
     console.log(os);
     // For IOS we already have it in seconds
     if (os == 'iOS' || os == 'MacOS') {
@@ -26,7 +26,6 @@ export function getverticalSpeedFromInterval(evt, gammaShift, betaShift, thresho
         acceleration0Z = (gammaShift / 90 * accelerationZ1) + (betaShift / 90 * accelerationZ1);
         acceleration0Y = (betaShift / 90 * accelerationY1);
         acceleration0X = - (gammaShift / 90 * accelerationX1);
-        currentAltitude = lastAltitude;
         isFirstCall = false;
     }
     acceleration0Altitude = acceleration0Z + acceleration0Y + acceleration0X;
@@ -54,7 +53,7 @@ export function getverticalSpeedFromInterval(evt, gammaShift, betaShift, thresho
                         adjustedAccelerationX1 = - (gammaShift / 90 * accelerationX1)
                         adjustedAccelerationAltitude1 = adjustedAccelerationZ1 + adjustedAccelerationY1 + adjustedAccelerationX1;
                         verticalSpeed = verticalSpeed + ((acceleration0Altitude + adjustedAccelerationAltitude1) / 2) * evt.interval;
-                        currentAltitude = currentAltitude + verticalSpeed * evt.interval;
+                        lastAltitude = lastAltitude + verticalSpeed * evt.interval;
                         break;
                     case (betaShift >= -90 && betaShift < 0):
                         // In this case the acceleration for the y-axis is negative because the top of the device is facing downwards.
@@ -63,7 +62,7 @@ export function getverticalSpeedFromInterval(evt, gammaShift, betaShift, thresho
                         adjustedAccelerationX1 = - (gammaShift / 90 * accelerationX1)
                         adjustedAccelerationAltitude1 = adjustedAccelerationZ1 + adjustedAccelerationY1 + adjustedAccelerationX1;
                         verticalSpeed = verticalSpeed + ((acceleration0Altitude + adjustedAccelerationAltitude1) / 2) * evt.interval;
-                        currentAltitude = currentAltitude + verticalSpeed * evt.interval;
+                        lastAltitude = lastAltitude + verticalSpeed * evt.interval;
                         break;
                     // Old code that I am unsure about:
                     // adjustedAccelerationAltitude = (gammaShift / 90 * accelerationZ) - (90 - gammaShift / 90 * accelerationX)  + (betaShift / 90 * accelerationZ) - (90 - betaShift / 90 * accelerationY); 
@@ -74,7 +73,7 @@ export function getverticalSpeedFromInterval(evt, gammaShift, betaShift, thresho
                         adjustedAccelerationX1 = - (gammaShift / 90 * accelerationX1)
                         adjustedAccelerationAltitude1 = adjustedAccelerationZ1 + adjustedAccelerationY1 + adjustedAccelerationX1;
                         verticalSpeed = verticalSpeed + ((acceleration0Altitude + adjustedAccelerationAltitude1) / 2) * evt.interval;
-                        currentAltitude = currentAltitude + verticalSpeed * evt.interval;
+                        lastAltitude = lastAltitude + verticalSpeed * evt.interval;
                         break;
                     // adjustedAccelerationAltitude = -(gammaShift / 90 * accelerationZ) + (90 - gammaShift / 90 * accelerationX) - (betaShift / 180 * accelerationZ) + (180 - betaShift / 180 * accelerationZ);
                     case (betaShift < 0 && betaShift <= -90):
@@ -83,7 +82,7 @@ export function getverticalSpeedFromInterval(evt, gammaShift, betaShift, thresho
                         adjustedAccelerationX1 = - (gammaShift / 90 * accelerationX1);
                         adjustedAccelerationAltitude = adjustedAccelerationZ1 + adjustedAccelerationY1 + adjustedAccelerationX1;
                         verticalSpeed = verticalSpeed + ((acceleration0Altitude + adjustedAccelerationAltitude1) / 2) * evt.interval;
-                        currentAltitude = currentAltitude + verticalSpeed * evt.interval;
+                        lastAltitude = lastAltitude + verticalSpeed * evt.interval;
                         break;
                 }
                 break;
@@ -96,7 +95,7 @@ export function getverticalSpeedFromInterval(evt, gammaShift, betaShift, thresho
                         adjustedAccelerationX1 = -(gammaShift / 90 * accelerationX1)
                         adjustedAccelerationAltitude1 = adjustedAccelerationZ1 + adjustedAccelerationY1 + adjustedAccelerationX1;
                         verticalSpeed = verticalSpeed + ((acceleration0Altitude + adjustedAccelerationAltitude1) / 2) * evt.interval;
-                        currentAltitude = currentAltitude + verticalSpeed * evt.interval;
+                        lastAltitude = lastAltitude + verticalSpeed * evt.interval;
                         break;
                     // adjustedAccelerationAltitude = (gammaShift / 90 * accelerationZ) + (90 - gammaShift / 90 * accelerationX) + (betaShift / 90 * accelerationY) + (90 - betaShift / 90 * accelerationZ);
                     case (betaShift >= -90 && betaShift < 0):
@@ -105,7 +104,7 @@ export function getverticalSpeedFromInterval(evt, gammaShift, betaShift, thresho
                         adjustedAccelerationX1 = -(gammaShift / 90 * accelerationX1)
                         adjustedAccelerationAltitude1 = adjustedAccelerationZ1 + adjustedAccelerationY1 + adjustedAccelerationX1;
                         verticalSpeed = verticalSpeed + ((acceleration0Altitude + adjustedAccelerationAltitude1) / 2) * evt.interval;
-                        currentAltitude = currentAltitude + verticalSpeed * evt.interval;
+                        lastAltitude = lastAltitude + verticalSpeed * evt.interval;
                         break;
                     // Todo: add code here
                     case (betaShift >= 90):
@@ -115,7 +114,7 @@ export function getverticalSpeedFromInterval(evt, gammaShift, betaShift, thresho
                         adjustedAccelerationX1 = -(gammaShift / 90 * accelerationX1)
                         adjustedAccelerationAltitude1 = adjustedAccelerationZ1 + adjustedAccelerationY1 + adjustedAccelerationX1;
                         verticalSpeed = verticalSpeed + ((acceleration0Altitude + adjustedAccelerationAltitude1) / 2) * evt.interval;
-                        currentAltitude = currentAltitude + verticalSpeed * evt.interval;
+                        lastAltitude = lastAltitude + verticalSpeed * evt.interval;
                         break;
                     case (betaShift < 0 && betaShift <= -90):
                         adjustedAccelerationZ1 = -(gammaShift / 90 * accelerationZ1) - (betaShift / 90 * accelerationZ1);
@@ -123,7 +122,7 @@ export function getverticalSpeedFromInterval(evt, gammaShift, betaShift, thresho
                         adjustedAccelerationX1 = -(gammaShift / 90 * accelerationX1)
                         adjustedAccelerationAltitude1 = adjustedAccelerationZ1 + adjustedAccelerationY1 + adjustedAccelerationX1;
                         verticalSpeed = verticalSpeed + ((acceleration0Altitude + adjustedAccelerationAltitude1) / 2) * evt.interval;
-                        currentAltitude = currentAltitude + verticalSpeed * evt.interval;
+                        lastAltitude = lastAltitude + verticalSpeed * evt.interval;
                         break;
                 }
                 break;
@@ -134,7 +133,7 @@ export function getverticalSpeedFromInterval(evt, gammaShift, betaShift, thresho
             acceleration0Z = adjustedAccelerationZ1;
         }
         console.log("startfunction")
-        console.log("Current altitude: ", currentAltitude);
+        console.log("Current altitude: ", lastAltitude);
         console.log("Vertical speed: ", verticalSpeed);
         console.log("Acceleration Z: ", acceleration0Z);
         console.log("Acceleration Y: ", acceleration0Y);
@@ -142,6 +141,6 @@ export function getverticalSpeedFromInterval(evt, gammaShift, betaShift, thresho
         console.log("Is first call: ", isFirstCall);
         console.log("endfunction");
 
-        return { currentAltitude, isFirstCall, verticalSpeed, acceleration0X, acceleration0Y, acceleration0Z, acceleration0Altitude}
+        return { lastAltitude, isFirstCall, verticalSpeed, acceleration0X, acceleration0Y, acceleration0Z, acceleration0Altitude}
     }
 }
