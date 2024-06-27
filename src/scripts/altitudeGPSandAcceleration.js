@@ -117,6 +117,7 @@ export function altitudeGPSandAcceleration() {
             console.log("Vertical speed calculation ended")
             lastTimestamp = currrentTime;
         }
+        console.log("AFTER1");
 
         if (marker.getLatLng().lat !== 0 && marker.getLatLng().lng !== 0) {
             var oldLatLng = marker.getLatLng();
@@ -133,6 +134,7 @@ export function altitudeGPSandAcceleration() {
         }
 
         $("#distance").html("Strecke in m: " + distance.toFixed(3));
+        console.log("AFTER2");
 
         var speed = position.coords.speed;
         if (speed !== null && !isNaN(speed)) {
@@ -146,6 +148,7 @@ export function altitudeGPSandAcceleration() {
             var manualSpeed = result.manualSpeed;
             $("#speed").html(manualSpeed.toFixed(2));
         }
+        console.log("AFTER3");
     }
 
     function setPosition(position) {
