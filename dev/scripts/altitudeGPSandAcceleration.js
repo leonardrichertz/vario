@@ -146,6 +146,13 @@ export function altitudeGPSandAcceleration() {
             $("#speed").html(manualSpeed.toFixed(2));
         }
     }
+
+    function setPosition(position) {
+        initialPosition = position;
+        lastAltitude = position.coords.altitude;
+        currentAltitude = lastAltitude;
+    }
+    
     function handleMotion(evt) {
         console.log("handleMotion event triggered");
         const {
@@ -185,6 +192,7 @@ export function altitudeGPSandAcceleration() {
             timer.start();
             console.log("timer started");
             if ('geolocation' in navigator) {
+                initialPosition = navigator.geolocation.getCurrentPosition(setPosition, handleError, options);
                 watchId = navigator.geolocation.watchPosition(handleGeolocation, handleError, options);
             } else {
                 alert("Geolocation not supported.");
