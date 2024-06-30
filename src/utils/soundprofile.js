@@ -1,6 +1,6 @@
 import { playSound } from 'sound.js';
 
-const soundProfile = {
+export const soundProfile = {
     "version": 1,
     "units": {
         "climb": "m/s",
@@ -56,6 +56,84 @@ const soundProfile = {
         { "climb": 6, "value": 1 },
         { "climb": 7, "value": 1 },
         { "climb": 8, "value": 1 }
+    ]
+};
+
+export const descentProfile = {
+    "version": 1,
+    "units": {
+        "climb": "m/s",
+        "frequency": "Hz",
+        "duration": "ms",
+        "dutycycle": "percent",
+        "gain": "percent"
+    },
+    "frequency": [
+        { "climb": -0.5, "value": 800 },
+        { "climb": -1, "value": 600 },
+        { "climb": -2, "value": 400 },
+        { "climb": -3, "value": 300 },
+        { "climb": -4, "value": 200 }
+    ],
+    "duration": [
+        { "climb": -0.5, "value": 1000 },
+        { "climb": -1, "value": 800 },
+        { "climb": -2, "value": 600 },
+        { "climb": -3, "value": 400 },
+        { "climb": -4, "value": 200 }
+    ],
+    "dutycycle": [
+        { "climb": -0.5, "value": 10 },
+        { "climb": -1, "value": 20 },
+        { "climb": -2, "value": 30 },
+        { "climb": -3, "value": 40 },
+        { "climb": -4, "value": 50 }
+    ],
+    "gain": [
+        { "climb": -0.5, "value": 100 },
+        { "climb": -1, "value": 100 },
+        { "climb": -2, "value": 100 },
+        { "climb": -3, "value": 100 },
+        { "climb": -4, "value": 100 }
+    ]
+};
+
+export const ascentProfile = {
+    "version": 1,
+    "units": {
+        "climb": "m/s",
+        "frequency": "Hz",
+        "duration": "ms",
+        "dutycycle": "percent",
+        "gain": "percent"
+    },
+    "frequency": [
+        { "climb": 0.5, "value": 1000 },
+        { "climb": 1, "value": 1200 },
+        { "climb": 2, "value": 1400 },
+        { "climb": 3, "value": 1600 },
+        { "climb": 4, "value": 1800 }
+    ],
+    "duration": [
+        { "climb": 0.5, "value": 1000 },
+        { "climb": 1, "value": 800 },
+        { "climb": 2, "value": 600 },
+        { "climb": 3, "value": 400 },
+        { "climb": 4, "value": 200 }
+    ],
+    "dutycycle": [
+        { "climb": 0.5, "value": 10 },
+        { "climb": 1, "value": 20 },
+        { "climb": 2, "value": 30 },
+        { "climb": 3, "value": 40 },
+        { "climb": 4, "value": 50 }
+    ],
+    "gain": [
+        { "climb": 0.5, "value": 100 },
+        { "climb": 1, "value": 100 },
+        { "climb": 2, "value": 100 },
+        { "climb": 3, "value": 100 },
+        { "climb": 4, "value": 100 }
     ]
 };
 
