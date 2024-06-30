@@ -1,9 +1,8 @@
-export function playSound() {
+export function playSound(soundProfile) {
     const climbRate = 2; // example climb rate
 
     const frequency = getValueForClimb(soundProfile.frequency, climbRate);
     const duration = getValueForClimb(soundProfile.duration, climbRate);
-    const dutyCycle = getValueForClimb(soundProfile.dutycycle, climbRate);
     const gainValue = getValueForClimb(soundProfile.gain, climbRate);
 
     const audioContext = new (window.AudioContext || window.webkitAudioContext)();
@@ -14,7 +13,7 @@ export function playSound() {
     oscillator.type = 'sine';
     oscillator.frequency.value = frequency;
 
-    gainNode.gain.value = gainValue;
+    gainNode.gain.value = gainValue / 100; // Convert percentage to a value between 0 and 1
 
     oscillator.connect(gainNode);
     gainNode.connect(audioContext.destination);
