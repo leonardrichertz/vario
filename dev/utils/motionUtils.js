@@ -80,7 +80,7 @@ export function getverticalSpeedFromInterval(evt, gammaShift, betaShift, thresho
                         adjustedAccelerationZ1 = -(gammaShift / 90 * accelerationZ1) - (betaShift / 180 * accelerationZ1);
                         adjustedAccelerationY1 = -(betaShift / 180 * accelerationY1);
                         adjustedAccelerationX1 = - (gammaShift / 90 * accelerationX1);
-                        adjustedAccelerationAltitude = adjustedAccelerationZ1 + adjustedAccelerationY1 + adjustedAccelerationX1;
+                        adjustedAccelerationAltitude1 = adjustedAccelerationZ1 + adjustedAccelerationY1 + adjustedAccelerationX1;
                         verticalSpeed = verticalSpeed + ((acceleration0Altitude + adjustedAccelerationAltitude1) / 2) * evt.interval;
                         lastAltitude = lastAltitude + verticalSpeed * evt.interval;
                         break;
@@ -170,7 +170,7 @@ export function playSound(soundProfile) {
         oscillator.stop();
     }, duration);
  }
- 
+
  export function getValueForClimb(data, climbRate) {
     for (let i = 0; i < data.length; i++) {
         if (climbRate <= data[i].climb) {
