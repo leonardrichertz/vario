@@ -2,9 +2,9 @@ import { calculateDistance, calculateManualSpeed } from '../utils/mapUtils.js';
 import { getOS } from '../utils/operatingSystem.js';
 import { handleOrientationAndroid, handleOrientationIOS } from '../utils/orientationUtils.js';
 import Timer from '../utils/timer.js';
-// import { descentProfile, ascentProfile } from '../utils/soundprofile.js';
+import { descentProfile, ascentProfile } from '../utils/soundprofile.js';
 import { test } from '../utils/test.js';
-// import { playSound, getValueForClimb } from '../utils/sound.js';
+import { playSound } from '../utils/sound.js';
 
 export function altitudeOnlyGPS() {
     var os = getOS();
@@ -85,14 +85,14 @@ export function altitudeOnlyGPS() {
                 console.log("Ascent speed: " + speed.toFixed(2));
                 $("#ascentSpeed").html(speed.toFixed(2));
                 $("#descentSpeed").html("0.00");
-                // playSound(ascentProfile);
+                playSound(ascentProfile);
             }
             else {
                 speed = Math.abs(speed);
                 console.log("Descent speed: " + speed.toFixed(2));
                 $("#ascentSpeed").html("0.00");
                 $("#descentSpeed").html(speed.toFixed(2));
-                // playSound(descentProfile);
+                playSound(descentProfile);
             }
             lastAltitude = newAltitude;
             lastTimestamp = currrentTime;
