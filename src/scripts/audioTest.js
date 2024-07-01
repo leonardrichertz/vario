@@ -33,6 +33,15 @@ function playSound(soundProfile) {
     console.log("playSound end: ", frequency, duration, gainValue);
 }
 
+function getValueForClimb(data, climbRate) {
+    for (let i = 0; i < data.length; i++) {
+        if (climbRate <= data[i].climb) {
+            return data[i].value;
+        }
+    }
+    return data[data.length - 1].value;
+}
+
 
 const descentProfile = {
     "version": 1,
