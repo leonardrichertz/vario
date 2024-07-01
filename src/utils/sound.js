@@ -1,27 +1,28 @@
 export function playSound(soundProfile) {
-   const climbRate = 2; // example climb rate
+    if (!audioContext) {
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    }
 
-   const frequency = getValueForClimb(soundProfile.frequency, climbRate);
-   const duration = getValueForClimb(soundProfile.duration, climbRate);
-   const gainValue = getValueForClimb(soundProfile.gain, climbRate);
+    const climbRate = 2; // example climb rate
+    const frequency = getValueForClimb(soundProfile.frequency, climbRate);
+    const duration = getValueForClimb(soundProfile.duration, climbRate);
+    const gainValue = getValueForClimb(soundProfile.gain, climbRate);
 
-   const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
 
-   const oscillator = audioContext.createOscillator();
-   const gainNode = audioContext.createGain();
+    oscillator.type = 'sine';
+    oscillator.frequency.value = frequency;
 
-   oscillator.type = 'sine';
-   oscillator.frequency.value = frequency;
+    gainNode.gain.value = gainValue / 100; // Convert percentage to a value between 0 and 1
 
-   gainNode.gain.value = gainValue / 100; // Convert percentage to a value between 0 and 1
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
 
-   oscillator.connect(gainNode);
-   gainNode.connect(audioContext.destination);
-
-   oscillator.start();
-   setTimeout(() => {
-       oscillator.stop();
-   }, duration);
+    oscillator.start();
+    setTimeout(() => {
+        oscillator.stop();
+    }, duration);
 }
 
 export function getValueForClimb(data, climbRate) {
