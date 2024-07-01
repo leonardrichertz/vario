@@ -2,7 +2,7 @@ import { calculateDistance, calculateManualSpeed } from '../utils/mapUtils.js';
 import { getOS } from '../utils/operatingSystem.js';
 import { handleOrientationAndroid, handleOrientationIOS } from '../utils/orientationUtils.js';
 import Timer from '../utils/timer.js';
-import { descentProfile, ascentProfile } from '../utils/soundprofile.js';
+// import { descentProfile, ascentProfile } from '../utils/soundprofile.js';
 import { test } from '../utils/test.js';
 // import { playSound, getValueForClimb } from '../utils/sound.js';
 
