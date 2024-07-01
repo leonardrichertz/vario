@@ -3,6 +3,7 @@ import { getOS } from '../utils/operatingSystem.js';
 import { handleOrientationAndroid, handleOrientationIOS } from '../utils/orientationUtils.js';
 import Timer from '../utils/timer.js';
 import { descentProfile, ascentProfile } from '../utils/soundprofile.js';
+import { playSound } from '../utils/sound.js';
 
 export function altitudeOnlyGPS() {
     var os = getOS();
