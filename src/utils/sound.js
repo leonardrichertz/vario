@@ -23,6 +23,7 @@ export function playSound(soundProfile, audioContext) {
     setTimeout(() => {
         oscillator.stop();
     }, duration);
+    return audioContext;
 }
 
 export function getValueForClimb(data, climbRate) {
