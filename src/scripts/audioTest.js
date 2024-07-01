@@ -1,6 +1,6 @@
 let audioContext = null;
 
-$(document).ready(function() {while (true){playSound(descentProfile);})});
+$(document).ready(function() {while (true){playSound(descentProfile);}});
 
 function playSound(soundProfile) {
     console.log("playSound function started: ", soundProfile);
