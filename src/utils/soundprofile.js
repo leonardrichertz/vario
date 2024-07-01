@@ -136,5 +136,3 @@ export const ascentProfile = {
         { "climb": 4, "value": 100 }
     ]
 };
-
-document.getElementById('playSound').addEventListener('click', playSound);
