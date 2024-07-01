@@ -3,10 +3,12 @@ import { getOS } from '../utils/operatingSystem.js';
 import { handleOrientationAndroid, handleOrientationIOS } from '../utils/orientationUtils.js';
 import Timer from '../utils/timer.js';
 import { descentProfile, ascentProfile } from '../utils/soundprofile.js';
-import { playSound, getValueForClimb } from '../utils/sound.js';
+import { test } from '../utils/test.js';
+// import { playSound, getValueForClimb } from '../utils/sound.js';
 
 export function altitudeOnlyGPS() {
     var os = getOS();
+    console.log(test());
     console.log("Operating System: " + os);
 
     // Define these variables in the correct scope
@@ -83,14 +85,14 @@ export function altitudeOnlyGPS() {
                 console.log("Ascent speed: " + speed.toFixed(2));
                 $("#ascentSpeed").html(speed.toFixed(2));
                 $("#descentSpeed").html("0.00");
-                playSound(ascentProfile);
+                // playSound(ascentProfile);
             }
             else {
                 speed = Math.abs(speed);
                 console.log("Descent speed: " + speed.toFixed(2));
                 $("#ascentSpeed").html("0.00");
                 $("#descentSpeed").html(speed.toFixed(2));
-                playSound(descentProfile);
+                // playSound(descentProfile);
             }
             lastAltitude = newAltitude;
             lastTimestamp = currrentTime;
