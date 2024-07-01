@@ -84,14 +84,14 @@ export function altitudeOnlyGPS() {
                 console.log("Ascent speed: " + speed.toFixed(2));
                 $("#ascentSpeed").html(speed.toFixed(2));
                 $("#descentSpeed").html("0.00");
-                playSound(ascentProfile);
+                playSound(ascentProfile, audioContext);
             }
             else {
                 speed = Math.abs(speed);
                 console.log("Descent speed: " + speed.toFixed(2));
                 $("#ascentSpeed").html("0.00");
                 $("#descentSpeed").html(speed.toFixed(2));
-                playSound(descentProfile);
+                playSound(descentProfile, audioContext);
             }
             lastAltitude = newAltitude;
             lastTimestamp = currrentTime;

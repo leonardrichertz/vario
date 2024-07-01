@@ -1,4 +1,4 @@
-export function playSound(soundProfile) {
+export function playSound(soundProfile, audioContext) {
     if (!audioContext) {
         audioContext = new (window.AudioContext || window.webkitAudioContext)();
     }
