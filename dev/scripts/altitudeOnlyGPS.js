@@ -4,7 +4,7 @@ import { handleOrientationAndroid, handleOrientationIOS } from '../utils/orienta
 import Timer from '../utils/timer.js';
 import { descentProfile, ascentProfile } from '../utils/soundprofile.js';
 import { test } from '../utils/test.js';
-import { playSound } from '../utils/sound.js';
+import { playSound } from '/../utils/sound.js';
 
 export function altitudeOnlyGPS() {
     var os = getOS();
