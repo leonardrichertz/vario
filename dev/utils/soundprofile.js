@@ -1,5 +1,3 @@
-import { playSound } from './sound.js';
-
 export const soundProfile = {
     "version": 1,
     "units": {
