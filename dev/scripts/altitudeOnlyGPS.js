@@ -20,6 +20,7 @@ export function altitudeOnlyGPS() {
     var watchId;
     var distance = 0;
     var lastAltitude = 0;
+    var audioContext = null;
 
     var startMarkerIcon = L.icon({
         iconUrl: '../assets/marker.png',
