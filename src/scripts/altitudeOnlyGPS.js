@@ -98,8 +98,6 @@ export function altitudeOnlyGPS() {
             }
             lastAltitude = newAltitude;
             lastTimestamp = currrentTime;
-        }
-
 
         if (marker.getLatLng().lat !== 0 && marker.getLatLng().lng !== 0) {
             var oldLatLng = marker.getLatLng();
