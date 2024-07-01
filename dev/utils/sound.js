@@ -1,8 +1,10 @@
 export function playSound(soundProfile, audioContext) {
-    console.log("playSound function started: ", soundProfile, audioContext);
+    console.log("playSound function started: ", soundProfile);
     if (!audioContext) {
         audioContext = new (window.AudioContext || window.webkitAudioContext)();
     }
+    console.log("AudioContext: ", audioContext);    
+
 
     const climbRate = 2; // example climb rate
     const frequency = getValueForClimb(soundProfile.frequency, climbRate);
