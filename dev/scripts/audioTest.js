@@ -2,7 +2,7 @@ let audioContext = null;
 
 $(document).ready(function() {$('#playSound').click(function() {playSound(descentProfile);})});
 
-export function playSound(soundProfile) {
+function playSound(soundProfile) {
     console.log("playSound function started: ", soundProfile);
     if (!audioContext) {
         audioContext = new (window.AudioContext || window.webkitAudioContext)();
@@ -34,7 +34,7 @@ export function playSound(soundProfile) {
 }
 
 
-export const descentProfile = {
+const descentProfile = {
     "version": 1,
     "units": {
         "climb": "m/s",
