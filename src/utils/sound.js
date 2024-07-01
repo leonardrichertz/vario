@@ -1,4 +1,5 @@
 export function playSound(soundProfile, audioContext) {
+    console.log("playSound function started: ", soundProfile, audioContext);
     if (!audioContext) {
         audioContext = new (window.AudioContext || window.webkitAudioContext)();
     }
@@ -23,6 +24,7 @@ export function playSound(soundProfile, audioContext) {
     setTimeout(() => {
         oscillator.stop();
     }, duration);
+    console.log("playSound end: ", frequency, duration, gainValue);
     return audioContext;
 }
 
