@@ -179,8 +179,8 @@ export function altitudeGPSAcceleration() {
             console.error('Geolocation error:', error);
         }, {
             enableHighAccuracy: true,
-            maximumAge: 0,
-            timeout: 5000
+            maximumAge: 30000,
+            timeout: 27000
         });
     }
 
