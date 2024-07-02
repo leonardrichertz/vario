@@ -9,6 +9,7 @@ export function playSound(soundProfile, audioContext) {
     const climbRate = 2; // example climb rate
     const frequency = getValueForClimb(soundProfile.frequency, climbRate);
     const duration = getValueForClimb(soundProfile.duration, climbRate);
+    console.log("Duration: ", duration);
     const gainValue = getValueForClimb(soundProfile.gain, climbRate);
 
     const oscillator = audioContext.createOscillator();
