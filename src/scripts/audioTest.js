@@ -1,10 +1,26 @@
 let audioContext = null;
 
 $(document).ready(function() {
+    $('#startSound').click(function() {
+        if (!audioContext) {
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        if (audioContext.state === 'suspended') {
+            audioContext.resume().then(() => {
+                console.log("AudioContext resumed");
+                startSoundInterval();
+            });
+        } else {
+            startSoundInterval();
+        }
+    });
+});
+
+function startSoundInterval() {
     setInterval(() => {
         playSound(ascentProfile);
     }, 1000);
-});
+}
 
 function playSound(soundProfile) {
     console.log("playSound function started: ", soundProfile);
@@ -104,7 +120,6 @@ const descentProfile = {
         { "climb": -4, "value": 100 }
     ]
 };
-
 
 const ascentProfile = {
     "version": 1,
