@@ -104,7 +104,7 @@ const descentProfile = {
         { "climb": -4, "value": 100 }
     ]
 };
-export const ascentProfile = {
+const ascentProfile = {
     "version": 1,
     "units": {
         "climb": "m/s",
