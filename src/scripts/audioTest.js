@@ -2,7 +2,8 @@ let audioContext = null;
 
 $(document).ready(function() {
     $('#playSound').click(function() {
-        playSound(ascentProfile);
+        setTimeout(() => {
+        playSound(ascentProfile), 1000});
     });
 });
 
@@ -104,6 +105,7 @@ const descentProfile = {
         { "climb": -4, "value": 100 }
     ]
 };
+
 const ascentProfile = {
     "version": 1,
     "units": {
