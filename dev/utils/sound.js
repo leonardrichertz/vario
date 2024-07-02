@@ -3,7 +3,8 @@ export function playSound(soundProfile, audioContext) {
     if (!audioContext) {
         audioContext = new (window.AudioContext || window.webkitAudioContext)();
     }
-    console.log("AudioContext: ", audioContext);    
+    console.log("AudioContext: ", audioContext);  
+    console.log("AudioContext state: ", audioContext.state);  
 
 
     const climbRate = 2; // example climb rate

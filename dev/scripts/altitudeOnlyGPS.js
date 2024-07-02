@@ -95,9 +95,9 @@ export function altitudeOnlyGPS() {
                 const context = playSound(descentProfile, audioContext);
                 audioContext = context;
             }
-            }
-            lastAltitude = newAltitude;
-            lastTimestamp = currrentTime;
+        }
+        lastAltitude = newAltitude;
+        lastTimestamp = currrentTime;
 
         if (marker.getLatLng().lat !== 0 && marker.getLatLng().lng !== 0) {
             var oldLatLng = marker.getLatLng();
@@ -139,6 +139,9 @@ export function altitudeOnlyGPS() {
             $(this).text("Stop");
             timer.start();
             console.log("timer started");
+            if (!audioContext){
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
             if ('geolocation' in navigator) {
                 watchId = navigator.geolocation.watchPosition(handleGeolocation, handleError, options);
             } else {
@@ -176,7 +179,7 @@ export function altitudeOnlyGPS() {
                     }
                 }
             } else {
-               console.log("Device orientation not supported.");
+                console.log("Device orientation not supported.");
             }
         } else {
             $(this).text("Start");
