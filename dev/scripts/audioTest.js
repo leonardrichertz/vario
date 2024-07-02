@@ -1,23 +1,31 @@
+
 let audioContext = null;
+let intervalId = null;
 
 $(document).ready(function() {
     $('#startSound').click(function() {
         if (!audioContext) {
-            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            initAudioContext();
         }
         if (audioContext.state === 'suspended') {
             audioContext.resume().then(() => {
                 console.log("AudioContext resumed");
-                startSoundInterval();
+                startSound();
             });
         } else {
-            startSoundInterval();
+            startSound();
         }
     });
 });
 
-function startSoundInterval() {
-    setInterval(() => {
+function initAudioContext() {
+    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+}
+
+function startSound() {
+    clearInterval(intervalId); // Clear any existing intervals
+
+    intervalId = setInterval(() => {
         playSound(ascentProfile);
     }, 1000);
 }
@@ -25,22 +33,11 @@ function startSoundInterval() {
 function playSound(soundProfile) {
     console.log("playSound function started: ", soundProfile);
     if (!audioContext) {
-        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        initAudioContext();
     }
-    console.log("AudioContext: ", audioContext);    
+    console.log("AudioContext: ", audioContext);
     console.log("AudioContext state: ", audioContext.state);
 
-    if (audioContext.state === 'suspended') {
-        audioContext.resume().then(() => {
-            console.log("AudioContext resumed");
-            playSoundInternal(soundProfile, audioContext);
-        });
-    } else {
-        playSoundInternal(soundProfile, audioContext);
-    }
-}
-
-function playSoundInternal(soundProfile, audioContext) {
     const climbRate = 2; // example climb rate
     const frequency = getValueForClimb(soundProfile.frequency, climbRate);
     const duration = getValueForClimb(soundProfile.duration, climbRate);
