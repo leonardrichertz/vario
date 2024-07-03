@@ -150,7 +150,6 @@ body {
     position: relative;
     z-index: 999; /* Ensure map is below sidebar */
 }
-
 /* Compass Section */
 .compass-section {
     background-color: #2d2d2d; /* Light gray background color */
@@ -171,15 +170,37 @@ body {
     background-color: #ccc;
     margin-right: 10px;
     border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px;
 }
 
-.height-bar {
-    position: absolute;
-    bottom: 0;
+.height-bars {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
     width: 100%;
-    height: 0;
-    background-color: #4caf50; /* Color of the height bar */
-    transition: height 0.5s; /* Smooth transition */
+}
+
+.bar {
+    height: 7%;
+    background-color: #464646; /* Dark color for bars */
+    transition: background-color 0.3s;
+}
+
+.bar-middle {
+    background-color: #4caf50; /* Brighter color for the middle bar */
+}
+
+.bar-dark {
+    background-color: #464646; /* Dark color for other bars */
+}
+
+.bar-light {
+    background-color: #E8E8E8; /* Light color for highlighting bars */
 }
 
 .height-label {
