@@ -1,10 +1,15 @@
+/**
+ * Represents a timer that tracks the elapsed time.
+ */
 class Timer {
     constructor() {
         this.seconds = 0;
         this.intervalId = null;
     }
 
-    //starts timer
+    /**
+     * Starts the timer.
+     */
     start() {
         this.intervalId = setInterval(() => {
             this.seconds++;
@@ -12,17 +17,25 @@ class Timer {
         }, 1000);
     }
 
-    // pauses timer, but does not clear the time
+    /**
+     * Pauses the timer, but does not clear the time.
+     */
     pause() {
         clearInterval(this.intervalId);
     }
 
-    // stops timer and clears the time
+    /**
+     * Stops the timer and clears the time.
+     */
     stop() {
         clearInterval(this.intervalId);
         this.seconds = 0;
     }
 
+    /**
+     * Returns the current time values as a formatted string.
+     * @returns {string} The formatted time string in the format "HH:MM:SS".
+     */
     getTimeValues() {
         let hours = Math.floor(this.seconds / 3600);
         let minutes = Math.floor((this.seconds - (hours * 3600)) / 60);
@@ -31,6 +44,11 @@ class Timer {
         return [hours, minutes, seconds].map(this.padTime).join(':');
     }
 
+    /**
+     * Pads a single digit time value with a leading zero.
+     * @param {number} time - The time value to pad.
+     * @returns {string} The padded time value as a string.
+     */
     padTime(time) {
         return time < 10 ? "0" + time : time;
     }
