@@ -21,6 +21,7 @@ export function altitudeOnlyGPS() {
     var distance = 0;
     var lastAltitude = 0;
     var audioContext = null;
+    console.log(navigator.getAutoplayPolicy())
 
     var startMarkerIcon = L.icon({
         iconUrl: '../assets/marker.png',
@@ -80,21 +81,7 @@ export function altitudeOnlyGPS() {
             console.log("Altitude difference: " + altitudeDifference);
             console.log("Time difference: " + timeDifference);
             let speed = altitudeDifference / timeDifference;
-            if (speed > 0) {
-                console.log("Ascent speed: " + speed.toFixed(2));
-                $("#ascentSpeed").html(speed.toFixed(2));
-                $("#descentSpeed").html("0.00");
-                const context = playSound(ascentProfile, audioContext);
-                audioContext = context;
-            }
-            else {
-                speed = Math.abs(speed);
-                console.log("Descent speed: " + speed.toFixed(2));
-                $("#ascentSpeed").html("0.00");
-                $("#descentSpeed").html(speed.toFixed(2));
-                const context = playSound(descentProfile, audioContext);
-                audioContext = context;
-            }
+            handleVerticalSpeed(speed);
         }
         lastAltitude = newAltitude;
         lastTimestamp = currrentTime;
@@ -126,6 +113,24 @@ export function altitudeOnlyGPS() {
             lastTimestamp = result.lastTimestamp;
             var manualSpeed = result.manualSpeed;
             $("#speed").html(manualSpeed.toFixed(2));
+        }
+    }
+
+    function handleVerticalSpeed(speed){
+        if (speed > 0) {
+            console.log("Ascent speed: " + speed.toFixed(2));
+            $("#ascentSpeed").html(speed.toFixed(2));
+            $("#descentSpeed").html("0.00");
+            const context = playSound(ascentProfile, audioContext);
+            audioContext = context;
+        }
+        else {
+            speed = Math.abs(speed);
+            console.log("Descent speed: " + speed.toFixed(2));
+            $("#ascentSpeed").html("0.00");
+            $("#descentSpeed").html(speed.toFixed(2));
+            const context = playSound(descentProfile, audioContext);
+            audioContext = context;
         }
     }
 
