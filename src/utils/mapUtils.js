@@ -1,3 +1,12 @@
+/**
+ * Calculates the distance between two coordinates on the Earth's surface.
+ *
+ * @param {number} lat1 - The latitude of the first coordinate.
+ * @param {number} lon1 - The longitude of the first coordinate.
+ * @param {number} lat2 - The latitude of the second coordinate.
+ * @param {number} lon2 - The longitude of the second coordinate.
+ * @returns {number} The distance between the two coordinates in kilometers.
+ */
 export function calculateDistance(lat1, lon1, lat2, lon2) {
     const R = 6371; // radius of the earth
     const dLat = (lat2 - lat1) * Math.PI / 180; // Convert degrees to radians
@@ -11,6 +20,13 @@ export function calculateDistance(lat1, lon1, lat2, lon2) {
     return distance;
 }
 
+/**
+ * Calculates the manual speed based on the current and previous positions.
+ * @param {Position} position - The current position.
+ * @param {Position} lastPosition - The previous position.
+ * @param {number} lastTimestamp - The timestamp of the previous position.
+ * @returns {Object} - An object containing the manual speed, last position, and last timestamp.
+ */
 export function calculateManualSpeed(position, lastPosition, lastTimestamp) {
     var speed = 0;
     if (lastPosition && lastTimestamp) {

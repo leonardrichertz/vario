@@ -1,3 +1,7 @@
+/**
+ * Returns the operating system of the user's device.
+ * @returns {string} The operating system name.
+ */
 export function getOS() {
     var userAgent = navigator.userAgent || navigator.vendor || window.opera;
 

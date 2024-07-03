@@ -1,3 +1,20 @@
+/**
+ * Calculates the vertical speed based on the given parameters.
+ *
+ * @param {Object} evt - The event object containing acceleration and interval data.
+ * @param {number} gammaShift - The gamma shift value.
+ * @param {number} betaShift - The beta shift value.
+ * @param {number} thresholdRotation - The threshold rotation value.
+ * @param {number} lastAltitude - The last recorded altitude.
+ * @param {string} os - The operating system (iOS or Android).
+ * @param {boolean} isFirstCall - Indicates if this is the first call to the function.
+ * @param {number} verticalSpeed - The current vertical speed.
+ * @param {number} acceleration0Z - The initial acceleration value for the z-axis.
+ * @param {number} acceleration0Y - The initial acceleration value for the y-axis.
+ * @param {number} acceleration0X - The initial acceleration value for the x-axis.
+ * @param {number} acceleration0Altitude - The initial acceleration value for the altitude.
+ * @returns {number} The updated vertical speed.
+ */
 export function getverticalSpeedFromInterval(evt, gammaShift, betaShift, thresholdRotation, lastAltitude, os, isFirstCall, verticalSpeed, acceleration0Z, acceleration0Y, acceleration0X, acceleration0Altitude) {
     var interval = null;
     console.log(os);

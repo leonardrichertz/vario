@@ -1,36 +1,34 @@
+/**
+ * Handles the orientation event on iOS devices.
+ * @param {Event} event - The orientation event object.
+ * @returns {number} - The normalized alpha value.
+ */
 export function handleOrientationIOS(event) {
     let alpha;
     if (typeof event.webkitCompassHeading !== "undefined") {
         alpha = Math.round(event.webkitCompassHeading * 100) / 100; // Normalize value
     }
-
     return alpha;
 }
 
+/**
+ * Handles the orientation event on Android devices.
+ *
+ * @param {Object} event - The orientation event object.
+ * @param {number} event.alpha - The alpha value of the orientation event.
+ * @returns {number} The normalized alpha value.
+ */
 export function handleOrientationAndroid(event) {
     const alpha = Math.round(event.alpha * 100) / 100; // Normalize value
-
     return alpha;
 }
 
-export function requestOrientationPermission(os) {
-    if (window.DeviceOrientationEvent) {
-        if (typeof DeviceOrientationEvent.requestPermission === 'function') {
-            return DeviceOrientationEvent.requestPermission().then(permissionState => {
-                if (permissionState === 'granted') {
-                    return { granted: true, os };
-                }
-                return { granted: false, os };
-            });
-        } else {
-            return Promise.resolve({ granted: true, os });
-        }
-    } else {
-        return Promise.resolve({ granted: false, os });
-    }
-}
-
-// return the orientation shift values for an event and the threshold rotation.
+/**
+ * Calculates the orientation shift based on the provided event and threshold rotation.
+ * @param {object} evt - The event object containing gamma and beta values.
+ * @param {number} thresholdRotation - The threshold rotation value.
+ * @returns {object} - An object containing the calculated gammaShift and betaShift values.
+ */
 export function getOrientationShift(evt, thresholdRotation){
     let gammaShift = 0;
     let betaShift = 0;
