@@ -3,10 +3,16 @@
 <head>
     <title>Altitude</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="altitude.js"></script>
 </head>
 
 <body>
+    <script type="module">
+        import { altitude } from '../scripts/altitude.js';
+        $(document).ready(function () {
+          console.log("Document ready, initializing map.");
+          altitude();
+        });
+      </script>
     <h1>
         Altitude Data
     </h1>
@@ -18,6 +24,7 @@
     <p id="motionInfo"></p>
     <p>Motion supported?</p>
     <p id="motion"></p>
+    <button id="requestAltitudeButton"> Request Altitude</button>
 </body>
 
 </html>
