@@ -21,6 +21,8 @@ export function altitudeOnlyGPS() {
     var distance = 0;
     var lastAltitude = 0;
     var audioContext = null;
+    var oscillator = null;
+    var gainNode = null;
 
     var startMarkerIcon = L.icon({
         iconUrl: '../assets/marker.png',
