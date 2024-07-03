@@ -178,6 +178,7 @@ body {
   }
   
   .height-label {
+    color: white; /* Text color */
     margin-left: 10px; /* Space between label and compass */
   }
   
