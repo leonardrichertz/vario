@@ -21,8 +21,6 @@ export function altitudeOnlyGPS() {
     var distance = 0;
     var lastAltitude = 0;
     var audioContext = null;
-    var oscillator = null;
-    var gainNode = null;
 
     var startMarkerIcon = L.icon({
         iconUrl: '../assets/marker.png',
@@ -122,46 +120,17 @@ export function altitudeOnlyGPS() {
             console.log("Ascent speed: " + speed.toFixed(2));
             $("#ascentSpeed").html(speed.toFixed(2));
             $("#descentSpeed").html("0.00");
-            updateSound(ascentProfile, speed);
+            const context = playSound(ascentProfile, audioContext);
+            audioContext = context;
         }
         else {
             speed = Math.abs(speed);
             console.log("Descent speed: " + speed.toFixed(2));
             $("#ascentSpeed").html("0.00");
             $("#descentSpeed").html(speed.toFixed(2));
-            updateSound(descentProfile, speed);
+            const context = playSound(descentProfile, audioContext);
+            audioContext = context;
         }
-    }
-    
-    function updateSound(profile, speed) {
-        if (!audioContext) {
-            audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            oscillator = audioContext.createOscillator();
-            gainNode = audioContext.createGain();
-
-            oscillator.connect(gainNode);
-            gainNode.connect(audioContext.destination);
-            oscillator.start();
-        }
-
-        // Update frequency, duration, and other parameters based on the speed
-        const frequency = getValueFromProfile(profile.frequency, speed);
-        const duration = getValueFromProfile(profile.duration, speed);
-        const gainValue = getValueFromProfile(profile.gain, speed) / 100;
-
-        oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
-        gainNode.gain.setValueAtTime(gainValue, audioContext.currentTime);
-
-        console.log(`Frequency: ${frequency} Hz, Duration: ${duration} ms, Gain: ${gainValue * 100}%`);
-    }
-    
-    function getValueFromProfile(profile, speed) {
-        for (let i = profile.length - 1; i >= 0; i--) {
-            if (speed >= Math.abs(profile[i].climb)) {
-                return profile[i].value;
-            }
-        }
-        return profile[0].value;
     }
 
     function handleError(error) {
