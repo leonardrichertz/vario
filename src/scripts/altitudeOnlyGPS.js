@@ -4,6 +4,7 @@ import { handleOrientationAndroid, handleOrientationIOS } from '../utils/orienta
 import Timer from '../utils/timer.js';
 import { descentProfile, ascentProfile } from '../utils/soundprofile.js';
 import { playSound } from '../utils/sound.js';
+import { changeAltitudeIcon } from '../utils/altitudeUtils.js';
 
 export function altitudeOnlyGPS() {
     var os = getOS();
@@ -131,8 +132,9 @@ export function altitudeOnlyGPS() {
             const context = playSound(descentProfile, audioContext);
             audioContext = context;
         }
+        changeAltitudeIcon(speed);
     }
-
+   
     function handleError(error) {
         $("#geolocationData").text("Geolocation error: " + error.message);
     }
