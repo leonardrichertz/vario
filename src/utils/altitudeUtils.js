@@ -1,6 +1,7 @@
 export function changeAltitudeIcon(speed) {
     // Remove existing highlight from all bars
     $(".bar").removeClass("bar-light").addClass("bar-dark");
+    $("#verticalSpeed").text(speed.toFixed(2));
 
     // Highlight the correct bar based on speed
     switch (true) {
