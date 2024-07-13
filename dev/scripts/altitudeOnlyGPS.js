@@ -22,6 +22,7 @@ export function altitudeOnlyGPS() {
     var distance = 0;
     var lastAltitude = 0;
     var audioContext = null;
+    var speedHistory = [];
 
     var startMarkerIcon = L.icon({
         iconUrl: '../assets/marker.png',
@@ -65,7 +66,6 @@ export function altitudeOnlyGPS() {
     function handleGeolocation(position) {
         console.log("handleGeolocation event triggered");
         var latlng = [position.coords.latitude, position.coords.longitude];
-        //Added altitude handling and displaying it on the website.
         const newAltitude = position.coords.altitude;
         console.log("new Altitude: " + newAltitude);
         console.log("last Altitude: " + lastAltitude);
@@ -117,22 +117,26 @@ export function altitudeOnlyGPS() {
     }
 
     function handleVerticalSpeed(speed){
-        if (speed > 0) {
-            console.log("Ascent speed: " + speed.toFixed(2));
-            $("#ascentSpeed").html(speed.toFixed(2));
+        changeAltitudeIcon(speed);
+        const averageSpeed = changeSpeedHistory(speedHistory, speed);
+        // Take the average of the last 4 speed values into consideration.
+        const trendAdjustedSpeed = speed * 0.8 + averageSpeed * 0.2;
+        if (trendAdjustedSpeed > 0) {
+            console.log("trendAdjustedSpeed Ascent speed: " + trendAdjustedSpeed.toFixed(2));
+            $("#ascentSpeed").html(trendAdjustedSpeed.toFixed(2));
             $("#descentSpeed").html("0.00");
             const context = playSound(ascentProfile, audioContext);
             audioContext = context;
         }
         else {
-            speed = Math.abs(speed);
-            console.log("Descent speed: " + speed.toFixed(2));
+            trendAdjustedSpeed = Math.abs(trendAdjustedSpeed);
+            console.log("Descent speed: " + trendAdjustedSpeed.toFixed(2));
             $("#ascentSpeed").html("0.00");
-            $("#descentSpeed").html(speed.toFixed(2));
+            $("#descentSpeed").html(trendAdjustedSpeed.toFixed(2));
             const context = playSound(descentProfile, audioContext);
             audioContext = context;
         }
-        changeAltitudeIcon(speed);
+        changeSpeedHistory(speedHistory, speed);
     }
    
     function handleError(error) {

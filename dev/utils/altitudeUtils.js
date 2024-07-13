@@ -49,3 +49,18 @@ export function changeAltitudeIcon(speed) {
             break;
     }
 }
+
+export function changeSpeedHistory(speedHistory, speed) {
+    var averageSpeed = 0;
+    // Update the speed history array
+    speedHistory.push(speed);
+    if (speedHistory.length > 4) {
+        speedHistory.shift();
+    }
+    
+    for (let i = 0; i < speedHistory.length; i++) {
+        averageSpeed += speedHistory[i];
+    }   
+    averageSpeed = averageSpeed/speedHistory.length;
+    return averageSpeed;
+}
