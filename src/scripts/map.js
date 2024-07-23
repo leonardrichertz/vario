@@ -1,13 +1,16 @@
-// scripts/map.js
 import { calculateDistance, calculateManualSpeed } from '../utils/mapUtils.js';
 import { getOS } from '../utils/operatingSystem.js';
 import { handleOrientationAndroid, handleOrientationIOS } from '../utils/orientationUtils.js';
+import Timer from '../utils/timer.js';
 
 export function map() {
     var os = getOS();
     console.log("Operating System: " + os);
-    lastPosition = null;
-    lastTimestamp = null;
+
+    // Define these variables in the correct scope
+    var lastPosition = null;
+    var lastTimestamp = null;
+    const timer = new Timer();
 
     var map = L.map('map').setView([49.75, 6.63], 12);
     var marker;
@@ -45,15 +48,13 @@ export function map() {
     $("#start").text("Karte, Geschwindigkeit und Distanz");
 
     function IOS(event) {
-        const {alpha, beta, gamma} = handleOrientationIOS(event);
-        $("#compass").css("transform", "rotate(" + alpha + "deg)");
-        $("#orientationData").html("<br>Alpha: " + alpha + "<br>Beta: " + beta + "<br>Gamma: " + gamma);
+        const alpha = handleOrientationIOS(event);
+        $("#compass").css("transform", "rotate(" + (360 - alpha) + "deg)");
     }
 
     function Android(event) {
-        const {alpha, beta, gamma} = handleOrientationAndroid(event);
-        $("#compass").css("transform", "rotate(" + (360 - alpha) + "deg)");
-        $("#orientationData").html("<br>Alpha: " + (360 - alpha) + "<br>Beta: " + beta + "<br>Gamma: " + gamma);
+        const alpha = handleOrientationAndroid(event);
+        $("#compass").css("transform", "rotate(" + alpha + "deg)");
     }
 
     function handleGeolocation(position) {
@@ -62,7 +63,7 @@ export function map() {
             var oldLatLng = marker.getLatLng();
             L.polyline([oldLatLng, latlng], { color: 'blue' }).addTo(map);
             distance += calculateDistance(oldLatLng.lat, oldLatLng.lng, position.coords.latitude, position.coords.longitude);
-            $("#distance").html("<br>distance: " + distance.toFixed(3));
+            $("#distance").html(/*"Strecke in m: " + */distance.toFixed(3));
         }
 
         marker.setLatLng(latlng).setIcon(markerIcon).update();
@@ -72,15 +73,17 @@ export function map() {
             startMarker = L.marker([position.coords.latitude, position.coords.longitude], { icon: startMarkerIcon }).addTo(map);
         }
 
-        $("#distance").html("<br>distance: " + distance.toFixed(3));
-        $("#geolocationData").html("<br>Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude);
+        $("#distance").html(/*"Strecke in m: " + */distance.toFixed(3));
 
         var speed = position.coords.speed;
         if (speed !== null && !isNaN(speed)) {
-            $("#speed").html("<br>Speed: " + speed.toFixed(2) + " m/s <br> Speed: " + (speed * 3.6).toFixed(2) + " km/h ");
+            $("#speed").html(speed.toFixed(2));
         } else {
-            var manualSpeed, lastPosition, lastTimestamp = calculateManualSpeed(position, lastPosition, lastTimestamp);
-            $("#speed").html("<br>Calculated Speed: " + manualSpeed.toFixed(2) + " m/s <br> Calculated Speed: " + (manualSpeed * 3.6).toFixed(2) + " km/h ");
+            var result = calculateManualSpeed(position, lastPosition, lastTimestamp);
+            lastPosition = result.lastPosition;
+            lastTimestamp = result.lastTimestamp;
+            var manualSpeed = result.manualSpeed;
+            $("#speed").html(manualSpeed.toFixed(2));
         }
     }
 
@@ -89,61 +92,54 @@ export function map() {
     }
 
     $("#requestOrientationPermissionButton").click(function () {
-        if (window.DeviceOrientationEvent) {
-            $("#orientation").text("Device orientation supported.");
-            if (typeof DeviceOrientationEvent.requestPermission === 'function') {
-                $("#orientationInfo").text("Requesting permission for DeviceOrientation");
-                DeviceOrientationEvent.requestPermission()
-                    .then(permissionState => {
-                        if (permissionState === 'granted') {
-                            $("#permission").text("Permission granted for DeviceOrientation");
-                            if (os === 'iOS' || os === 'MacOS') {
-                                window.addEventListener('deviceorientation', IOS);
-                            } else {
-                                window.addEventListener('deviceorientationabsolute', Android, true);
-                            }
-                        } else {
-                            $("#permission").text("Permission not granted for DeviceOrientation");
-                            alert('Permission not granted for DeviceOrientation');
-                        }
-                    })
-                    .catch(console.error);
+        if ($(this).text() === "Start") {
+            console.log("startOrientation clicked");
+            $(this).text("Stop");
+            timer.start();
+            console.log("timer started");
+            if ('geolocation' in navigator) {
+                watchId = navigator.geolocation.watchPosition(handleGeolocation, handleError, options);
             } else {
-                $("#orientationInfo").text("No need to request permission for DeviceOrientation");
-                if (os === 'iOS') {
-
-                    window.addEventListener('deviceorientation', handleOrientationIOS);
+                console.log("Geolocation not supported.");
+            }
+            console.log("Requesting permission for DeviceOrientation");
+            if (window.DeviceOrientationEvent) {
+                console.log("DeviceOrientation supported");
+                if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+                    console.log("Requesting permission for DeviceOrientation");
+                    DeviceOrientationEvent.requestPermission()
+                        .then(permissionState => {
+                            if (permissionState === 'granted') {
+                                console.log("Permission granted for DeviceOrientation");
+                                if (os === 'iOS' || os === 'MacOS') {
+                                    console.log("case 1 Apple");
+                                    window.addEventListener('deviceorientation', IOS);
+                                } else {
+                                    console.log("case 1 Android");
+                                    window.addEventListener('deviceorientationabsolute', Android, true);
+                                }
+                            } else {
+                               console.log("Permission not granted for DeviceOrientation");
+                            }
+                        })
+                        .catch(console.error);
                 } else {
-                    window.addEventListener('deviceorientationabsolute', handleOrientationAndroid, true);
+                    console.log("No need to request permission for DeviceOrientation");
+                    if (os === 'iOS'|| os === 'MacOS') {
+                        console.log("case 2 Apple");
+                        window.addEventListener('deviceorientation', IOS);
+                    } else {
+                        console.log("case 2 Android");
+                        window.addEventListener('deviceorientationabsolute', Android, true);
+                    }
                 }
+            } else {
+                console.log("Device orientation not supported.");
             }
         } else {
-            $("#orientation").text("Device orientation not supported.");
+            $(this).text("Start");
+            navigator.geolocation.clearWatch(watchId);
+            timer.stop();
         }
     });
-
-    $("#stopGeolocation").click(function () {
-        navigator.geolocation.clearWatch(watchId);
-        $("#geolocationData").text("Geolocation data stopped.");
-        $("#startGeolocation").prop("disabled", false);
-    });
-
-    $("#startGeolocation").click(function () {
-        startGeolocation();
-    });
-
-    function startGeolocation() {
-        if ('geolocation' in navigator) {
-            watchId = navigator.geolocation.watchPosition(handleGeolocation, handleError, options);
-        } else {
-            $("#geolocationData").text("Geolocation not supported.");
-        }
-    }
-
-    if ('geolocation' in navigator) {
-        watchId = navigator.geolocation.watchPosition(handleGeolocation, handleError, options);
-        $("#startGeolocation").prop("disabled", true);
-    } else {
-        $("#geolocationData").text("Geolocation not supported.");
-    }
 }

@@ -1,0 +1,217 @@
+:root {
+    --primary-color: #1B1B1B;
+    --highlight-color: yellow;
+    --hover-highlight-color: yellow;
+    --text-color: #E8E8E8;
+    --text-color-contrast: white;
+}
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #000000;
+    /*display: flex;*/
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /*height: 100vh;*/
+}
+/* General CSS */
+.color-text {
+    color: #E8E8E8; /* Replace this with your desired color */
+}
+
+/* Navbar */
+.navbar-custom {
+    background-color: #212121; /* Dark background color */
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.start-button {
+    border-radius: 15px; /* Adjust the value to make it more curvy */
+    padding: 5px 15px; /* Adjust padding if needed */
+    /*border: 10px; /* Remove border if you want a cleaner look */
+    background-color: #464646; /* Adjust background color */
+    border-color: #7c7c7c;
+    color: white; /* Adjust text color */
+    font-size: 16px; /* Adjust font size */
+}
+
+/* Compass */
+.img-height {
+    width: 30px; /* Adjust width of the images */
+    height: auto; /* Maintain aspect ratio */
+}
+
+.img-compass {
+    width: 200px; /* Adjust width of the images */
+    height: auto; /* Maintain aspect ratio */
+}
+
+.badge {
+    font-size: 20px;
+    padding: 5px 10px;
+}
+
+/* Speed Labels */
+.speed-section {
+    background-color: #212121; /* Light gray background color */
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.circle-label-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1 1 20%; /* Grow and shrink, with a base size of 20% */
+    max-width: 200px; /* Maximum width of each container */
+    /*margin: 5px;*/
+}
+
+ .circle-label {
+     width: 100%;
+     height: 80px;
+     background-color: #212121; /* Example blue color */
+     /*border-radius: 50%;*/
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     margin-bottom: 10px;
+     border: 2px solid #545454; /* White border */
+     border-radius: 5px;
+ }
+
+.label-text {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* Statistic */
+.statistic-section {
+    background-color: #1B1B1B; /* Light gray background color */
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+.img-small {
+    width: 45px;
+    height: 45px;
+}
+
+/* Save Button */
+.button-section {
+    background-color: #2d2d2d; /* Light gray background color */
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+
+/* Sidebar CSS */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: -250px; /* Initially hide the sidebar off-screen */
+    width: 250px;
+    height: 100vh;
+    background-color: #1B1B1B;
+    transition: left 0.3s ease;
+    z-index: 1000; /* Ensure sidebar is above other content */
+}
+
+.sidebar.show {
+    left: 0; /* Show the sidebar by setting left to 0 */
+}
+
+.sidebar ul li {
+    padding: 10px;
+    color: #E8E8E8;
+}
+
+.sidebar-link {
+    color: inherit; /* Inherit text color from parent */
+    text-decoration: none; /* Remove underline */
+}
+
+.sidebar-link:hover {
+    text-decoration: none; /* Remove underline on hover */
+    color: inherit; /* Inherit text color on hover */
+}
+
+
+/* Map CSS */
+/* Adjusted z-index for Leaflet map */
+#map {
+    border-top: 5px solid #b7b7b7; /* Top border */
+    border-bottom: 5px solid #b7b7b7; /* Bottom border */
+    /*height: 400px; /* Set a height for the map container */
+    position: relative;
+    z-index: 999; /* Ensure map is below sidebar */
+}
+/* Compass Section */
+.compass-section {
+    background-color: #181818; /* Light gray background color */
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+/* Height indicator */
+.height-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.height-container {
+    position: relative;
+    width: 30px;
+    height: 200px;
+    background-color: #ccc;
+    margin-right: 10px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px;
+}
+
+.height-bars {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    width: 100%;
+}
+
+.bar {
+    height: 7%;
+    background-color: #464646; /* Dark color for bars */
+    transition: background-color 0.3s;
+}
+
+.bar-middle {
+    background-color: #4caf50; /* Brighter color for the middle bar */
+}
+
+.bar-dark {
+    background-color: #464646; /* Dark color for other bars */
+}
+
+.bar-light {
+    background-color: #E8E8E8; /* Light color for highlighting bars */
+}
+
+.height-label {
+    color: white;
+    margin-left: 10px; /* Space between label and compass */
+}
+
+.border-line {
+    border-top:3px solid #000000;
+}
+
+#speed, #ascentSpeed, #timeFlown, #distance {
+    color: white; /* Text color */
+    font-weight: bold; /* Makes the text thicker */
+    font-size: 24px; /* Makes the text bigger */
+}
