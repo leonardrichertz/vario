@@ -17,7 +17,7 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="">
 
   <!-- Custom CSS -->
-  <link rel="stylesheet" href="../styles/style.css">
+  <link rel="stylesheet" href="../styles/styles.css">
 
   <!-- jQuery -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -93,33 +93,44 @@
   <div class="container-fluid speed-section d-flex justify-content-around align-items-center">
     <div class="circle-label-container">
       <span id="ascentSpeed" class="circle-label circle-lg"></span>
-      <div class="label-text color-text">Geschwindigkeit von Aufstieg</div>
+      <div class="label-text color-text">Vertikale Geschwindigkeit</div>
     </div>
-    <div class="circle-label-container">
+    <!-- <div class="circle-label-container">
       <span id="descentSpeed" class="circle-label circle-lg"></span>
       <div class="label-text color-text">Geschwindigkeit von Abstieg</div>
-    </div>
+    </div> -->
     <div class="circle-label-container">
       <span id="speed" class="circle-label circle-lg"></span>
-      <div class="label-text color-text">Geschwindigkeit über Boden</div>
+      <div class="label-text color-text">Horizontale Geschwindigkeit</div>
+    </div>
+  </div>
+
+  <div class="container-fluid speed-section d-flex justify-content-around align-items-center">
+    <div class="circle-label-container">
+      <span id="distance" class="circle-label"></span>
+      <div class="label-text color-text">Geflogene Strecke(in m)</div>
+    </div>
+    <div class="circle-label-container">
+      <span id="timeFlown" class="circle-label"></span>
+      <div class="label-text color-text">Zeit(h/min/s)</div>
     </div>
   </div>
 
    <!-- Statistics Labels -->
-   <div class="container-fluid statistic-section">
-    <div class="row justify-content-around align-items-center">
+   <!-- <div class="container-fluid statistic-section">
+    <div class="row justify-content-around align-items-center"> -->
       <!-- First Container Pair -->
-      <div class="col-sm-6 col-md-4 mb-3 d-flex justify-content-center">
+      <!-- <div class="col-sm-6 col-md-4 mb-3 d-flex justify-content-center">
         <div class="container-pair d-flex flex-column align-items-center">
           <span class="circle-label circle-lg">
             <img src="../assets/img/Vector.svg" alt="Image 1" class="img-small">
           </span>
           <div id="timeFlown" class="label-text color-text mt-2">Zeit:</div>
         </div>
-      </div>
+      </div> -->
 
       <!-- Second Container Pair -->
-      <div class="col-sm-6 col-md-4 mb-3 d-flex justify-content-center">
+      <!-- <div class="col-sm-6 col-md-4 mb-3 d-flex justify-content-center">
         <div class="container-pair d-flex flex-column align-items-center">
           <span class="circle-label circle-lg">
             <img src="../assets/img/Map.svg" alt="Image 2" class="img-small">
@@ -128,7 +139,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 
   <!-- Sidebar -->
   <div class="sidebar" id="sidebar">
