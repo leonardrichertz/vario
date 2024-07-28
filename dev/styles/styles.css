@@ -56,7 +56,7 @@ body {
 
 /* Speed Labels */
 .speed-section {
-    background-color: #2d2d2d; /* Light gray background color */
+    background-color: #212121; /* Light gray background color */
     padding-top: 15px;
     padding-bottom: 15px;
 }
@@ -65,25 +65,23 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    text-align: center;
+    flex: 1 1 20%; /* Grow and shrink, with a base size of 20% */
+    max-width: 200px; /* Maximum width of each container */
+    /*margin: 5px;*/
 }
 
  .circle-label {
-     width: 50px;
-     height: 50px;
-     background-color: #565656; /* Example blue color */
-     border-radius: 50%;
+     width: 100%;
+     height: 80px;
+     background-color: #212121; /* Example blue color */
+     /*border-radius: 50%;*/
      display: flex;
      justify-content: center;
      align-items: center;
      margin-bottom: 10px;
-     border: 2px solid #E8E8E8; /* White border */
+     border: 2px solid #545454; /* White border */
+     border-radius: 5px;
  }
-
-.circle-lg {
-    width: 80px; /* Larger size for circle */
-    height: 80px; /* Larger size for circle */
-}
 
 .label-text {
     font-size: 12px;
@@ -146,13 +144,13 @@ body {
 #map {
     border-top: 5px solid #b7b7b7; /* Top border */
     border-bottom: 5px solid #b7b7b7; /* Bottom border */
-    height: 400px; /* Set a height for the map container */
+    /*height: 400px; /* Set a height for the map container */
     position: relative;
     z-index: 999; /* Ensure map is below sidebar */
 }
 /* Compass Section */
 .compass-section {
-    background-color: #2d2d2d; /* Light gray background color */
+    background-color: #181818; /* Light gray background color */
     padding-top: 15px;
     padding-bottom: 15px;
 }
@@ -206,4 +204,14 @@ body {
 .height-label {
     color: white;
     margin-left: 10px; /* Space between label and compass */
+}
+
+.border-line {
+    border-top:3px solid #000000;
+}
+
+#speed, #ascentSpeed, #timeFlown, #distance {
+    color: white; /* Text color */
+    font-weight: bold; /* Makes the text thicker */
+    font-size: 24px; /* Makes the text bigger */
 }
