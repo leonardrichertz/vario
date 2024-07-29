@@ -55,14 +55,14 @@ export function altitudeOnlyGPS() {
     $('#sidebarToggle').click(function (e) {
         e.stopPropagation();
         $('#sidebar').toggleClass('show');
-      });
+    });
 
-      
-      $(document).click(function (e) {
+
+    $(document).click(function (e) {
         if (!$(e.target).closest('.sidebar').length && !$(e.target).closest('#sidebarToggle').length) {
-          $('#sidebar').removeClass('show');
+            $('#sidebar').removeClass('show');
         }
-      });
+    });
     function IOS(event) {
         const alpha = handleOrientationIOS(event);
         $("#compass").css("transform", "rotate(" + (360 - alpha) + "deg)");
@@ -127,7 +127,7 @@ export function altitudeOnlyGPS() {
         }
     }
 
-    function handleVerticalSpeed(speed){
+    function handleVerticalSpeed(speed) {
         const averageSpeed = changeSpeedHistory(speedHistory, speed);
         const trendAdjustedSpeed = speed * 0.8 + averageSpeed * 0.2;
         changeAltitudeIcon(trendAdjustedSpeed);
@@ -145,7 +145,7 @@ export function altitudeOnlyGPS() {
         }
         changeSpeedHistory(speedHistory, speed);
     }
-   
+
     function handleError(error) {
         $("#geolocationData").text("Geolocation error: " + error.message);
     }
@@ -156,7 +156,7 @@ export function altitudeOnlyGPS() {
             $(this).text("Stop");
             timer.start();
             console.log("timer started");
-            if (!audioContext){
+            if (!audioContext) {
                 audioContext = new (window.AudioContext || window.webkitAudioContext)();
             }
             if ('geolocation' in navigator) {
