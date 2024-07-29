@@ -90,7 +90,7 @@ export function altitudeOnlyGPS() {
             var oldLatLng = marker.getLatLng();
             L.polyline([oldLatLng, latlng], { color: 'blue' }).addTo(map);
             distance += calculateDistance(oldLatLng.lat, oldLatLng.lng, position.coords.latitude, position.coords.longitude);
-            $("#distance").html("Strecke in m: " + distance.toFixed(3));
+            $("#distance").html(distance.toFixed(3));
         }
 
         marker.setLatLng(latlng).setIcon(markerIcon).update();
@@ -100,7 +100,7 @@ export function altitudeOnlyGPS() {
             startMarker = L.marker([position.coords.latitude, position.coords.longitude], { icon: startMarkerIcon }).addTo(map);
         }
 
-        $("#distance").html("Strecke in m: " + distance.toFixed(3));
+        $("#distance").html(distance.toFixed(3));
 
         var speed = position.coords.speed;
         if (speed !== null && !isNaN(speed)) {
@@ -121,18 +121,14 @@ export function altitudeOnlyGPS() {
         const averageSpeed = changeSpeedHistory(speedHistory, speed);
         // Take the average of the last 4 speed values into consideration.
         const trendAdjustedSpeed = speed * 0.8 + averageSpeed * 0.2;
+        $("#verticalSpeed").html(trendAdjustedSpeed.toFixed(2));
         if (trendAdjustedSpeed > 0) {
             console.log("trendAdjustedSpeed Ascent speed: " + trendAdjustedSpeed.toFixed(2));
-            $("#ascentSpeed").html(trendAdjustedSpeed.toFixed(2));
-            $("#descentSpeed").html("0.00");
             const context = playSound(ascentProfile, audioContext);
             audioContext = context;
         }
         else {
-            trendAdjustedSpeed = Math.abs(trendAdjustedSpeed);
             console.log("Descent speed: " + trendAdjustedSpeed.toFixed(2));
-            $("#ascentSpeed").html("0.00");
-            $("#descentSpeed").html(trendAdjustedSpeed.toFixed(2));
             const context = playSound(descentProfile, audioContext);
             audioContext = context;
         }
