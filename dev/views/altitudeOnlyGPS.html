@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="de">
-
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="initial-scale=1, width=device-width">
@@ -130,7 +129,26 @@
   <div class="container-fluid button-section">
     <div class="row justify-content-center">
       <div class="col-md-auto text-center">
-        <button type="button" class="btn btn-secondary btn-lg" data-toggle="modal" data-target="#exampleModal">Strecke abspeichern</button>
+        <button type="button" class="btn btn-secondary btn-lg" data-toggle="modal" data-target="#saveModal">Strecke abspeichern</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Save Modal -->
+  <div class="modal fade" id="saveModal" tabindex="-1" aria-labelledby="saveModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="saveModalLabel">Speichern der Strecke</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Möchten Sie die Strecke speichern?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
+          <button type="button" class="btn btn-primary" id="saveTrackButton">Speichern</button>
+        </div>
       </div>
     </div>
   </div>
@@ -143,5 +161,4 @@
   </script>
 
 </body>
-
 </html>
