@@ -117,9 +117,9 @@ export function altitudeOnlyGPS() {
     }
 
     function handleVerticalSpeed(speed){
+        const averageSpeed = changeSpeedHistory(speedHistory, speed);
         const trendAdjustedSpeed = speed * 0.8 + averageSpeed * 0.2;
         changeAltitudeIcon(trendAdjustedSpeed);
-        const averageSpeed = changeSpeedHistory(speedHistory, speed);
         // Take the average of the last 4 speed values into consideration.
         $("#verticalSpeed").html(trendAdjustedSpeed.toFixed(2));
         if (trendAdjustedSpeed > 0) {
