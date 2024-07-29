@@ -140,19 +140,6 @@
     function closeSidebar() {
       $('#sidebar').removeClass('show');
     }
-
-    $(document).ready(function () {
-      $('#sidebarToggle').click(function (e) {
-        e.stopPropagation();
-        $('#sidebar').toggleClass('show');
-      });
-
-      $(document).click(function (e) {
-        if (!$(e.target).closest('.sidebar').length && !$(e.target).closest('#sidebarToggle').length) {
-          $('#sidebar').removeClass('show');
-        }
-      });
-    });
   </script>
 
 </body>

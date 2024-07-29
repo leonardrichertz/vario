@@ -51,8 +51,18 @@ export function altitudeOnlyGPS() {
 
     marker = L.marker([0, 0], { icon: markerIcon }).addTo(map).bindPopup("You are here");
 
-    $("#start").text("Karte, Geschwindigkeit und Distanz");
 
+    $('#sidebarToggle').click(function (e) {
+        e.stopPropagation();
+        $('#sidebar').toggleClass('show');
+      });
+
+      
+      $(document).click(function (e) {
+        if (!$(e.target).closest('.sidebar').length && !$(e.target).closest('#sidebarToggle').length) {
+          $('#sidebar').removeClass('show');
+        }
+      });
     function IOS(event) {
         const alpha = handleOrientationIOS(event);
         $("#compass").css("transform", "rotate(" + (360 - alpha) + "deg)");
@@ -64,6 +74,7 @@ export function altitudeOnlyGPS() {
     }
 
     function handleGeolocation(position) {
+        // writeDatatoSaveObject(position);
         console.log("handleGeolocation event triggered");
         var latlng = [position.coords.latitude, position.coords.longitude];
         const newAltitude = position.coords.altitude;
