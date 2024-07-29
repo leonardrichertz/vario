@@ -63,6 +63,12 @@ export function altitudeOnlyGPS() {
             $('#sidebar').removeClass('show');
         }
     });
+
+    $('#saveTrackButton').click(function () {
+        console.log("Save Track button clicked");
+        // saveFlightData();
+    });
+
     function IOS(event) {
         const alpha = handleOrientationIOS(event);
         $("#compass").css("transform", "rotate(" + (360 - alpha) + "deg)");
