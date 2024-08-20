@@ -2,8 +2,7 @@ import { calculateDistance, calculateManualSpeed } from '../utils/mapUtils.js';
 import { getOS } from '../utils/operatingSystem.js';
 import { handleOrientationAndroid, handleOrientationIOS } from '../utils/orientationUtils.js';
 import Timer from '../utils/timer.js';
-import { descentProfile, ascentProfile } from '../utils/soundprofile.js';
-import { playSound } from '../utils/sound.js';
+import { playSound, getSoundProfile } from '../utils/sound.js';
 import { changeAltitudeIcon, changeSpeedHistory, displayAltitude } from '../utils/altitudeUtils.js';
 import { showToast } from '../utils/toast.js';
 
@@ -127,19 +126,22 @@ export function altitudeOnlyGPS() {
     function handleVerticalSpeed(speed) {
         const averageSpeed = changeSpeedHistory(speedHistory, speed);
         const trendAdjustedSpeed = speed * 0.8 + averageSpeed * 0.2;
-        changeAltitudeIcon(trendAdjustedSpeed);
+        const soundChoice = changeAltitudeIcon(trendAdjustedSpeed);
+        const soundProfile = getSoundProfile(soundChoice);
         // Take the average of the last 4 speed values into consideration.
         $("#verticalSpeed").html(trendAdjustedSpeed.toFixed(2));
-        if (trendAdjustedSpeed > 0) {
-            console.log("trendAdjustedSpeed Ascent speed: " + trendAdjustedSpeed.toFixed(2));
-            const context = playSound(ascentProfile, audioContext);
-            audioContext = context;
-        }
-        else {
-            console.log("Descent speed: " + trendAdjustedSpeed.toFixed(2));
-            const context = playSound(descentProfile, audioContext);
-            audioContext = context;
-        }
+        const context = playSound(soundProfile, audioContext);
+        audioContext = context;
+        // if (trendAdjustedSpeed > 0) {
+        //     console.log("trendAdjustedSpeed Ascent speed: " + trendAdjustedSpeed.toFixed(2));
+        //     const context = playSound(soundProfile, audioContext);
+        //     audioContext = context;
+        // }
+        // else {
+        //     console.log("Descent speed: " + trendAdjustedSpeed.toFixed(2));
+        //     const context = playSound(descentProfile, audioContext);
+        //     audioContext = context;
+        // }
         changeSpeedHistory(speedHistory, speed);
     }
 
