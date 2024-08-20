@@ -1,4 +1,4 @@
-import { ascentProfile1, ascentProfile2, ascentProfile3, ascentProfile4, ascentProfile5, ascentProfile6, ascentProfile7, descentProfile1, descentProfile2, descentProfile3, descentProfile4, descentProfile5, descentProfile6, descentProfile7 } from './soundProfiles.js';
+import { ascentProfile1, ascentProfile2, ascentProfile3, ascentProfile4, ascentProfile5, ascentProfile6, ascentProfile7, descentProfile1, descentProfile2, descentProfile3, descentProfile4, descentProfile5, descentProfile6, descentProfile7 } from './soundprofiles.js';
 
 
 export function getSoundProfile(soundChoice) {
