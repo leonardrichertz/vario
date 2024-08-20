@@ -215,3 +215,23 @@ body {
     font-weight: bold; /* Makes the text thicker */
     font-size: 24px; /* Makes the text bigger */
 }
+
+#toast-container {
+    z-index: 1055; /* Make sure it's above other elements */
+}
+
+.toast {
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    opacity: 0;
+    transform: translateY(100%);
+    transition: opacity 0.5s, transform 0.5s;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateY(0);
+}
