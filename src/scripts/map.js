@@ -115,7 +115,7 @@ export function map() {
                                     console.log("case 1 Apple");
                                     window.addEventListener('deviceorientation', IOS);
                                 } else {
-                                    console.log("case 1 Android");
+                                    console.log("case 2 Android");
                                     window.addEventListener('deviceorientationabsolute', Android, true);
                                 }
                             } else {
