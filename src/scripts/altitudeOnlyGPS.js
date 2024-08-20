@@ -5,6 +5,7 @@ import Timer from '../utils/timer.js';
 import { descentProfile, ascentProfile } from '../utils/soundprofile.js';
 import { playSound } from '../utils/sound.js';
 import { changeAltitudeIcon, changeSpeedHistory, displayAltitude } from '../utils/altitudeUtils.js';
+import { showToast } from '../utils/toast.js';
 
 export function altitudeOnlyGPS() {
     var os = getOS();
@@ -146,6 +147,7 @@ export function altitudeOnlyGPS() {
     }
 
     $("#requestOrientationPermissionButton").click(function () {
+        showToast("Requesting permission for DeviceOrientation", 2000);
         if ($(this).text() === "Start") {
             console.log("startOrientation clicked");
             $(this).text("Stop");
