@@ -1,4 +1,4 @@
-function showToast(message, type = 'info', duration = 3000) {
+export function showToast(message, type = 'info', duration = 3000) {
     const toastContainer = document.getElementById('toast-container');
 
     const toast = document.createElement('div');
