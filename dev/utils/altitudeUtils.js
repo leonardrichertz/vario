@@ -64,3 +64,7 @@ export function changeSpeedHistory(speedHistory, speed) {
     averageSpeed = averageSpeed/speedHistory.length;
     return averageSpeed;
 }
+
+export function displayAltitude(altitude) {
+    $("#altitude").html(altitude.toFixed(2));
+}

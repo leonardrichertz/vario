@@ -4,7 +4,7 @@ import { handleOrientationAndroid, handleOrientationIOS } from '../utils/orienta
 import Timer from '../utils/timer.js';
 import { descentProfile, ascentProfile } from '../utils/soundprofile.js';
 import { playSound } from '../utils/sound.js';
-import { changeAltitudeIcon, changeSpeedHistory } from '../utils/altitudeUtils.js';
+import { changeAltitudeIcon, changeSpeedHistory, displayAltitude } from '../utils/altitudeUtils.js';
 
 export function altitudeOnlyGPS() {
     var os = getOS();
@@ -51,19 +51,6 @@ export function altitudeOnlyGPS() {
 
     marker = L.marker([0, 0], { icon: markerIcon }).addTo(map).bindPopup("You are here");
 
-
-    $('#sidebarToggle').click(function (e) {
-        e.stopPropagation();
-        $('#sidebar').toggleClass('show');
-    });
-
-
-    $(document).click(function (e) {
-        if (!$(e.target).closest('.sidebar').length && !$(e.target).closest('#sidebarToggle').length) {
-            $('#sidebar').removeClass('show');
-        }
-    });
-
     $('#saveTrackButton').click(function () {
         console.log("Save Track button clicked");
         // saveFlightData();
@@ -102,6 +89,8 @@ export function altitudeOnlyGPS() {
         }
         lastAltitude = newAltitude;
         lastTimestamp = currrentTime;
+
+        displayAltitude(lastAltitude);
 
         if (marker.getLatLng().lat !== 0 && marker.getLatLng().lng !== 0) {
             var oldLatLng = marker.getLatLng();
