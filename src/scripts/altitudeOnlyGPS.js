@@ -53,8 +53,9 @@ export function altitudeOnlyGPS() {
     marker = L.marker([0, 0], { icon: markerIcon }).addTo(map).bindPopup("You are here");
 
     $('#saveTrackButton').click(function () {
-        console.log("Save Track button clicked");
-        // saveFlightData();
+        showToast("Save Track button clicked", 'info', 3000);
+        // saveFlightData(); Replace with the function to save the flight data.
+        // show success message if saving was succesful.
     });
 
     function IOS(event) {
@@ -143,7 +144,8 @@ export function altitudeOnlyGPS() {
     }
 
     function handleError(error) {
-        $("#geolocationData").text("Geolocation error: " + error.message);
+        console.error(error);
+        showToast("Geolocation error: " + error.message, 'error', 2000);
     }
 
     $("#requestOrientationPermissionButton").click(function () {
@@ -179,9 +181,13 @@ export function altitudeOnlyGPS() {
                                 }
                             } else {
                                 console.log("Permission not granted for DeviceOrientation");
+                                showToast("Permission not granted for DeviceOrientation", 'error', 3000);
                             }
                         })
-                        .catch(console.error);
+                        .catch(error => {
+                            console.error(error);
+                            showToast("Error requesting DeviceOrientation permission", 'error', 2000);
+                        });
                 } else {
                     console.log("No need to request permission for DeviceOrientation");
                     if (os === 'iOS') {
@@ -194,6 +200,7 @@ export function altitudeOnlyGPS() {
                 }
             } else {
                 console.log("Device orientation not supported.");
+                showToast("Device orientation not supported", 'error', 2000);
             }
         } else {
             $(this).text("Start");
