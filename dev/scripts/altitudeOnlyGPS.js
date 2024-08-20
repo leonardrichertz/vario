@@ -147,7 +147,7 @@ export function altitudeOnlyGPS() {
     }
 
     $("#requestOrientationPermissionButton").click(function () {
-        showToast("Requesting permission for DeviceOrientation", 2000);
+        showToast("Requesting permission for DeviceOrientation", 'info', 2000);
         if ($(this).text() === "Start") {
             console.log("startOrientation clicked");
             $(this).text("Stop");
