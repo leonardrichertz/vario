@@ -91,7 +91,7 @@ export function altitudeOnlyGPS() {
         lastAltitude = newAltitude;
         lastTimestamp = currrentTime;
 
-        $("#altitude").html((1000).toFixed(3));
+        $("#altitude").html((1000));
         console.log("changed altitude to: " + lastAltitude);   
 
         if (marker.getLatLng().lat !== 0 && marker.getLatLng().lng !== 0) {
