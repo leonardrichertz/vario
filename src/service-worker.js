@@ -3,7 +3,7 @@ const urlsToCache = [
   '/vario/dev/',
   '/vario/dev/index.html',
   '/vario/dev/scripts/altitudeOnlyGPS.js',
-  '/vario/dev/assets/compass.png',
+  '/vario/dev/assets/img/compass.png',
   'https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js',
   'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css',
   'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js',
