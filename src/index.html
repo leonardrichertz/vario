@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="de">
-
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="initial-scale=1, width=device-width">
@@ -17,7 +16,7 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="">
 
   <!-- Custom CSS -->
-  <link rel="stylesheet" href="styles/styles.css">
+  <link rel="stylesheet" href="../styles/styles.css">
 
   <!-- jQuery -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -32,12 +31,12 @@
   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
   <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
 
-  <title>Studienprojekt</title>
+  <title>Variometer</title>
 </head>
 
 <body>
   <script type="module">
-    import { altitudeOnlyGPS } from 'scripts/altitudeOnlyGPS.js';
+    import { altitudeOnlyGPS } from '../scripts/altitudeOnlyGPS.js';
     $(document).ready(function () {
       console.log("Document ready, initializing map.");
       altitudeOnlyGPS();
@@ -47,9 +46,6 @@
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-custom">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#" id="sidebarToggle">
-        <img src="../assets/img/Menu.svg" alt="Menu" width="30" height="24">
-      </a>
       <span class="color-text">Variometer</span>
       <div class="start-button-section">
         <button class="start-button color-text" id="requestOrientationPermissionButton">Start</button>
@@ -72,7 +68,6 @@
             <div id="bar7" class="bar bar-middle"></div> <!-- Middle bar -->
             <div id="bar8" class="bar bar-dark"></div>
             <div id="bar9" class="bar bar-dark"></div>
-            <div id="bar9" class="bar bar-dark"></div>
             <div id="bar10" class="bar bar-dark"></div>
             <div id="bar11" class="bar bar-dark"></div>
             <div id="bar12" class="bar bar-dark"></div>
@@ -81,7 +76,7 @@
         <span id="verticalSpeed" class="badge badge-secondary badge-lg height-label">0.0</span>
       </div>
       <div class="col-auto">
-        <img src="assets/img/compass.svg" alt="Compass" id="compass" class="img-compass">
+        <img src="../assets/img/compass.svg" alt="Compass" id="compass" class="img-compass">
       </div>
     </div>
   </div>
@@ -89,101 +84,55 @@
   <!-- Speed Labels -->
   <div class="container-fluid speed-section d-flex justify-content-around align-items-center">
     <div class="circle-label-container">
-      <span id="ascentSpeed" class="circle-label circle-lg"></span>
-      <div class="label-text color-text">Vertikale Geschwindigkeit</div>
+      <span id="altitude" class="circle-label circle-lg" name="altitude">0.0</span>
+      <div class="label-text color-text">Höhe (in m)</div>
     </div>
-    <!-- <div class="circle-label-container">
-      <span id="descentSpeed" class="circle-label circle-lg"></span>
-      <div class="label-text color-text">Geschwindigkeit von Abstieg</div>
-    </div> -->
     <div class="circle-label-container">
-      <span id="speed" class="circle-label circle-lg"></span>
+      <span id="speed" class="circle-label circle-lg">0.0</span>
       <div class="label-text color-text">Horizontale Geschwindigkeit</div>
     </div>
   </div>
 
   <div class="container-fluid speed-section d-flex justify-content-around align-items-center">
     <div class="circle-label-container">
-      <span id="distance" class="circle-label"></span>
-      <div class="label-text color-text">Geflogene Strecke(in m)</div>
+      <span id="distance" class="circle-label">0.0</span>
+      <div class="label-text color-text">Geflogene Strecke (in m)</div>
     </div>
     <div class="circle-label-container">
       <span id="timeFlown" class="circle-label"></span>
-      <div class="label-text color-text">Zeit(h/min/s)</div>
+      <div class="label-text color-text">Zeit (h/min/s)</div>
     </div>
   </div>
-
-   <!-- Statistics Labels -->
-   <!-- <div class="container-fluid statistic-section">
-    <div class="row justify-content-around align-items-center"> -->
-      <!-- First Container Pair -->
-      <!-- <div class="col-sm-6 col-md-4 mb-3 d-flex justify-content-center">
-        <div class="container-pair d-flex flex-column align-items-center">
-          <span class="circle-label circle-lg">
-            <img src="../assets/img/Vector.svg" alt="Image 1" class="img-small">
-          </span>
-          <div id="timeFlown" class="label-text color-text mt-2">Zeit:</div>
-        </div>
-      </div> -->
-
-      <!-- Second Container Pair -->
-      <!-- <div class="col-sm-6 col-md-4 mb-3 d-flex justify-content-center">
-        <div class="container-pair d-flex flex-column align-items-center">
-          <span class="circle-label circle-lg">
-            <img src="../assets/img/Map.svg" alt="Image 2" class="img-small">
-          </span>
-          <div id="distance" class="label-text color-text mt-2">Strecke in m: 0.000</div>
-        </div>
-      </div>
-    </div>
-  </div> -->
 
   <div id="map" style="height: 400px;"></div>
-
-  <!-- Sidebar -->
-  <div class="sidebar" id="sidebar">
-    <ul class="list-unstyled">
-      <li class="sidebar-item" onclick="closeSidebar()">
-        <a href="#" class="sidebar-link">Zurück zur Übersicht</a>
-      </li>
-      <li class="sidebar-item">
-        <a href="#" class="sidebar-link">Gespeicherte Flüge</a>
-      </li>
-      <li class="sidebar-item">
-        <a href="#" class="sidebar-link">Einstellungen</a>
-      </li>
-    </ul>
-  </div>
 
   <!-- Save Button -->
   <div class="container-fluid button-section">
     <div class="row justify-content-center">
       <div class="col-md-auto text-center">
-        <button type="button" class="btn btn-secondary btn-lg" data-toggle="modal" data-target="#exampleModal">Strecke abspeichern</button>
+        <button type="button" class="btn btn-secondary btn-lg" data-bs-toggle="modal" data-bs-target="#saveModal">Strecke abspeichern</button>
       </div>
     </div>
   </div>
 
-  <!-- Javascript Close Sidebar -->
-  <script>
-    function closeSidebar() {
-      $('#sidebar').removeClass('show');
-    }
-
-    $(document).ready(function () {
-      $('#sidebarToggle').click(function (e) {
-        e.stopPropagation();
-        $('#sidebar').toggleClass('show');
-      });
-
-      $(document).click(function (e) {
-        if (!$(e.target).closest('.sidebar').length && !$(e.target).closest('#sidebarToggle').length) {
-          $('#sidebar').removeClass('show');
-        }
-      });
-    });
-  </script>
-
+  <!-- Save Modal -->
+  <div class="modal fade" id="saveModal" tabindex="-1" aria-labelledby="saveModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="saveModalLabel">Speichern der Strecke</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Möchten Sie die Strecke speichern?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
+          <button type="button" class="btn btn-primary" id="saveTrackButton">Speichern</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="toast-container" class="toast-container position-fixed bottom-0 end-0 p-3"></div>
 </body>
-
 </html>

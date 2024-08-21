@@ -1,9 +1,9 @@
-import { calculateDistance, calculateManualSpeed } from '../utils/mapUtils.js';
+import { calculateDistance, calculateManualSpeed, displayDistance, displaySpeed } from '../utils/mapUtils.js';
 import { getOS } from '../utils/operatingSystem.js';
 import { handleOrientationAndroid, handleOrientationIOS } from '../utils/orientationUtils.js';
 import Timer from '../utils/timer.js';
 import { playSound, getSoundProfile } from '../utils/sound.js';
-import { changeAltitudeIcon, changeSpeedHistory } from '../utils/altitudeUtils.js';
+import { changeAltitudeIcon, changeSpeedHistory, displayAttitude, displayVerticalSpeed } from '../utils/altitudeUtils.js';
 import { showToast } from '../utils/toast.js';
 
 export function altitudeOnlyGPS() {
@@ -91,13 +91,14 @@ export function altitudeOnlyGPS() {
         lastAltitude = newAltitude;
         lastTimestamp = currrentTime;
 
-        $("#altitude").html((lastAltitude).toFixed(2));
+        displayAttitude(lastAltitude);
+
 
         if (marker.getLatLng().lat !== 0 && marker.getLatLng().lng !== 0) {
             var oldLatLng = marker.getLatLng();
             L.polyline([oldLatLng, latlng], { color: 'blue' }).addTo(map);
             distance += calculateDistance(oldLatLng.lat, oldLatLng.lng, position.coords.latitude, position.coords.longitude);
-            $("#distance").html(distance.toFixed(3));
+            displayDistance(distance);
         }
 
         marker.setLatLng(latlng).setIcon(markerIcon).update();
@@ -107,19 +108,19 @@ export function altitudeOnlyGPS() {
             startMarker = L.marker([position.coords.latitude, position.coords.longitude], { icon: startMarkerIcon }).addTo(map);
         }
 
-        $("#distance").html(distance.toFixed(3));
+        displayDistance(distance);
 
         var speed = position.coords.speed;
         if (speed !== null && !isNaN(speed)) {
             console.log("speed is coming from GPS")
-            $("#speed").html(speed.toFixed(2));
+            displaySpeed(speed);
         } else {
             console.log("speed is calculated manually")
             var result = calculateManualSpeed(position, lastPosition, lastTimestamp);
             lastPosition = result.lastPosition;
             lastTimestamp = result.lastTimestamp;
             var manualSpeed = result.manualSpeed;
-            $("#speed").html(manualSpeed.toFixed(2));
+            displaySpeed(manualSpeed);
         }
     }
 
@@ -129,19 +130,8 @@ export function altitudeOnlyGPS() {
         const soundChoice = changeAltitudeIcon(trendAdjustedSpeed);
         const soundProfile = getSoundProfile(soundChoice);
         // Take the average of the last 4 speed values into consideration.
-        $("#verticalSpeed").html(trendAdjustedSpeed.toFixed(2));
         const context = playSound(soundProfile, audioContext);
         audioContext = context;
-        // if (trendAdjustedSpeed > 0) {
-        //     console.log("trendAdjustedSpeed Ascent speed: " + trendAdjustedSpeed.toFixed(2));
-        //     const context = playSound(soundProfile, audioContext);
-        //     audioContext = context;
-        // }
-        // else {
-        //     console.log("Descent speed: " + trendAdjustedSpeed.toFixed(2));
-        //     const context = playSound(descentProfile, audioContext);
-        //     audioContext = context;
-        // }
         changeSpeedHistory(speedHistory, speed);
     }
 
