@@ -2,11 +2,15 @@ const CACHE_NAME = 'vario-cache-v1';
 const urlsToCache = [
   '/vario/dev/',
   '/vario/dev/index.html',
-  '/vario/dev/functions.js',
+  '/vario/dev/scripts/altitudeOnlyGPS.js',
   '/vario/dev/assets/compass.png',
   'https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js',
   'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css',
-  'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js'
+  'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js',
+  '/vario/dev/assets/favicon.ico',
+  '/vario/dev/assets/marker.png',
+  '/vario/dev/assets/paraglider.png',
+  
 ];
 
 self.addEventListener('install', event => {
