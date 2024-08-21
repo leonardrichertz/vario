@@ -25,14 +25,14 @@ export function altitudeOnlyGPS() {
     var speedHistory = [];
 
     var startMarkerIcon = L.icon({
-        iconUrl: '../assets/marker.png',
+        iconUrl: './assets/marker.png',
         iconSize: [38, 50], // size of the icon
         iconAnchor: [19, 50], // point of the icon which will correspond to marker's location
         popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
     });
 
     var markerIcon = L.icon({
-        iconUrl: '../assets/paraglider.png',
+        iconUrl: './assets/paraglider.png',
         iconSize: [38, 50], // size of the icon
         iconAnchor: [19, 50], // point of the icon which will correspond to marker's location
         popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
