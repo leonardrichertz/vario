@@ -107,38 +107,6 @@ body {
 }
 
 
-/* Sidebar CSS */
-.sidebar {
-    position: fixed;
-    top: 0;
-    left: -250px; /* Initially hide the sidebar off-screen */
-    width: 250px;
-    height: 100vh;
-    background-color: #1B1B1B;
-    transition: left 0.3s ease;
-    z-index: 1000; /* Ensure sidebar is above other content */
-}
-
-.sidebar.show {
-    left: 0; /* Show the sidebar by setting left to 0 */
-}
-
-.sidebar ul li {
-    padding: 10px;
-    color: #E8E8E8;
-}
-
-.sidebar-link {
-    color: inherit; /* Inherit text color from parent */
-    text-decoration: none; /* Remove underline */
-}
-
-.sidebar-link:hover {
-    text-decoration: none; /* Remove underline on hover */
-    color: inherit; /* Inherit text color on hover */
-}
-
-
 /* Map CSS */
 /* Adjusted z-index for Leaflet map */
 #map {
