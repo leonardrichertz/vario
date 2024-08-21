@@ -10,13 +10,21 @@ const urlsToCache = [
   '/vario/dev/assets/favicon.ico',
   '/vario/dev/assets/marker.png',
   '/vario/dev/assets/paraglider.png',
-  
+
 ];
 
-self.addEventListener('install', event => {
+self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => cache.addAll(urlsToCache))
+    caches.open('my-cache-v1').then(async (cache) => {
+      return cache.addAll([
+        '/',
+        '/styles/main.css',
+        '/script/main.js',
+        // Add more resources here
+      ]).catch((error) => {
+        console.error('Failed to cache resources:', error);
+      });
+    })
   );
 });
 
