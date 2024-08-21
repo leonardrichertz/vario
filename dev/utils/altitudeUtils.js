@@ -1,7 +1,7 @@
 export function changeAltitudeIcon(speed) {
     // Remove existing highlight from all bars
     $(".bar").removeClass("bar-light").addClass("bar-dark");
-    $("#verticalSpeed").text(speed.toFixed(2));
+    displayVerticalSpeed(speed);
 
     // Highlight the correct bar based on speed
     switch (true) {
@@ -66,4 +66,12 @@ export function changeSpeedHistory(speedHistory, speed) {
     }   
     averageSpeed = averageSpeed/speedHistory.length;
     return averageSpeed;
+}
+
+export function displayAttitude(altitude) {
+    $("#altitude").html((altitude).toFixed(2));
+}
+
+export function displayVerticalSpeed(speed) {
+    $("#verticalSpeed").text(speed.toFixed(2));
 }

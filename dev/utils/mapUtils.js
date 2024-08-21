@@ -41,3 +41,11 @@ export function calculateManualSpeed(position, lastPosition, lastTimestamp) {
     console.log(lastTimestamp);
     return { manualSpeed: speed, lastPosition, lastTimestamp };
 }
+
+export function displayDistance(distance) {
+    $("#distance").html(distance.toFixed(3));
+}
+
+export function displaySpeed(speed) {
+    $("#speed").html(speed.toFixed(2));
+}
