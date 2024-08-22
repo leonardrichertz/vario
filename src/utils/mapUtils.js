@@ -42,10 +42,21 @@ export function calculateManualSpeed(position, lastPosition, lastTimestamp) {
     return { manualSpeed: speed, lastPosition, lastTimestamp };
 }
 
+/**
+ * Displays the given distance on the HTML element with the id "distance".
+ * @param {number} distance - The distance to be displayed.
+ * @returns {void}
+ */
 export function displayDistance(distance) {
     $("#distance").html(distance.toFixed(3));
 }
 
+/**
+ * Displays the speed value on the HTML element with the id "speed".
+ * 
+ * @param {number} speed - The speed value to be displayed.
+ * @returns {void}
+ */
 export function displaySpeed(speed) {
     $("#speed").html(speed.toFixed(2));
 }

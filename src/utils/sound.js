@@ -1,6 +1,12 @@
 import { ascentProfile1, ascentProfile2, ascentProfile3, ascentProfile4, ascentProfile5, ascentProfile6, ascentProfile7, descentProfile1, descentProfile2, descentProfile3, descentProfile4, descentProfile5, descentProfile6, descentProfile7 } from './soundprofiles.js';
 
 
+/**
+ * Retrieves the sound profile based on the given sound choice.
+ * 
+ * @param {string} soundChoice - The sound choice.
+ * @returns {any} The sound profile corresponding to the sound choice.
+ */
 export function getSoundProfile(soundChoice) {
     switch (true) {
         case soundChoice === 'ascentProfile1':
@@ -35,6 +41,14 @@ export function getSoundProfile(soundChoice) {
             return descentProfile1;
 };
 }
+
+/**
+ * Plays a sound using the provided sound profile and audio context.
+ * 
+ * @param {Object} soundProfile - The sound profile containing frequency, duration, and gain values.
+ * @param {AudioContext} audioContext - The audio context to use for playing the sound.
+ * @returns {AudioContext} The audio context used for playing the sound.
+ */
 export function playSound(soundProfile, audioContext) {
     console.log("playSound function started: ", soundProfile);
     if (!audioContext) {
@@ -69,6 +83,12 @@ export function playSound(soundProfile, audioContext) {
     return audioContext;
 }
 
+/**
+ * Returns the value corresponding to the given climb rate from the provided data.
+ * @param {Array} data - The data array containing climb rates and their corresponding values.
+ * @param {number} climbRate - The climb rate for which the corresponding value is to be retrieved.
+ * @returns {*} - The value corresponding to the given climb rate. If no match is found, the value corresponding to the highest climb rate in the data array is returned.
+ */
 export function getValueForClimb(data, climbRate) {
     for (let i = 0; i < data.length; i++) {
         if (climbRate <= data[i].climb) {

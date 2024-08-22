@@ -1,3 +1,9 @@
+/**
+ * Changes the altitude icon based on the given speed.
+ * 
+ * @param {number} speed - The speed value used to determine the altitude icon.
+ * @returns {string} - The name of the altitude profile associated with the highlighted bar.
+ */
 export function changeAltitudeIcon(speed) {
     // Remove existing highlight from all bars
     $(".bar").removeClass("bar-light").addClass("bar-dark");
@@ -53,6 +59,13 @@ export function changeAltitudeIcon(speed) {
     }
 }
 
+/**
+ * Calculates the average speed based on the given speed history array and the current speed.
+ * 
+ * @param {number[]} speedHistory - The array containing the speed history.
+ * @param {number} speed - The current speed.
+ * @returns {number} - The average speed.
+ */
 export function changeSpeedHistory(speedHistory, speed) {
     var averageSpeed = 0;
     // Update the speed history array
@@ -68,10 +81,22 @@ export function changeSpeedHistory(speedHistory, speed) {
     return averageSpeed;
 }
 
+/**
+ * Displays the attitude value on the webpage.
+ * 
+ * @param {number} altitude - The altitude value to be displayed.
+ * @returns {void}
+ */
 export function displayAttitude(altitude) {
     $("#altitude").html((altitude).toFixed(2));
 }
 
+/**
+ * Displays the vertical speed.
+ * 
+ * @param {number} speed - The vertical speed to be displayed.
+ * @returns {void}
+ */
 export function displayVerticalSpeed(speed) {
     $("#verticalSpeed").text(speed.toFixed(2));
 }
