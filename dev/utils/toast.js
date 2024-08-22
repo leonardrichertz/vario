@@ -1,3 +1,10 @@
+/**
+ * Displays a toast message.
+ * 
+ * @param {string} message - The message to be displayed in the toast.
+ * @param {string} [type='info'] - The type of the toast. Defaults to 'info'.
+ * @param {number} [duration=3000] - The duration in milliseconds for which the toast should be displayed. Defaults to 3000.
+ */
 export function showToast(message, type = 'info', duration = 3000) {
     const toastContainer = document.getElementById('toast-container');
 
