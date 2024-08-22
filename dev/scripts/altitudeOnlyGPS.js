@@ -33,7 +33,7 @@ export function altitudeOnlyGPS() {
 
     var markerIcon = L.icon({
         iconUrl: './assets/paraglider.png',
-        iconSize: [38, 50], // size of the icon
+        iconSize: [50, 50], // size of the icon
         iconAnchor: [19, 50], // point of the icon which will correspond to marker's location
         popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
     });
@@ -126,13 +126,14 @@ export function altitudeOnlyGPS() {
 
     function handleVerticalSpeed(speed) {
         const averageSpeed = changeSpeedHistory(speedHistory, speed);
-        const trendAdjustedSpeed = speed * 0.8 + averageSpeed * 0.2;
+        let trendAdjustedSpeed = speed;
+        if (speed * 0.7 < averageSpeed || speed * 1.3 > averageSpeed) {
+            trendAdjustedSpeed = speed * 0.7 + averageSpeed * 0.3;
+        }
         const soundChoice = changeAltitudeIcon(trendAdjustedSpeed);
         const soundProfile = getSoundProfile(soundChoice);
-        // Take the average of the last 4 speed values into consideration.
         const context = playSound(soundProfile, audioContext);
         audioContext = context;
-        changeSpeedHistory(speedHistory, speed);
     }
 
     function handleError(error) {
