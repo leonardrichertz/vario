@@ -17,6 +17,7 @@ class Timer {
         }, 1000);
     }
 
+
     /**
      * Pauses the timer, but does not clear the time.
      */
@@ -42,6 +43,15 @@ class Timer {
         let seconds = this.seconds - (hours * 3600) - (minutes * 60);
 
         return [hours, minutes, seconds].map(this.padTime).join(':');
+    }
+    
+    /**
+     * Returns the value of the seconds property.
+     *
+     * @returns {number} The value of the seconds property.
+     */
+    getSeconds() {
+        return this.seconds;
     }
 
     /**

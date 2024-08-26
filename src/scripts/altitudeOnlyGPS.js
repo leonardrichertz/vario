@@ -51,7 +51,7 @@ export function altitudeOnlyGPS() {
     marker = L.marker([0, 0], { icon: markerIcon }).addTo(map).bindPopup("You are here");
 
     $('#saveTrackButton').click(function () {
-        showToast("Save Track button clicked", 'info', 3000);
+        showToast("Save Track button clicked. The flight was " + timer.getSeconds() + " long", 'info', 3000);
         // saveFlightData(); Replace with the function to save the flight data.
         // show success message if saving was succesful.
     });
@@ -84,23 +84,19 @@ export function altitudeOnlyGPS() {
 
         displayAttitude(lastAltitude);
 
-
         if (marker.getLatLng().lat !== 0 && marker.getLatLng().lng !== 0) {
             var oldLatLng = marker.getLatLng();
             L.polyline([oldLatLng, latlng], { color: 'blue' }).addTo(map);
             distance += calculateDistance(oldLatLng.lat, oldLatLng.lng, position.coords.latitude, position.coords.longitude);
             displayDistance(distance);
         }
-
         marker.setLatLng(latlng).setIcon(markerIcon).update();
         map.setView(latlng);
 
         if (typeof startMarker == 'undefined') {
             startMarker = L.marker([position.coords.latitude, position.coords.longitude], { icon: startMarkerIcon }).addTo(map);
         }
-
         displayDistance(distance);
-
         var speed = position.coords.speed;
         if (speed !== null && !isNaN(speed)) {
             displaySpeed(speed);
