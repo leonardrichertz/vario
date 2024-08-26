@@ -21,12 +21,10 @@ export function getverticalSpeedFromInterval(evt, gammaShift, betaShift, thresho
     // For IOS we already have it in seconds
     if (os == 'iOS' || os == 'MacOS') {
         interval = evt.interval;
-        console.log("IOS interval: ", interval);
     }
     // For Android we have it in milliseconds
     else {
         interval = evt.interval / 1000;
-        console.log("Android interval: ", interval);
     }
     console.log(interval);
     let accelerationZ1 = evt.acceleration.z;
@@ -149,15 +147,6 @@ export function getverticalSpeedFromInterval(evt, gammaShift, betaShift, thresho
             acceleration0Y = adjustedAccelerationY1;
             acceleration0Z = adjustedAccelerationZ1;
         }
-        console.log("startfunction")
-        console.log("Current altitude: ", lastAltitude);
-        console.log("Vertical speed: ", verticalSpeed);
-        console.log("Acceleration Z: ", acceleration0Z);
-        console.log("Acceleration Y: ", acceleration0Y);
-        console.log("Acceleration X: ", acceleration0X);
-        console.log("Is first call: ", isFirstCall);
-        console.log("endfunction");
-
         return { lastAltitude, isFirstCall, verticalSpeed, acceleration0X, acceleration0Y, acceleration0Z, acceleration0Altitude}
     }
 }
