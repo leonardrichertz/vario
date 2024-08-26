@@ -51,7 +51,7 @@ export function altitudeOnlyGPS() {
     marker = L.marker([0, 0], { icon: markerIcon }).addTo(map).bindPopup("You are here");
 
     $('#saveTrackButton').click(function () {
-        showToast("Save Track button clicked. The flight was " + timer.getSeconds() + " long", 'info', 3000);
+        showToast("Save Track button clicked. The flight was " + timer.getSeconds() + " seconds long", 'info', 3000);
         // saveFlightData(); Replace with the function to save the flight data.
         // show success message if saving was succesful.
     });
