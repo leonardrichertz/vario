@@ -54,14 +54,12 @@ export function playSound(soundProfile, audioContext) {
     if (!audioContext) {
         audioContext = new (window.AudioContext || window.webkitAudioContext)();
     }
-    console.log("AudioContext: ", audioContext);  
-    console.log("AudioContext state: ", audioContext.state);  
 
 
     const climbRate = 2; // example climb rate
     const frequency = getValueForClimb(soundProfile.frequency, climbRate);
+    // Maybe get the duration froom the difference between the two timestamps?
     const duration = getValueForClimb(soundProfile.duration, climbRate);
-    console.log("Duration: ", duration);
     const gainValue = getValueForClimb(soundProfile.gain, climbRate);
 
     const oscillator = audioContext.createOscillator();
@@ -79,7 +77,6 @@ export function playSound(soundProfile, audioContext) {
     setTimeout(() => {
         oscillator.stop();
     }, duration);
-    console.log("playSound end: ", frequency, duration, gainValue);
     return audioContext;
 }
 

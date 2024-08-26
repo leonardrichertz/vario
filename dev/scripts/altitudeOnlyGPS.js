@@ -8,7 +8,6 @@ import { showToast } from '../utils/toast.js';
 
 export function altitudeOnlyGPS() {
     var os = getOS();
-    console.log("Operating System: " + os);
 
     // Define these variables in the correct scope
     var lastPosition = null;
@@ -68,18 +67,10 @@ export function altitudeOnlyGPS() {
     }
 
     function handleGeolocation(position) {
-        // writeDatatoSaveObject(position);
-        console.log("handleGeolocation event triggered");
         var latlng = [position.coords.latitude, position.coords.longitude];
         const newAltitude = position.coords.altitude;
-        console.log("new Altitude: " + newAltitude);
-        console.log("last Altitude: " + lastAltitude);
         const currrentTime = Date.now();
-        console.log("current time: " + currrentTime);
-        console.log("last timestamp: " + lastTimestamp);
-
         if (lastTimestamp !== 0 && newAltitude !== null) {
-            console.log("Vertical speed calculation started")
             const altitudeDifference = newAltitude - lastAltitude;
             // convert milliseconds to seconds
             const timeDifference = (currrentTime - lastTimestamp) / 1000;
@@ -112,16 +103,16 @@ export function altitudeOnlyGPS() {
 
         var speed = position.coords.speed;
         if (speed !== null && !isNaN(speed)) {
-            console.log("speed is coming from GPS")
             displaySpeed(speed);
         } else {
-            console.log("speed is calculated manually")
             var result = calculateManualSpeed(position, lastPosition, lastTimestamp);
             lastPosition = result.lastPosition;
             lastTimestamp = result.lastTimestamp;
             var manualSpeed = result.manualSpeed;
             displaySpeed(manualSpeed);
         }
+        // Save the necessary data to the save object. This has to be specified by the implementer, but all the necessary data is available.
+        // writeDatatoSaveObject(position, lastTimestamp);
     }
 
     function handleVerticalSpeed(speed) {
@@ -130,6 +121,7 @@ export function altitudeOnlyGPS() {
         if (speed * 0.7 < averageSpeed || speed * 1.3 > averageSpeed) {
             trendAdjustedSpeed = speed * 0.7 + averageSpeed * 0.3;
         }
+        console.log('trendAdjustedSpeed: ', trendAdjustedSpeed);
         const soundChoice = changeAltitudeIcon(trendAdjustedSpeed);
         const soundProfile = getSoundProfile(soundChoice);
         const context = playSound(soundProfile, audioContext);
@@ -137,63 +129,48 @@ export function altitudeOnlyGPS() {
     }
 
     function handleError(error) {
-        console.error(error);
-        showToast("Geolocation error: " + error.message, 'error', 2000);
+        showToast("Error with the Geolocation, if this issue persists try reloading the page and restarting the tracking.", 'error', 4000);
     }
 
     $("#requestOrientationPermissionButton").click(function () {
         showToast("Requesting permission for DeviceOrientation", 'info', 2000);
         if ($(this).text() === "Start") {
-            console.log("startOrientation clicked");
             $(this).text("Stop");
             timer.start();
-            console.log("timer started");
             if (!audioContext) {
                 audioContext = new (window.AudioContext || window.webkitAudioContext)();
             }
             if ('geolocation' in navigator) {
                 watchId = navigator.geolocation.watchPosition(handleGeolocation, handleError, options);
             } else {
-                $("#geolocationData").text("Geolocation not supported.");
+                showToast("Geolocation not supported.", 'error', 2000);
             }
-            console.log("Requesting permission for DeviceOrientation");
             if (window.DeviceOrientationEvent) {
-                console.log("DeviceOrientation supported");
                 if (typeof DeviceOrientationEvent.requestPermission === 'function') {
-                    console.log("Requesting permission for DeviceOrientation");
                     DeviceOrientationEvent.requestPermission()
                         .then(permissionState => {
                             if (permissionState === 'granted') {
-                                console.log("Permission granted for DeviceOrientation");
                                 if (os === 'iOS' || os === 'MacOS') {
-                                    console.log("case 1 Apple");
                                     window.addEventListener('deviceorientation', IOS);
                                 } else {
-                                    console.log("case 1 Android");
                                     window.addEventListener('deviceorientationabsolute', Android, true);
                                 }
                             } else {
-                                console.log("Permission not granted for DeviceOrientation");
                                 showToast("Permission not granted for DeviceOrientation", 'error', 3000);
                             }
                         })
                         .catch(error => {
-                            console.error(error);
-                            showToast("Error requesting DeviceOrientation permission", 'error', 2000);
+                            showToast("Error requesting DeviceOrientation permission. Try reloading the page.", 'error', 4000);
                         });
                 } else {
-                    console.log("No need to request permission for DeviceOrientation");
                     if (os === 'iOS') {
-                        console.log("case 2 Apple");
                         window.addEventListener('deviceorientation', handleOrientationIOS);
                     } else {
-                        console.log("case 2 Android");
                         window.addEventListener('deviceorientationabsolute', Android, true);
                     }
                 }
             } else {
-                console.log("Device orientation not supported.");
-                showToast("Device orientation not supported", 'error', 2000);
+                showToast("Device orientation not supported", 'error', 3000);
             }
         } else {
             $(this).text("Start");
