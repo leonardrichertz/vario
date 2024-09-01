@@ -7,6 +7,21 @@ import { changeAltitudeIcon, changeSpeedHistory, displayAttitude, displayVertica
 import { showToast } from '../utils/toast.js';
 
 export function altitudeOnlyGPS() {
+
+    function updateFaviconForColorScheme(){
+        const favicon = $('#favicon');
+        const appleTouchIcon = $('#apple-touch-icon');
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          favicon.attr('href', './assets/favicon-white.ico');
+          appleTouchIcon.attr('href', './assets/icon-192x192-white.png');
+        }
+        else{
+          favicon.attr('href', './assets/favicon.ico');
+          appleTouchIcon.attr('href', './assets/icon-192x192.png');
+        }
+    }
+    updateFaviconForColorScheme();
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateFaviconForColorScheme);
     var os = getOS();
 
     // Define these variables in the correct scope
