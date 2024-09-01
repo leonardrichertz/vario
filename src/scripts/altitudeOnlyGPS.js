@@ -12,10 +12,12 @@ export function altitudeOnlyGPS() {
         const favicon = $('#favicon');
         const appleTouchIcon = $('#apple-touch-icon');
         if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            console.log('Dark mode');
           favicon.attr('href', './assets/favicon-white.ico');
           appleTouchIcon.attr('href', './assets/icon-192x192-white.png');
         }
         else{
+            console.log('Light mode');
           favicon.attr('href', './assets/favicon.ico');
           appleTouchIcon.attr('href', './assets/icon-192x192.png');
         }
