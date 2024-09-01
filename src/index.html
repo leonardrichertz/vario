@@ -7,7 +7,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
-  <link rel="apple-touch-icon" href="./assets/icon-192x192.png">
+  <link rel="apple-touch-icon" id="apple-touch-icon" href="./assets/icon-192x192.png">
 
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap">
@@ -38,7 +38,7 @@
 
   <link rel="manifest" href="manifest.webmanifest">
 
-  <link rel="icon" type="favicon" href="./assets/favicon.ico">
+  <link rel="icon" type="favicon" id="favicon" href="./assets/favicon.ico">
   <title>Variometer</title>
 </head>
 
@@ -46,8 +46,7 @@
   <script type="module">
     import { altitudeOnlyGPS } from './scripts/altitudeOnlyGPS.js';
     $(document).ready(function () {
-      console.log("Document ready, initializing map.");
-      altitudeOnlyGPS();
+        altitudeOnlyGPS();
     });
   </script>
 
@@ -84,7 +83,7 @@
         <span id="verticalSpeed" class="badge badge-secondary badge-lg height-label">0.0</span>
       </div>
       <div class="col-auto">
-        <img src="assets/img/compass.svg" alt="Compass" id="compass" class="img-compass">
+        <img src="assets/compass.svg" alt="Compass" id="compass" class="img-compass">
       </div>
     </div>
   </div>
