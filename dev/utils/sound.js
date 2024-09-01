@@ -50,7 +50,6 @@ export function getSoundProfile(soundChoice) {
  * @returns {AudioContext} The audio context used for playing the sound.
  */
 export function playSound(soundProfile, audioContext) {
-    console.log("playSound function started: ", soundProfile);
     if (!audioContext) {
         audioContext = new (window.AudioContext || window.webkitAudioContext)();
     }
