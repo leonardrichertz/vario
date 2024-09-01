@@ -3,7 +3,7 @@ import { getOS } from '../utils/operatingSystem.js';
 import { handleOrientationAndroid, handleOrientationIOS } from '../utils/orientationUtils.js';
 import Timer from '../utils/timer.js';
 import { playSound, getSoundProfile } from '../utils/sound.js';
-import { changeAltitudeIcon, changeSpeedHistory, displayAttitude, displayVerticalSpeed } from '../utils/altitudeUtils.js';
+import { changeAltitudeIcon, changeSpeedHistory, displayAttitude } from '../utils/altitudeUtils.js';
 import { showToast } from '../utils/toast.js';
 
 export function altitudeOnlyGPS() {
@@ -12,12 +12,10 @@ export function altitudeOnlyGPS() {
         const favicon = $('#favicon');
         const appleTouchIcon = $('#apple-touch-icon');
         if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            console.log('Dark mode');
           favicon.attr('href', './assets/favicon-white.ico');
           appleTouchIcon.attr('href', './assets/icon-192x192-white.png');
         }
         else{
-            console.log('Light mode');
           favicon.attr('href', './assets/favicon.ico');
           appleTouchIcon.attr('href', './assets/icon-192x192.png');
         }
@@ -91,8 +89,6 @@ export function altitudeOnlyGPS() {
             const altitudeDifference = newAltitude - lastAltitude;
             // convert milliseconds to seconds
             const timeDifference = (currrentTime - lastTimestamp) / 1000;
-            console.log("Altitude difference: " + altitudeDifference);
-            console.log("Time difference: " + timeDifference);
             let speed = altitudeDifference / timeDifference;
             handleVerticalSpeed(speed);
         }
@@ -134,7 +130,6 @@ export function altitudeOnlyGPS() {
         if (speed * 0.7 < averageSpeed || speed * 1.3 > averageSpeed) {
             trendAdjustedSpeed = speed * 0.7 + averageSpeed * 0.3;
         }
-        console.log('trendAdjustedSpeed: ', trendAdjustedSpeed);
         const soundChoice = changeAltitudeIcon(trendAdjustedSpeed);
         const soundProfile = getSoundProfile(soundChoice);
         const context = playSound(soundProfile, audioContext);
@@ -156,7 +151,7 @@ export function altitudeOnlyGPS() {
             if ('geolocation' in navigator) {
                 watchId = navigator.geolocation.watchPosition(handleGeolocation, handleError, options);
             } else {
-                showToast("Geolocation not supported.", 'error', 2000);
+                showToast("Geolocation not supported.", 'error', 3000);
             }
             if (window.DeviceOrientationEvent) {
                 if (typeof DeviceOrientationEvent.requestPermission === 'function') {

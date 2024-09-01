@@ -73,13 +73,11 @@ export function changeSpeedHistory(speedHistory, speed) {
     if (speedHistory.length > 4) {
         speedHistory.shift();
     }
-    console.log('speed History:', speedHistory);
     
     for (let i = 0; i < speedHistory.length; i++) {
         averageSpeed += speedHistory[i];
     }   
     averageSpeed = averageSpeed/speedHistory.length;
-    console.log('average Speed: ', averageSpeed);
     return averageSpeed;
 }
 

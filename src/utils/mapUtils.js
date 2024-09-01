@@ -36,9 +36,6 @@ export function calculateManualSpeed(position, lastPosition, lastTimestamp) {
     }
     lastPosition = position;
     lastTimestamp = position.timestamp;
-    console.log(speed);
-    console.log(lastPosition);
-    console.log(lastTimestamp);
     return { manualSpeed: speed, lastPosition, lastTimestamp };
 }
 
