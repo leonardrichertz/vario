@@ -17,14 +17,13 @@ class Timer {
         }, 1000);
     }
 
-
     /**
      * Pauses the timer, but does not clear the time.
      */
     pause() {
         clearInterval(this.intervalId);
     }
-
+    
     /**
      * Stops the timer and clears the time.
      */

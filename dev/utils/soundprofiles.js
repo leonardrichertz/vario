@@ -1,3 +1,5 @@
+// This file contains the soundProfiles we have used for our variometer app. Feel free to adjust them as needed.
+
 export const ascentProfile1 = {
     "version": 1,
     "units": {

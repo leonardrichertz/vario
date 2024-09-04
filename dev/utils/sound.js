@@ -53,8 +53,6 @@ export function playSound(soundProfile, audioContext) {
     if (!audioContext) {
         audioContext = new (window.AudioContext || window.webkitAudioContext)();
     }
-
-
     const climbRate = 2; // example climb rate
     const frequency = getValueForClimb(soundProfile.frequency, climbRate);
     // Maybe get the duration froom the difference between the two timestamps?

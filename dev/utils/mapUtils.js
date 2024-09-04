@@ -1,5 +1,5 @@
 /**
- * Calculates the distance between two coordinates on the Earth's surface.
+ * Calculates the distance between two coordinates on the Earth's surface. Uses the Haversine formula.
  *
  * @param {number} lat1 - The latitude of the first coordinate.
  * @param {number} lon1 - The longitude of the first coordinate.

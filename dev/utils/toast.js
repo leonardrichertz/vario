@@ -1,8 +1,8 @@
 /**
- * Displays a toast message.
+ * Displays a toast message on the screen.
  * 
  * @param {string} message - The message to be displayed in the toast.
- * @param {string} [type='info'] - The type of the toast. Defaults to 'info'.
+ * @param {string} [type='info'] - The type of the toast. Defaults to 'info'. Types are 'info', 'success', 'warning', and 'error'.
  * @param {number} [duration=3000] - The duration in milliseconds for which the toast should be displayed. Defaults to 3000.
  */
 export function showToast(message, type = 'info', duration = 3000) {
