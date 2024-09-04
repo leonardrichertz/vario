@@ -8,6 +8,7 @@ import { showToast } from '../utils/toast.js';
 
 export function altitudeOnlyGPS() {
 
+    // Updates the app's favicon based on the user's color scheme preference.
     function updateFaviconForColorScheme(){
         const favicon = $('#favicon');
         const appleTouchIcon = $('#apple-touch-icon');
