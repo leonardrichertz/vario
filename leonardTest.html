@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Altitude</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            font-size: 24px;
+            margin-top: 20px;
+        }
+        #orientationInfo, #orientationData, #motionInfo, #motionData {
+            font-size: 18px;
+            margin: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 80%;
+            margin: 0 auto;
+        }
+        #requestPermission {
+            font-size: 20px;
+            margin-top: 20px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Orientation Data</h1>
+    <p id="orientationInfo"></p>
+    <p id="orientationData">AltitudeData</p>
+    <p id="motionInfo"></p>
+    <p id="motionData">MotionData</p>
+    <button id="requestPermission">Get Orientation Data and Acceleration</button>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="leonardTest.js"></script>
+</body>
+</html>
