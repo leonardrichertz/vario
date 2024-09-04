@@ -1,4 +1,5 @@
 const CACHE_NAME = 'vario-cache-v1';
+// These are the urls that the service worker will cache.
 const urlsToCache = [
   '/vario/dev/',
   '/vario/dev/index.html',
@@ -8,9 +9,13 @@ const urlsToCache = [
   'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css',
   'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js',
   '/vario/dev/assets/favicon.ico',
+  '/vario/dev/assets/favicon-white.ico',
   '/vario/dev/assets/marker.png',
   '/vario/dev/assets/paraglider.png',
+  '/vario/dev/assets/icon-192x192-white.png',
+  '/vario/dev/assets/icon-192x192.png',
 ];
+// This event is triggered when the service worker is installed. It will cache the urlsToCache and see if any of them fail.
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(async cache => {
@@ -34,7 +39,7 @@ self.addEventListener('install', event => {
   );
 });
 
-
+// This event is triggered upon a fetch request. It will check if the request is already cached and return it. If it is not cached, it will fetch the request.
 self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request)
@@ -42,6 +47,7 @@ self.addEventListener('fetch', event => {
   );
 });
 
+// This event is triggered when the service worker is activated. It will delete any old caches that are not in the cacheWhitelist.
 self.addEventListener('activate', event => {
   const cacheWhitelist = [CACHE_NAME];
   event.waitUntil(

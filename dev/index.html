@@ -4,6 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="initial-scale=1, width=device-width">
   <meta name="description" content="A simple to use variometer PWA that allows you to trak your flights in the browser without the hassle of having to download an App.">
+  
+  <!-- Meta tags defining that the app can be added to the home screen -->
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -37,6 +39,7 @@
   <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js" defer></script>
 
 
+  <!-- Manifest -->
   <link rel="manifest" href="manifest.webmanifest">
 
   <link rel="icon" type="favicon" id="favicon" href="./assets/favicon.ico">
@@ -66,7 +69,7 @@
       <div class="col-auto d-flex align-items-center height-wrapper">
         <div class="height-container">
           <div class="height-bars">
-            <!-- 13 bars with the middle one having a different class -->
+            <!-- 13 bars with one having a different class to display the change in altitude -->
             <div id="bar1" class="bar bar-dark"></div>
             <div id="bar2" class="bar bar-dark"></div>
             <div id="bar3" class="bar bar-dark"></div>
@@ -89,7 +92,7 @@
     </div>
   </div>
    
-  <!-- Speed Labels -->
+  <!-- Data display grid -->
   <div class="container-fluid speed-section d-flex justify-content-around align-items-center">
     <div class="circle-label-container">
       <span id="altitude" class="circle-label circle-lg" name="altitude">0.0</span>
