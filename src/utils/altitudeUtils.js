@@ -92,7 +92,7 @@ export function displayAttitude(altitude) {
 }
 
 /**
- * Displays the vertical speed.
+ * Displays the vertical speed on the webpage.
  * 
  * @param {number} speed - The vertical speed to be displayed.
  * @returns {void}

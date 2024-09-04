@@ -53,6 +53,7 @@ export function altitudeOnlyGPS() {
         popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
     });
 
+    // Define the options for the geolocation.watchposition function.
     const options = {
         enableHighAccuracy: true,
         maximumAge: 30000,
@@ -66,18 +67,20 @@ export function altitudeOnlyGPS() {
 
     marker = L.marker([0, 0], { icon: markerIcon }).addTo(map).bindPopup("You are here");
 
+    // EventListener for the save track button.
     $('#saveTrackButton').click(function () {
-        showToast("Save Track button clicked. The flight was " + timer.getSeconds() + " seconds long", 'info', 3000);
-        // saveFlightData(); Replace with the function to save the flight data.
         // show success message if saving was succesful.
+        showToast("Save Track button clicked. The flight was " + timer.getSeconds() + " seconds long", 'success', 3000);
+        // saveFlightData(); Replace with the function to save the flight data.
     });
 
-    function IOS(event) {
+
+    function OrientationIOS(event) {
         const alpha = handleOrientationIOS(event);
         $("#compass").css("transform", "rotate(" + (360 - alpha) + "deg)");
     }
 
-    function Android(event) {
+    function OrientationAndroid(event) {
         const alpha = handleOrientationAndroid(event);
         $("#compass").css("transform", "rotate(" + alpha + "deg)");
     }
@@ -160,9 +163,9 @@ export function altitudeOnlyGPS() {
                         .then(permissionState => {
                             if (permissionState === 'granted') {
                                 if (os === 'iOS' || os === 'MacOS') {
-                                    window.addEventListener('deviceorientation', IOS);
+                                    window.addEventListener('deviceorientation', OrientationIOS);
                                 } else {
-                                    window.addEventListener('deviceorientationabsolute', Android, true);
+                                    window.addEventListener('deviceorientationabsolute', OrientationAndroid, true);
                                 }
                             } else {
                                 showToast("Permission not granted for DeviceOrientation", 'error', 3000);
