@@ -8,9 +8,6 @@ export function handleOrientationIOS(event) {
     if (typeof event.webkitCompassHeading !== "undefined") {
         alpha = Math.round(event.webkitCompassHeading * 100) / 100; // Normalize value
     }
-    else{
-        alpha = Math.round(event.alpha * 100) / 100;
-    }
     return alpha;
 }
 
