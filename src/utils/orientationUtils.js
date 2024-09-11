@@ -24,5 +24,4 @@ export function handleOrientationAndroid(event) {
     const gamma = Math.round(event.gamma * 100) / 100; // Rotation around y-axis
 
     return { alpha, beta, gamma };
-    return alpha;
 }
