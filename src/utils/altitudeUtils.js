@@ -88,7 +88,7 @@ export function changeSpeedHistory(speedHistory, speed) {
  * @returns {void}
  */
 export function displayAttitude(altitude) {
-    $("#altitude").html((altitude).toFixed(2));
+    $("#altitude").html((altitude).toFixed(2), "m");
 }
 
 /**
