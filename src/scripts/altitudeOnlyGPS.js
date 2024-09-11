@@ -126,7 +126,8 @@ export function altitudeOnlyGPS() {
             var manualSpeed = result.manualSpeed;
             displaySpeed(manualSpeed);
         }
-        // Save the necessary data to the save object. This has to be specified by the implementer, but all the necessary data is available.
+        // Save the necessary data to the save object. This has to be specified by the implementer,
+        // but all the necessary data is available.
         // writeDatatoSaveObject(position, lastTimestamp);
     }
 
@@ -147,7 +148,6 @@ export function altitudeOnlyGPS() {
     }
 
     $("#requestOrientationPermissionButton").click(function () {
-        showToast("Requesting permission for DeviceOrientation", 'info', 2000);
         if ($(this).text() === "Start") {
             $(this).text("Stop");
             timer.start();
