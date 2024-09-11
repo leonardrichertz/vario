@@ -98,5 +98,10 @@ export function displayAttitude(altitude) {
  * @returns {void}
  */
 export function displayVerticalSpeed(speed) {
-    $("#verticalSpeed").text(speed.toFixed(2));
+    if (speed > 0) {
+        $("#verticalSpeed").text("+" + speed.toFixed(2));
+    }
+    else {
+        $("#verticalSpeed").text(speed.toFixed(2));
+    }
 }
