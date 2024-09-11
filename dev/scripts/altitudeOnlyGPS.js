@@ -81,7 +81,7 @@ export function altitudeOnlyGPS() {
     }
 
     function OrientationAndroid(event) {
-        const alpha = handleOrientationAndroid(event);
+        const { alpha, beta, gamma } = handleOrientationAndroid(event);
         $("#compass").css("transform", "rotate(" + alpha + "deg)");
     }
 
