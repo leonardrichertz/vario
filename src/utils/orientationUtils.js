@@ -20,5 +20,9 @@ export function handleOrientationIOS(event) {
  */
 export function handleOrientationAndroid(event) {
     const alpha = Math.round(event.alpha * 100) / 100; // Normalize value
+    const beta = Math.round(event.beta * 100) / 100;  // Rotation around x-axis
+    const gamma = Math.round(event.gamma * 100) / 100; // Rotation around y-axis
+
+    return { alpha, beta, gamma };
     return alpha;
 }
