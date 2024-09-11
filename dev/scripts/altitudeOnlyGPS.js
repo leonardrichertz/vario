@@ -72,6 +72,8 @@ export function altitudeOnlyGPS() {
         // show success message if saving was succesful.
         showToast("Save Track button clicked. The flight was " + timer.getSeconds() + " seconds long", 'success', 3000);
         // saveFlightData(); Replace with the function to save the flight data.
+        navigator.geolocation.clearWatch(watchId);
+        timer.stop();
     });
 
 
