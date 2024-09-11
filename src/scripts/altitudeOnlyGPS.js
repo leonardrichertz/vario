@@ -180,7 +180,7 @@ export function altitudeOnlyGPS() {
                     if (os === 'iOS') {
                         window.addEventListener('deviceorientation', handleOrientationIOS);
                     } else {
-                        window.addEventListener('deviceorientationabsolute', Android, true);
+                        window.addEventListener('deviceorientationabsolute', OrientationAndroid, true);
                     }
                 }
             } else {

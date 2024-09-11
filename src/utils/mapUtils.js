@@ -45,7 +45,7 @@ export function calculateManualSpeed(position, lastPosition, lastTimestamp) {
  * @returns {void}
  */
 export function displayDistance(distance) {
-    $("#distance").html(distance.toFixed(3), "m");
+    $("#distance").html(distance.toFixed(3) + " m");
 }
 
 /**
@@ -55,5 +55,5 @@ export function displayDistance(distance) {
  * @returns {void}
  */
 export function displaySpeed(speed) {
-    $("#speed").html(speed.toFixed(2), "m/s");
+    $("#speed").html(speed.toFixed(2) + " m/s");
 }
