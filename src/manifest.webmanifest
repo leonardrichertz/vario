@@ -1,6 +1,6 @@
 {
-    "theme_color": "#87CEEB",
-    "background_color": "#87CEEB",
+    "theme_color": "#EA352B",
+    "background_color": "#EA352B",
     "display": "standalone",
     "scope": "/vario/dev/",
     "start_url": "/vario/dev/",
