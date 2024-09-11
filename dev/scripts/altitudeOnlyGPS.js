@@ -163,8 +163,10 @@ export function altitudeOnlyGPS() {
                         .then(permissionState => {
                             if (permissionState === 'granted') {
                                 if (os === 'iOS' || os === 'MacOS') {
+                                    alert("iOS or MacOS");
                                     window.addEventListener('deviceorientation', OrientationIOS);
                                 } else {
+                                    alert("Android");
                                     window.addEventListener('deviceorientationabsolute', OrientationAndroid, true);
                                 }
                             } else {
