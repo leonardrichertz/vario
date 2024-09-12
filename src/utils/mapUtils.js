@@ -55,5 +55,5 @@ export function displayDistance(distance) {
  * @returns {void}
  */
 export function displaySpeed(speed) {
-    $("#speed").html(speed.toFixed(2) + " m/s");
+    $("#speed").html(Math.abs(speed).toFixed(2) + " m/s");
 }
