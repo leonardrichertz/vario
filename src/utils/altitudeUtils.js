@@ -66,10 +66,10 @@ export function changeAltitudeIcon(speed) {
         case speed < thresholds.descent2 && speed > thresholds.descent1:
             $("#bar11").addClass("bar-light");
             return descentProfile3;
-        case speed <= thresholds.descent1 && speed > minSpeed:
+        case speed <= thresholds.descent1 && speed > -maxSpeed:
             $("#bar12").addClass("bar-light");
             return descentProfile2;
-        case speed <= minSpeed:
+        case speed <= -maxSpeed:
             $("#bar13").addClass("bar-light");
             return descentProfile1;
         default:
