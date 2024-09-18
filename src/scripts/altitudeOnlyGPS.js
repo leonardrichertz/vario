@@ -2,7 +2,7 @@ import { calculateDistance, calculateManualSpeed, displayDistance, displaySpeed 
 import { getOS } from '../utils/operatingSystem.js';
 import { handleOrientationAndroid, handleOrientationIOS } from '../utils/orientationUtils.js';
 import Timer from '../utils/timer.js';
-import { playSound, getSoundProfile } from '../utils/sound.js';
+import { playSound } from '../utils/sound.js';
 import { changeAltitudeIcon, changeSpeedHistory, displayAltitude } from '../utils/altitudeUtils.js';
 import { showToast } from '../utils/toast.js';
 
