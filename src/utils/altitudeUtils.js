@@ -1,8 +1,7 @@
 import { ascentProfile1, ascentProfile2, ascentProfile3, ascentProfile4, ascentProfile5, ascentProfile6, ascentProfile7, descentProfile1, descentProfile2, descentProfile3, descentProfile4, descentProfile5, descentProfile6, descentProfile7 } from './soundprofiles.js';
 
 
-const maxSpeed = 0.8; // Maximum speed for ascent. Change this value as needed.
-const minSpeed = -0.8; // Minimum speed for descent. Change this value as needed.
+const maxSpeed = 0.8; // Maximum threshold speed for the sensitivity of the sound functionality. Change this value as needed.
 
 const thresholds = {
     ascent1: maxSpeed * 0.625,
@@ -10,11 +9,11 @@ const thresholds = {
     ascent3: maxSpeed * 0.375,
     ascent4: maxSpeed * 0.25,
     ascent5: maxSpeed * 0.125,
-    descent5: minSpeed * 0.125,
-    descent4: minSpeed * 0.25,
-    descent3: minSpeed * 0.375,
-    descent2: minSpeed * 0.5,
-    descent1: minSpeed * 0.625,
+    descent5: -maxSpeed * 0.125,
+    descent4: -maxSpeed * 0.25,
+    descent3: -maxSpeed * 0.375,
+    descent2: -maxSpeed * 0.5,
+    descent1: -maxSpeed * 0.625,
 };
 
 
