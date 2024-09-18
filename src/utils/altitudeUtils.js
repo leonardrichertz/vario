@@ -87,7 +87,7 @@ export function changeSpeedHistory(speedHistory, speed) {
  * @param {number} altitude - The altitude value to be displayed.
  * @returns {void}
  */
-export function displayAttitude(altitude) {
+export function displayAltitude(altitude) {
     $("#altitude").html((altitude).toFixed(2) + " m");
 }
 
