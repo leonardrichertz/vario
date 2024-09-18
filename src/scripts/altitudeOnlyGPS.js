@@ -137,8 +137,7 @@ export function altitudeOnlyGPS() {
         if (speed * 0.7 < averageSpeed || speed * 1.3 > averageSpeed) {
             trendAdjustedSpeed = speed * 0.7 + averageSpeed * 0.3;
         }
-        const soundChoice = changeAltitudeIcon(trendAdjustedSpeed);
-        const soundProfile = getSoundProfile(soundChoice);
+        const soundProfile = changeAltitudeIcon(trendAdjustedSpeed);
         const context = playSound(soundProfile, audioContext);
         audioContext = context;
     }
