@@ -90,16 +90,16 @@ export function altitudeOnlyGPS() {
     function handleGeolocation(position) {
         var latlng = [position.coords.latitude, position.coords.longitude];
         const newAltitude = position.coords.altitude;
-        const currrentTime = Date.now();
+        const currentTime = Date.now();
         if (lastTimestamp !== 0 && newAltitude !== null) {
             const altitudeDifference = newAltitude - lastAltitude;
             // convert milliseconds to seconds
-            const timeDifference = (currrentTime - lastTimestamp) / 1000;
+            const timeDifference = (currentTime - lastTimestamp) / 1000;
             let speed = altitudeDifference / timeDifference;
             handleVerticalSpeed(speed);
         }
         lastAltitude = newAltitude;
-        lastTimestamp = currrentTime;
+        lastTimestamp = currentTime;
 
         displayAttitude(lastAltitude);
 
