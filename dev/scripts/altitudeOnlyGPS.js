@@ -3,7 +3,7 @@ import { getOS } from '../utils/operatingSystem.js';
 import { handleOrientationAndroid, handleOrientationIOS } from '../utils/orientationUtils.js';
 import Timer from '../utils/timer.js';
 import { playSound, getSoundProfile } from '../utils/sound.js';
-import { changeAltitudeIcon, changeSpeedHistory, displayAttitude } from '../utils/altitudeUtils.js';
+import { changeAltitudeIcon, changeSpeedHistory, displayAltitude } from '../utils/altitudeUtils.js';
 import { showToast } from '../utils/toast.js';
 
 export function altitudeOnlyGPS() {
@@ -101,7 +101,7 @@ export function altitudeOnlyGPS() {
         lastAltitude = newAltitude;
         lastTimestamp = currentTime;
 
-        displayAttitude(lastAltitude);
+        displayAltitude(lastAltitude);
 
         if (marker.getLatLng().lat !== 0 && marker.getLatLng().lng !== 0) {
             var oldLatLng = marker.getLatLng();
