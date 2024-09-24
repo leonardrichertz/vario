@@ -70,7 +70,7 @@ export function altitudeOnlyGPS() {
 
     // EventListener for the save track button.
     $('#saveTrackButton').click(function () {
-        // show success message if saving was succesful.
+        // show success message if saving was successful.
         showToast("Save Track button clicked. The flight was " + timer.getSeconds() + " seconds long", 'success', 3000);
         // saveFlightData(); Replace with the function to save the flight data.
         navigator.geolocation.clearWatch(watchId);
