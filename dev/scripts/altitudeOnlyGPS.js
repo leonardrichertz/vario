@@ -57,7 +57,7 @@ export function altitudeOnlyGPS() {
     const options = {
         enableHighAccuracy: true,
         //changed for testing purposes. Change back to 30000
-        maximumAge: 3000,
+        maximumAge: 0,
         timeout: 27000,
     };
 
