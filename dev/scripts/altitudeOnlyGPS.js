@@ -56,7 +56,8 @@ export function altitudeOnlyGPS() {
     // Define the options for the geolocation.watchposition function.
     const options = {
         enableHighAccuracy: true,
-        maximumAge: 30000,
+        //changed for testing purposes. Change back to 30000
+        maximumAge: 3000,
         timeout: 27000,
     };
 
