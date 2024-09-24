@@ -11,7 +11,6 @@ export function playSound(soundProfile, audioContext) {
     }
     const climbRate = 2; // example climb rate
     const frequency = getValueForClimb(soundProfile.frequency, climbRate);
-    // Maybe get the duration froom the difference between the two timestamps?
     const duration = getValueForClimb(soundProfile.duration, climbRate);
     const gainValue = getValueForClimb(soundProfile.gain, climbRate);
 
